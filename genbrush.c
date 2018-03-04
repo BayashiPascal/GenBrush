@@ -417,23 +417,27 @@ GBPixel GBPixelStackBlend(GSet* stack, GBPixel* bgColor) {
       }
       blendMode = pix->_blendMode;
     }
-  }
-  // If we've reached the bottom of the stack and there is still 
-  // transparency
-  if (res._rgba[GBPixelAlpha] < 255) {
-    // Add the background color
-    switch (blendMode) {
-      case GBLayerBlendModeDefault:
-        break;
-      case GBLayerBlendModeNormal:
-        GBPixelBlendNormal(&res, bgColor);
-        break;
-      case GBLayerBlendModeOver:
-        GBPixelBlendOver(&res, bgColor);
-        break;
-      default:
-        break;
+    // If we've reached the bottom of the stack and there is still 
+    // transparency
+    if (res._rgba[GBPixelAlpha] < 255) {
+      // Add the background color
+      switch (blendMode) {
+        case GBLayerBlendModeDefault:
+          break;
+        case GBLayerBlendModeNormal:
+          GBPixelBlendNormal(&res, bgColor);
+          break;
+        case GBLayerBlendModeOver:
+          GBPixelBlendOver(&res, bgColor);
+          break;
+        default:
+          break;
+      }
     }
+  // Else, the stack is empty
+  } else {
+    // Simply copy the background pixel;
+    res = *bgColor;
   }
   // Return the result pixel
   return res;

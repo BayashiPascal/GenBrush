@@ -2375,6 +2375,30 @@ void _GBAddShapoid(GenBrush* that, Shapoid* shap, GBEye* eye,
     GBObjPodCreateShapoid(shap, eye, hand, tool, ink, layer));
 }
 
+// Add a GBObjPod for the SCurve 'curve' to the GenBrush 'that'
+// drawn with 'eye', 'hand' and 'tool' in layer 'layer'
+// 'curve' 's dimension must be 2 or more
+#if BUILDMODE != 0
+inline
+#endif 
+void _GBAddSCurve(GenBrush* that, SCurve* curve, GBEye* eye, 
+  GBHand* hand, GBTool* tool, GBInk* ink, GBLayer* layer) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (curve == NULL) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'curve' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  GSetAppend(&(that->_pods), 
+    GBObjPodCreateSCurve(curve, eye, hand, tool, ink, layer));
+}
+
 // Reset all the final pix of the surface of the GenBrush 'that' to its 
 // background color, and reset all the modified flag of layers to true
 #if BUILDMODE != 0

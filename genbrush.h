@@ -126,6 +126,10 @@
   default: PBErrInvalidPolymorphism) (GB, (Shapoid*)(Shap), \
   (GBEye*)(Eye), (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
 
+#define GBAddSCurve(GB, Curve, Eye, Hand, Tool, Ink, Layer) \
+  _GBAddSCurve(GB, Curve, \
+  (GBEye*)(Eye), (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
+
 #define GBRemovePod(GB, Obj, Eye, Hand, Tool, Ink, Layer) \
   _GBRemovePod(GB, (void*)(Obj), (GBEye*)(Eye), (GBHand*)(Hand), \
   (GBTool*)(Tool), (GBInk*)(Ink), Layer)
@@ -1559,6 +1563,15 @@ void _GBAddPoint(GenBrush* that, VecFloat* pos, GBEye* eye,
 inline
 #endif 
 void _GBAddShapoid(GenBrush* that, Shapoid* shap, GBEye* eye, 
+  GBHand* hand, GBTool* tool, GBInk* ink, GBLayer* layer);
+
+// Add a GBObjPod for the SCurve 'curve' to the GenBrush 'that'
+// drawn with 'eye', 'hand' and 'tool' in layer 'layer'
+// 'curve' 's dimension must be 2 or more
+#if BUILDMODE != 0
+inline
+#endif 
+void _GBAddSCurve(GenBrush* that, SCurve* curve, GBEye* eye, 
   GBHand* hand, GBTool* tool, GBInk* ink, GBLayer* layer);
 
 // Remove from the list of pods of the GenBrush 'that' those who 
