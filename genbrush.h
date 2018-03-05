@@ -490,11 +490,11 @@ typedef struct GBObjPod {
     SCurve* _eyeSCurve;
   };
   // GSet of projected Points (VecFloat) through eye + hand
-  GSet _handPoints;
+  GSetVecFloat _handPoints;
   // GSet of projected Shapoids through eye + hand
-  GSet _handShapoids;
+  GSetShapoid _handShapoids;
   // GSet of projected Shapoids through eye + hand
-  GSet _handSCurves;
+  GSetSCurve _handSCurves;
   // Eye
   GBEye* _eye;
   // Hand
@@ -828,7 +828,7 @@ inline
 #endif 
 bool GBSurfaceIsPosInside(GBSurface* that, VecShort2D *pos);
 
-// Get the seet of layers of the GBSurface 'that'
+// Get the set of layers of the GBSurface 'that'
 #if BUILDMODE != 0
 inline
 #endif 
@@ -890,7 +890,7 @@ void GBSurfaceRemoveLayer(GBSurface* that, GBLayer* layer);
 // Get a GSet of Facoid representing the sub areas of the GBSurface 
 // 'that' affected by layers with _modified flag equal to true
 // If there is no modified sub area return an empty GSet
-GSet* GBSurfaceGetModifiedArea(GBSurface* that);
+GSetShapoid* GBSurfaceGetModifiedArea(GBSurface* that);
 
 // Update the final pixels according to layers of the GBSurface 'that'
 // Update only pixels affected by layers with the _modified flag 
@@ -1240,21 +1240,21 @@ void* GBObjPodGetEyeObj(GBObjPod* that);
 #if BUILDMODE != 0
 inline
 #endif 
-GSet* GBObjPodGetHandObjAsPoints(GBObjPod* that);
+GSetVecFloat* GBObjPodGetHandObjAsPoints(GBObjPod* that);
 
 // Return the object processed as Shapoids by its attached hand in the 
 // GBObjPod 'that'
 #if BUILDMODE != 0
 inline
 #endif 
-GSet* GBObjPodGetHandObjAsShapoids(GBObjPod* that);
+GSetShapoid* GBObjPodGetHandObjAsShapoids(GBObjPod* that);
 
 // Return the object processed as SCurves by its attached hand in the 
 // GBObjPod 'that'
 #if BUILDMODE != 0
 inline
 #endif 
-GSet* GBObjPodGetHandObjAsSCurves(GBObjPod* that);
+GSetSCurve* GBObjPodGetHandObjAsSCurves(GBObjPod* that);
 
 // Return the eye in the GBObjPod 'that'
 #if BUILDMODE != 0

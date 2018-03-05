@@ -1515,7 +1515,7 @@ void* GBObjPodGetEyeObj(GBObjPod* that) {
 #if BUILDMODE != 0
 inline
 #endif 
-GSet* GBObjPodGetHandObjAsPoints(GBObjPod* that) {
+GSetVecFloat* GBObjPodGetHandObjAsPoints(GBObjPod* that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1531,7 +1531,7 @@ GSet* GBObjPodGetHandObjAsPoints(GBObjPod* that) {
 #if BUILDMODE != 0
 inline
 #endif 
-GSet* GBObjPodGetHandObjAsShapoids(GBObjPod* that) {
+GSetShapoid* GBObjPodGetHandObjAsShapoids(GBObjPod* that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1548,7 +1548,7 @@ GSet* GBObjPodGetHandObjAsShapoids(GBObjPod* that) {
 #if BUILDMODE != 0
 inline
 #endif 
-GSet* GBObjPodGetHandObjAsSCurves(GBObjPod* that) {
+GSetSCurve* GBObjPodGetHandObjAsSCurves(GBObjPod* that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;

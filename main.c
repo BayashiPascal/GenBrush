@@ -824,7 +824,7 @@ void UnitTestGBSurfaceGetModifiedArea() {
   VecSet(&pos, 0, 20); VecSet(&pos, 1, 20); 
   GBLayerSetPos(layers[3], &pos);
   GBLayerSetModified(layers[3], false);
-  GSet* set = GBSurfaceGetModifiedArea(&surf);
+  GSetShapoid* set = GBSurfaceGetModifiedArea(&surf);
   if (GSetNbElem(set) != 5) {
     ShapoidErr->_type = PBErrTypeUnitTestFailed;
     sprintf(ShapoidErr->_msg, 
@@ -840,7 +840,7 @@ void UnitTestGBSurfaceGetModifiedArea() {
   VecFloat2D u = VecFloatCreateStatic2D();
   VecFloat2D v = VecFloatCreateStatic2D();
   do {
-    Facoid* fac = GSetPop(set);
+    Facoid* fac = (Facoid*)GSetPop(set);
     VecSet(&p, 0, checkp[2 * iCheck]); 
     VecSet(&p, 1, checkp[2 * iCheck + 1]); 
     VecSet(&u, 0, checku[iCheck]); VecSet(&v, 1, checkv[iCheck]); 
@@ -1927,7 +1927,7 @@ void UnitTestGBHandDefaultProcess() {
     GBObjPodCreatePoint(&point, &eye, hand, &tool, &ink, &layer);
   GBHandProcess(hand, pod);
   if (GSetNbElem(&(pod->_handPoints)) == 0 ||
-    VecIsEqual((VecFloat*)(pod->_handPoints._head->_data), 
+    VecIsEqual(GSetGetFirst(&(pod->_handPoints)), 
       &point) == false) {
     ShapoidErr->_type = PBErrTypeUnitTestFailed;
     sprintf(ShapoidErr->_msg, "GBHandDefaultProcess failed");

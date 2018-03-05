@@ -707,7 +707,7 @@ GBSurface GBSurfaceClone(GBSurface* that) {
 // Get a GSet of Facoid representing the sub areas of the GBSurface 
 // 'that' affected by layers with _modified flag equal to true
 // If there is no modified sub area return an empty GSet
-GSet* GBSurfaceGetModifiedArea(GBSurface* that) {
+GSetShapoid* GBSurfaceGetModifiedArea(GBSurface* that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -716,7 +716,7 @@ GSet* GBSurfaceGetModifiedArea(GBSurface* that) {
   }
 #endif
   // Declare the GSet to memorize the areas
-  GSet* areas = GSetCreate();
+  GSetShapoid* areas = GSetShapoidCreate();
   // If the surface has layers
   if (GBSurfaceNbLayer(that) > 0) {
     // For each layer of the surface
@@ -774,7 +774,7 @@ void GBSurfaceUpdate(GBSurface* that) {
   // If the surface has layers
   if (GBSurfaceNbLayer(that) > 0) {
     // Get the areas needing to be updated
-    GSet* areas = GBSurfaceGetModifiedArea(that);
+    GSetShapoid* areas = GBSurfaceGetModifiedArea(that);
     // Declare some vectors to memorize pixel coordinates
     VecShort2D from = VecShortCreateStatic2D();
     VecShort2D to = VecShortCreateStatic2D();
@@ -787,7 +787,7 @@ void GBSurfaceUpdate(GBSurface* that) {
     // For each area
     while (GSetNbElem(areas) > 0) {
       // Get the current area
-      Facoid* area = GSetPop(areas);
+      Facoid* area = (Facoid*)GSetPop(areas);
       // Facoid values are float, we need to convert to short for
       // pixel coordinates
       for (int i = 2; i--;) {
@@ -1625,17 +1625,17 @@ void GBHandDefaultProcess(GBHandDefault* that, GBObjPod* pod) {
 #endif
   (void)that;
   // Empty all the sets
-  GSet* setPoints = GBObjPodGetHandObjAsPoints(pod);
+  GSetVecFloat* setPoints = GBObjPodGetHandObjAsPoints(pod);
   while (GSetNbElem(setPoints) > 0) {
     VecFloat* point = GSetPop(setPoints);
     VecFree(&point);
   }
-  GSet* setShapoids = GBObjPodGetHandObjAsShapoids(pod);
+  GSetShapoid* setShapoids = GBObjPodGetHandObjAsShapoids(pod);
   while (GSetNbElem(setShapoids) > 0) {
     Shapoid* shap = GSetPop(setShapoids);
     ShapoidFree(&shap);
   }
-  GSet* setSCurves = GBObjPodGetHandObjAsSCurves(pod);
+  GSetSCurve* setSCurves = GBObjPodGetHandObjAsSCurves(pod);
   while (GSetNbElem(setPoints) > 0) {
     SCurve* curve = GSetPop(setSCurves);
     SCurveFree(&curve);
@@ -2051,9 +2051,9 @@ GBObjPod* _GBObjPodCreatePoint(VecFloat* pos, GBEye* eye, GBHand* hand,
   pod->_type = GBObjTypePoint;
   pod->_srcPoint = pos;
   pod->_eyePoint = NULL;
-  pod->_handPoints = GSetCreateStatic();
-  pod->_handShapoids = GSetCreateStatic();
-  pod->_handSCurves = GSetCreateStatic();
+  pod->_handPoints = GSetVecFloatCreateStatic();
+  pod->_handShapoids = GSetShapoidCreateStatic();
+  pod->_handSCurves = GSetSCurveCreateStatic();
   pod->_eye = eye;
   pod->_hand = hand;
   pod->_tool = tool;
@@ -2096,9 +2096,9 @@ GBObjPod* _GBObjPodCreateShapoid(Shapoid* shap, GBEye* eye,
   pod->_type = GBObjTypeShapoid;
   pod->_srcShapoid = shap;
   pod->_eyeShapoid = NULL;
-  pod->_handPoints = GSetCreateStatic();
-  pod->_handShapoids = GSetCreateStatic();
-  pod->_handSCurves = GSetCreateStatic();
+  pod->_handPoints = GSetVecFloatCreateStatic();
+  pod->_handShapoids = GSetShapoidCreateStatic();
+  pod->_handSCurves = GSetSCurveCreateStatic();
   pod->_eye = eye;
   pod->_hand = hand;
   pod->_tool = tool;
@@ -2141,9 +2141,9 @@ GBObjPod* _GBObjPodCreateSCurve(SCurve* curve, GBEye* eye,
   pod->_type = GBObjTypeSCurve;
   pod->_srcSCurve = curve;
   pod->_eyeSCurve = NULL;
-  pod->_handPoints = GSetCreateStatic();
-  pod->_handShapoids = GSetCreateStatic();
-  pod->_handSCurves = GSetCreateStatic();
+  pod->_handPoints = GSetVecFloatCreateStatic();
+  pod->_handShapoids = GSetShapoidCreateStatic();
+  pod->_handSCurves = GSetSCurveCreateStatic();
   pod->_eye = eye;
   pod->_hand = hand;
   pod->_tool = tool;
