@@ -73,231 +73,6 @@
     ._rgba[GBPixelAlpha]=255,._rgba[GBPixelRed]=0, \
     ._rgba[GBPixelGreen]=0,._rgba[GBPixelBlue]=255}
     
-// ================= Polymorphism ==================
-
-#define GBPosIndex(Pos, Dim) \
-  (VecGet(Dim, 0) * VecGet(Pos, 1) + VecGet(Pos, 0))
-
-#define GBInkGetType(Ink) _Generic(Ink, \
-  GBInk*: _GBInkGetType, \
-  GBInkSolid*: _GBInkGetType, \
-  default: PBErrInvalidPolymorphism) ((GBInk*)(Ink))
-
-#define GBInkGet(Ink, Tool, Pod, PosInternal, PosExternal, PosLayer) \
-  _GBInkGet((GBInk*)(Ink), (GBTool*)(Tool), Pod, \
-  (VecFloat*)(PosInternal), (VecFloat*)(PosExternal), \
-  (VecShort*)(PosLayer))
-  
-#define GBObjPodCreatePoint(Pos, Eye, Hand, Tool, Ink, Layer) \
-  _Generic(Pos, \
-  VecFloat*: _GBObjPodCreatePoint, \
-  VecFloat2D*: _GBObjPodCreatePoint, \
-  VecFloat3D*: _GBObjPodCreatePoint, \
-  default: PBErrInvalidPolymorphism) ((VecFloat*)(Pos), \
-  (GBEye*)(Eye), (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
-  
-#define GBObjPodCreateShapoid(Shap, Eye, Hand, Tool, Ink, Layer) \
-  _Generic(Shap, \
-  Shapoid*: _GBObjPodCreateShapoid, \
-  Facoid*: _GBObjPodCreateShapoid, \
-  Spheroid*: _GBObjPodCreateShapoid, \
-  Pyramidoid*: _GBObjPodCreateShapoid, \
-  default: PBErrInvalidPolymorphism) ((Shapoid*)(Shap), \
-  (GBEye*)(Eye), (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
-
-#define GBObjPodCreateSCurve(Curve, Eye, Hand, Tool, Ink, Layer) \
-  _GBObjPodCreateSCurve(Curve, \
-  (GBEye*)(Eye), (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
-
-#define GBAddPoint(GB, Pos, Eye, Hand, Tool, Ink, Layer) \
-  _Generic(Pos, \
-  VecFloat*: _GBAddPoint, \
-  VecFloat2D*: _GBAddPoint, \
-  VecFloat3D*: _GBAddPoint, \
-  default: PBErrInvalidPolymorphism) (GB, (VecFloat*)(Pos), \
-  (GBEye*)(Eye), (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
-  
-#define GBAddShapoid(GB, Shap, Eye, Hand, Tool, Ink, Layer) \
-  _Generic(Shap, \
-  Shapoid*: _GBAddShapoid, \
-  Facoid*: _GBAddShapoid, \
-  Spheroid*: _GBAddShapoid, \
-  Pyramidoid*: _GBAddShapoid, \
-  default: PBErrInvalidPolymorphism) (GB, (Shapoid*)(Shap), \
-  (GBEye*)(Eye), (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
-
-#define GBAddSCurve(GB, Curve, Eye, Hand, Tool, Ink, Layer) \
-  _GBAddSCurve(GB, Curve, \
-  (GBEye*)(Eye), (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
-
-#define GBRemovePod(GB, Obj, Eye, Hand, Tool, Ink, Layer) \
-  _GBRemovePod(GB, (void*)(Obj), (GBEye*)(Eye), (GBHand*)(Hand), \
-  (GBTool*)(Tool), (GBInk*)(Ink), Layer)
-
-#define GBObjPodGetObjAsPoint(Pod) (VecFloat*)GBObjPodGetObj(Pod)
-#define GBObjPodGetObjAsShapoid(Pod) (Shapoid*)GBObjPodGetObj(Pod)
-#define GBObjPodGetObjAsSCurve(Pod) (SCurve*)GBObjPodGetObj(Pod)
-
-#define GBObjPodGetEyeObjAsPoint(Pod) (VecFloat*)GBObjPodGetEyeObj(Pod)
-#define GBObjPodGetEyeObjAsShapoid(Pod) (Shapoid*)GBObjPodGetEyeObj(Pod)
-#define GBObjPodGetEyeObjAsSCurve(Pod) (SCurve*)GBObjPodGetEyeObj(Pod)
-
-#define GBObjPodSetEyePoint(Pod, Point) \
-  _GBObjPodSetEyePoint(Pod, (VecFloat*)Point)
-#define GBObjPodSetEyeShapoid(Pod, Shap) \
-  _GBObjPodSetEyeShapoid(Pod, (Shapoid*)Shap)
-#define GBObjPodSetEyeSCurve(Pod, Curve) \
-  _GBObjPodSetEyeSCurve(Pod, (SCurve*)Curve)
-
-#define GBSetPodEye(GB, ToEye, Obj, Eye, Hand, Tool, Ink, Layer) \
-  _GBSetPodEye(GB, (GBEye*)(ToEye), (void*)(Obj), (GBEye*)(Eye), \
-  (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
-
-#define GBSetPodHand(GB, ToHand, Obj, Eye, Hand, Tool, Ink, Layer) \
-  _GBSetPodHand(GB, (GBHand*)(ToHand), (void*)(Obj), (GBEye*)(Eye), \
-  (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
-
-#define GBSetPodTool(GB, ToTool, Obj, Eye, Hand, Tool, Ink, Layer) \
-  _GBSetPodTool(GB, (GBTool*)(ToTool), (void*)(Obj), (GBEye*)(Eye), \
-  (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
-
-#define GBSetPodInk(GB, ToInk, Obj, Eye, Hand, Tool, Ink, Layer) \
-  _GBSetPodInk(GB, (GBInk*)(ToInk), (void*)(Obj), (GBEye*)(Eye), \
-  (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
-
-#define GBSetPodLayer(GB, ToLayer, Obj, Eye, Hand, Tool, Ink, Layer) \
-  _GBSetPodLayer(GB, ToLayer, (void*)(Obj), (GBEye*)(Eye), \
-  (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
-
-#define GBNotifyChangeFromObj(GB, Obj) \
-  _GBNotifyChangeFromObj(GB, (void*)(Obj))
-
-#define GBNotifyChangeFromEye(GB, Eye) \
-  _GBNotifyChangeFromEye(GB, (GBEye*)(Eye))
-
-#define GBNotifyChangeFromHand(GB, Hand) \
-  _GBNotifyChangeFromHand(GB, (GBHand*)(Hand))
-
-#define GBNotifyChangeFromTool(GB, Tool) \
-  _GBNotifyChangeFromTool(GB, (GBTool*)(Tool))
-
-#define GBNotifyChangeFromInk(GB, Ink) \
-  _GBNotifyChangeFromInk(GB, (GBInk*)(Ink))
-
-#define GBHandGetType(Hand) _Generic(Hand, \
-  GBHand*: _GBHandGetType, \
-  GBHandDefault*: _GBHandGetType, \
-  default: PBErrInvalidPolymorphism) ((GBHand*)(Hand))
-
-#define GBHandProcess(Hand, Pod) _Generic(Hand, \
-  GBHand*: _GBHandProcess, \
-  GBHandDefault*: GBHandDefaultProcess, \
-  default: PBErrInvalidPolymorphism) (Hand, Pod)
-
-#define GBObjPodSetHand(Pod, Hand) \
-  _GBObjPodSetHand(Pod, (GBHand*)(Hand))
-  
-#define GBObjPodSetEye(Pod, Eye) \
-  _GBObjPodSetEye(Pod, (GBEye*)(Eye))
-  
-#define GBObjPodSetTool(Pod, Tool) \
-  _GBObjPodSetTool(Pod, (GBTool*)(Tool))
-  
-#define GBObjPodSetInk(Pod, Ink) \
-  _GBObjPodSetInk(Pod, (GBInk*)(Ink))
-
-#define GBEyeGetType(Eye) _Generic(Eye, \
-  GBEye*: _GBEyeGetType, \
-  GBEyeOrtho*: _GBEyeGetType, \
-  GBEyeIsometric*: _GBEyeGetType, \
-  default: PBErrInvalidPolymorphism)((GBEye*)(Eye))
-
-#define GBEyeScale(Eye) _Generic(Eye, \
-  GBEye*: _GBEyeScale, \
-  GBEyeOrtho*: _GBEyeScale, \
-  GBEyeIsometric*: _GBEyeScale, \
-  default: PBErrInvalidPolymorphism)((GBEye*)(Eye))
-
-#define GBEyeGetScale(Eye) _Generic(Eye, \
-  GBEye*: _GBEyeGetScale, \
-  GBEyeOrtho*: _GBEyeGetScale, \
-  GBEyeIsometric*: _GBEyeGetScale, \
-  default: PBErrInvalidPolymorphism)((GBEye*)(Eye))
-
-#define GBEyeSetScale(Eye, Scale) _Generic(Scale, \
-  float: GBEyeSetScaleFloat, \
-  VecFloat3D*: GBEyeSetScaleVec, \
-  default: PBErrInvalidPolymorphism)( \
-    _Generic(Eye, \
-      GBEye*: Eye, \
-      GBEyeOrtho*: (GBEye*)Eye, \
-      GBEyeIsometric*: (GBEye*)Eye, \
-      default: Eye), \
-    _Generic(Scale, \
-      float: Scale, \
-      VecFloat3D*: Scale, \
-      default: Scale))
-
-#define GBEyeOrig(Eye) _Generic(Eye, \
-  GBEye*: _GBEyeOrig, \
-  GBEyeOrtho*: _GBEyeOrig, \
-  GBEyeIsometric*: _GBEyeOrig, \
-  default: PBErrInvalidPolymorphism)((GBEye*)(Eye))
-
-#define GBEyeGetOrig(Eye) _Generic(Eye, \
-  GBEye*: _GBEyeGetOrig, \
-  GBEyeOrtho*: _GBEyeGetOrig, \
-  GBEyeIsometric*: _GBEyeGetOrig, \
-  default: PBErrInvalidPolymorphism)((GBEye*)(Eye))
-
-#define GBEyeSetOrig(Eye, Orig) _Generic(Eye, \
-  GBEye*: _GBEyeSetOrig, \
-  GBEyeOrtho*: _GBEyeSetOrig, \
-  GBEyeIsometric*: _GBEyeSetOrig, \
-  default: PBErrInvalidPolymorphism)((GBEye*)(Eye), Orig)
-
-#define GBEyeGetRot(Eye) _Generic(Eye, \
-  GBEye*: _GBEyeGetRot, \
-  GBEyeOrtho*: _GBEyeGetRot, \
-  GBEyeIsometric*: _GBEyeGetRot, \
-  default: PBErrInvalidPolymorphism)((GBEye*)(Eye))
-
-#define GBEyeSetRot(Eye, Theta) _Generic(Eye, \
-  GBEye*: _GBEyeSetRot, \
-  GBEyeOrtho*: _GBEyeSetRot, \
-  GBEyeIsometric*: _GBEyeSetRot, \
-  default: PBErrInvalidPolymorphism)((GBEye*)(Eye), Theta)
-
-#define GBEyeProj(Eye) _Generic(Eye, \
-  GBEye*: _GBEyeProj, \
-  GBEyeOrtho*: _GBEyeProj, \
-  GBEyeIsometric*: _GBEyeProj, \
-  default: PBErrInvalidPolymorphism)((GBEye*)(Eye))
-
-#define GBEyeProcess(Eye, Pod) _Generic(Eye, \
-  GBEye*: _GBEyeProcess, \
-  GBEyeOrtho*: _GBEyeProcess, \
-  GBEyeIsometric*: _GBEyeProcess, \
-  default: PBErrInvalidPolymorphism)((GBEye*)(Eye), Pod)
-
-#define GBEyeFree(EyeRef) _Generic(EyeRef, \
-  GBEyeOrtho**: GBEyeOrthoFree, \
-  GBEyeIsometric**: GBEyeIsometricFree, \
-  default: PBErrInvalidPolymorphism)(EyeRef)
-
-#define GBToolDraw(Tool, Pod) _Generic(Tool, \
-  GBTool*: _GBToolDraw, \
-  GBToolPlotter*: GBToolPlotterDraw, \
-  default: PBErrInvalidPolymorphism) (Tool, Pod)
-  
-#if BUILDWITHGRAPHICLIB == 0
-
-
-#elif BUILDWITHGRAPHICLIB == 1
-
-
-#endif
-
 // ================= Data structure ===================
 
 typedef struct GBPixel {
@@ -724,6 +499,14 @@ void GBSurfaceFreeStatic(GBSurface* that);
 
 // Clone the GBSurface 'that'
 GBSurface GBSurfaceClone(GBSurface* that);
+
+// Return true if the GBSurface 'that' has same dimension and same
+// values for _finalPix as GBSurface 'surf'
+// Else, return false
+#if BUILDMODE != 0
+inline
+#endif 
+bool GBSurfaceIsSameAs(GBSurface* that, GBSurface* surf);
 
 // Get the type of the GBSurface 'that'
 #if BUILDMODE != 0
@@ -1684,8 +1467,241 @@ void _GBNotifyChangeFromHand(GenBrush* that, GBHand* hand);
 // GBTool 'tool' in the list of pods of the GenBrush 'that'
 void _GBNotifyChangeFromTool(GenBrush* that, GBTool* tool);
 
+// Return true if the surface of the GenBrush 'that' is same as the
+// surface of the GenBrush 'gb'
+// Else, return false
+#if BUILDMODE != 0
+inline
+#endif 
+bool GBIsSameAs(GenBrush* that, GenBrush* gb);
+
 #if BUILDWITHGRAPHICLIB == 1
 #include "genbrush-GTK.h"
+#endif
+
+// ================= Polymorphism ==================
+
+#define GBPosIndex(Pos, Dim) \
+  (VecGet(Dim, 0) * VecGet(Pos, 1) + VecGet(Pos, 0))
+
+#define GBInkGetType(Ink) _Generic(Ink, \
+  GBInk*: _GBInkGetType, \
+  GBInkSolid*: _GBInkGetType, \
+  default: PBErrInvalidPolymorphism) ((GBInk*)(Ink))
+
+#define GBInkGet(Ink, Tool, Pod, PosInternal, PosExternal, PosLayer) \
+  _GBInkGet((GBInk*)(Ink), (GBTool*)(Tool), Pod, \
+  (VecFloat*)(PosInternal), (VecFloat*)(PosExternal), \
+  (VecShort*)(PosLayer))
+  
+#define GBObjPodCreatePoint(Pos, Eye, Hand, Tool, Ink, Layer) \
+  _Generic(Pos, \
+  VecFloat*: _GBObjPodCreatePoint, \
+  VecFloat2D*: _GBObjPodCreatePoint, \
+  VecFloat3D*: _GBObjPodCreatePoint, \
+  default: PBErrInvalidPolymorphism) ((VecFloat*)(Pos), \
+  (GBEye*)(Eye), (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
+  
+#define GBObjPodCreateShapoid(Shap, Eye, Hand, Tool, Ink, Layer) \
+  _Generic(Shap, \
+  Shapoid*: _GBObjPodCreateShapoid, \
+  Facoid*: _GBObjPodCreateShapoid, \
+  Spheroid*: _GBObjPodCreateShapoid, \
+  Pyramidoid*: _GBObjPodCreateShapoid, \
+  default: PBErrInvalidPolymorphism) ((Shapoid*)(Shap), \
+  (GBEye*)(Eye), (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
+
+#define GBObjPodCreateSCurve(Curve, Eye, Hand, Tool, Ink, Layer) \
+  _GBObjPodCreateSCurve(Curve, \
+  (GBEye*)(Eye), (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
+
+#define GBAddPoint(GB, Pos, Eye, Hand, Tool, Ink, Layer) \
+  _Generic(Pos, \
+  VecFloat*: _GBAddPoint, \
+  VecFloat2D*: _GBAddPoint, \
+  VecFloat3D*: _GBAddPoint, \
+  default: PBErrInvalidPolymorphism) (GB, (VecFloat*)(Pos), \
+  (GBEye*)(Eye), (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
+  
+#define GBAddShapoid(GB, Shap, Eye, Hand, Tool, Ink, Layer) \
+  _Generic(Shap, \
+  Shapoid*: _GBAddShapoid, \
+  Facoid*: _GBAddShapoid, \
+  Spheroid*: _GBAddShapoid, \
+  Pyramidoid*: _GBAddShapoid, \
+  default: PBErrInvalidPolymorphism) (GB, (Shapoid*)(Shap), \
+  (GBEye*)(Eye), (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
+
+#define GBAddSCurve(GB, Curve, Eye, Hand, Tool, Ink, Layer) \
+  _GBAddSCurve(GB, Curve, \
+  (GBEye*)(Eye), (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
+
+#define GBRemovePod(GB, Obj, Eye, Hand, Tool, Ink, Layer) \
+  _GBRemovePod(GB, (void*)(Obj), (GBEye*)(Eye), (GBHand*)(Hand), \
+  (GBTool*)(Tool), (GBInk*)(Ink), Layer)
+
+#define GBObjPodGetObjAsPoint(Pod) (VecFloat*)GBObjPodGetObj(Pod)
+#define GBObjPodGetObjAsShapoid(Pod) (Shapoid*)GBObjPodGetObj(Pod)
+#define GBObjPodGetObjAsSCurve(Pod) (SCurve*)GBObjPodGetObj(Pod)
+
+#define GBObjPodGetEyeObjAsPoint(Pod) (VecFloat*)GBObjPodGetEyeObj(Pod)
+#define GBObjPodGetEyeObjAsShapoid(Pod) (Shapoid*)GBObjPodGetEyeObj(Pod)
+#define GBObjPodGetEyeObjAsSCurve(Pod) (SCurve*)GBObjPodGetEyeObj(Pod)
+
+#define GBObjPodSetEyePoint(Pod, Point) \
+  _GBObjPodSetEyePoint(Pod, (VecFloat*)Point)
+#define GBObjPodSetEyeShapoid(Pod, Shap) \
+  _GBObjPodSetEyeShapoid(Pod, (Shapoid*)Shap)
+#define GBObjPodSetEyeSCurve(Pod, Curve) \
+  _GBObjPodSetEyeSCurve(Pod, (SCurve*)Curve)
+
+#define GBSetPodEye(GB, ToEye, Obj, Eye, Hand, Tool, Ink, Layer) \
+  _GBSetPodEye(GB, (GBEye*)(ToEye), (void*)(Obj), (GBEye*)(Eye), \
+  (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
+
+#define GBSetPodHand(GB, ToHand, Obj, Eye, Hand, Tool, Ink, Layer) \
+  _GBSetPodHand(GB, (GBHand*)(ToHand), (void*)(Obj), (GBEye*)(Eye), \
+  (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
+
+#define GBSetPodTool(GB, ToTool, Obj, Eye, Hand, Tool, Ink, Layer) \
+  _GBSetPodTool(GB, (GBTool*)(ToTool), (void*)(Obj), (GBEye*)(Eye), \
+  (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
+
+#define GBSetPodInk(GB, ToInk, Obj, Eye, Hand, Tool, Ink, Layer) \
+  _GBSetPodInk(GB, (GBInk*)(ToInk), (void*)(Obj), (GBEye*)(Eye), \
+  (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
+
+#define GBSetPodLayer(GB, ToLayer, Obj, Eye, Hand, Tool, Ink, Layer) \
+  _GBSetPodLayer(GB, ToLayer, (void*)(Obj), (GBEye*)(Eye), \
+  (GBHand*)(Hand), (GBTool*)(Tool), (GBInk*)(Ink), Layer)
+
+#define GBNotifyChangeFromObj(GB, Obj) \
+  _GBNotifyChangeFromObj(GB, (void*)(Obj))
+
+#define GBNotifyChangeFromEye(GB, Eye) \
+  _GBNotifyChangeFromEye(GB, (GBEye*)(Eye))
+
+#define GBNotifyChangeFromHand(GB, Hand) \
+  _GBNotifyChangeFromHand(GB, (GBHand*)(Hand))
+
+#define GBNotifyChangeFromTool(GB, Tool) \
+  _GBNotifyChangeFromTool(GB, (GBTool*)(Tool))
+
+#define GBNotifyChangeFromInk(GB, Ink) \
+  _GBNotifyChangeFromInk(GB, (GBInk*)(Ink))
+
+#define GBHandGetType(Hand) _Generic(Hand, \
+  GBHand*: _GBHandGetType, \
+  GBHandDefault*: _GBHandGetType, \
+  default: PBErrInvalidPolymorphism) ((GBHand*)(Hand))
+
+#define GBHandProcess(Hand, Pod) _Generic(Hand, \
+  GBHand*: _GBHandProcess, \
+  GBHandDefault*: GBHandDefaultProcess, \
+  default: PBErrInvalidPolymorphism) (Hand, Pod)
+
+#define GBObjPodSetHand(Pod, Hand) \
+  _GBObjPodSetHand(Pod, (GBHand*)(Hand))
+  
+#define GBObjPodSetEye(Pod, Eye) \
+  _GBObjPodSetEye(Pod, (GBEye*)(Eye))
+  
+#define GBObjPodSetTool(Pod, Tool) \
+  _GBObjPodSetTool(Pod, (GBTool*)(Tool))
+  
+#define GBObjPodSetInk(Pod, Ink) \
+  _GBObjPodSetInk(Pod, (GBInk*)(Ink))
+
+#define GBEyeGetType(Eye) _Generic(Eye, \
+  GBEye*: _GBEyeGetType, \
+  GBEyeOrtho*: _GBEyeGetType, \
+  GBEyeIsometric*: _GBEyeGetType, \
+  default: PBErrInvalidPolymorphism)((GBEye*)(Eye))
+
+#define GBEyeScale(Eye) _Generic(Eye, \
+  GBEye*: _GBEyeScale, \
+  GBEyeOrtho*: _GBEyeScale, \
+  GBEyeIsometric*: _GBEyeScale, \
+  default: PBErrInvalidPolymorphism)((GBEye*)(Eye))
+
+#define GBEyeGetScale(Eye) _Generic(Eye, \
+  GBEye*: _GBEyeGetScale, \
+  GBEyeOrtho*: _GBEyeGetScale, \
+  GBEyeIsometric*: _GBEyeGetScale, \
+  default: PBErrInvalidPolymorphism)((GBEye*)(Eye))
+
+#define GBEyeSetScale(Eye, Scale) _Generic(Scale, \
+  float: GBEyeSetScaleFloat, \
+  VecFloat3D*: GBEyeSetScaleVec, \
+  default: PBErrInvalidPolymorphism)( \
+    _Generic(Eye, \
+      GBEye*: Eye, \
+      GBEyeOrtho*: (GBEye*)Eye, \
+      GBEyeIsometric*: (GBEye*)Eye, \
+      default: Eye), \
+    _Generic(Scale, \
+      float: Scale, \
+      VecFloat3D*: Scale, \
+      default: Scale))
+
+#define GBEyeOrig(Eye) _Generic(Eye, \
+  GBEye*: _GBEyeOrig, \
+  GBEyeOrtho*: _GBEyeOrig, \
+  GBEyeIsometric*: _GBEyeOrig, \
+  default: PBErrInvalidPolymorphism)((GBEye*)(Eye))
+
+#define GBEyeGetOrig(Eye) _Generic(Eye, \
+  GBEye*: _GBEyeGetOrig, \
+  GBEyeOrtho*: _GBEyeGetOrig, \
+  GBEyeIsometric*: _GBEyeGetOrig, \
+  default: PBErrInvalidPolymorphism)((GBEye*)(Eye))
+
+#define GBEyeSetOrig(Eye, Orig) _Generic(Eye, \
+  GBEye*: _GBEyeSetOrig, \
+  GBEyeOrtho*: _GBEyeSetOrig, \
+  GBEyeIsometric*: _GBEyeSetOrig, \
+  default: PBErrInvalidPolymorphism)((GBEye*)(Eye), Orig)
+
+#define GBEyeGetRot(Eye) _Generic(Eye, \
+  GBEye*: _GBEyeGetRot, \
+  GBEyeOrtho*: _GBEyeGetRot, \
+  GBEyeIsometric*: _GBEyeGetRot, \
+  default: PBErrInvalidPolymorphism)((GBEye*)(Eye))
+
+#define GBEyeSetRot(Eye, Theta) _Generic(Eye, \
+  GBEye*: _GBEyeSetRot, \
+  GBEyeOrtho*: _GBEyeSetRot, \
+  GBEyeIsometric*: _GBEyeSetRot, \
+  default: PBErrInvalidPolymorphism)((GBEye*)(Eye), Theta)
+
+#define GBEyeProj(Eye) _Generic(Eye, \
+  GBEye*: _GBEyeProj, \
+  GBEyeOrtho*: _GBEyeProj, \
+  GBEyeIsometric*: _GBEyeProj, \
+  default: PBErrInvalidPolymorphism)((GBEye*)(Eye))
+
+#define GBEyeProcess(Eye, Pod) _Generic(Eye, \
+  GBEye*: _GBEyeProcess, \
+  GBEyeOrtho*: _GBEyeProcess, \
+  GBEyeIsometric*: _GBEyeProcess, \
+  default: PBErrInvalidPolymorphism)((GBEye*)(Eye), Pod)
+
+#define GBEyeFree(EyeRef) _Generic(EyeRef, \
+  GBEyeOrtho**: GBEyeOrthoFree, \
+  GBEyeIsometric**: GBEyeIsometricFree, \
+  default: PBErrInvalidPolymorphism)(EyeRef)
+
+#define GBToolDraw(Tool, Pod) _Generic(Tool, \
+  GBTool*: _GBToolDraw, \
+  GBToolPlotter*: GBToolPlotterDraw, \
+  default: PBErrInvalidPolymorphism) (Tool, Pod)
+  
+#if BUILDWITHGRAPHICLIB == 0
+
+
+#elif BUILDWITHGRAPHICLIB == 1
+
+
 #endif
 
 // ================ Inliner ====================

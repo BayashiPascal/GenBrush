@@ -19,6 +19,7 @@ UnitTestGBSurfaceGetModifiedArea OK
 UnitTestGBSurfaceUpdate OK
 UnitTestGBSurfaceAddLayerFromFile OK
 UnitTestGBSurfaceFlush OK
+UnitTestGBSurfaceIsSameAs OK
 UnitTestGBSurface OK
 UnitTestGBSurfaceImageCreateFree OK
 UnitTestGBSurfaceImageGetSet OK
@@ -79,5 +80,6 @@ UnitTestGenBrushSetPod OK
 UnitTestGenBrushFlush OK
 UnitTestGenBrushTouchLayers OK
 UnitTestGenBrushCreateFromFile OK
+UnitTestGenBrushIsSameAs OK
 UnitTestGenBrush OK
 UnitTestAll OK

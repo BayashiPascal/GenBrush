@@ -426,6 +426,34 @@ void GBLayerFlush(GBLayer* that) {
 
 // ---------------- GBSurface --------------------------
 
+// Return true if the GBSurface 'that' has same dimension and same
+// values for _finalPix as GBSurface 'surf'
+// Else, return false
+#if BUILDMODE != 0
+inline
+#endif 
+bool GBSurfaceIsSameAs(GBSurface* that, GBSurface* surf) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (surf == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'surf' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  if (VecIsEqual(GBSurfaceDim(that), GBSurfaceDim(surf)) &&
+    memcmp(GBSurfaceFinalPixels(that), GBSurfaceFinalPixels(surf),
+    sizeof(GBPixel) * VecGet(GBSurfaceDim(that), 0) *
+    VecGet(GBSurfaceDim(that), 1)) == 0)
+    return true;
+  else
+    return false;
+}
+
 // Get the type of the GBSurface 'that'
 #if BUILDMODE != 0
 inline
@@ -2413,6 +2441,28 @@ void GBFlush(GenBrush* that) {
   }
 #endif
   GBSurfaceFlush(GBSurf(that));
+}
+
+// Return true if the surface of the GenBrush 'that' is same as the
+// surface of the GenBrush 'gb'
+// Else, return false
+#if BUILDMODE != 0
+inline
+#endif 
+bool GBIsSameAs(GenBrush* that, GenBrush* gb) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (gb == NULL) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'gb' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  return GBSurfaceIsSameAs(GBSurf(that), GBSurf(gb));
 }
 
 // ================ GTK Functions ====================

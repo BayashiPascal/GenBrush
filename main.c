@@ -1018,6 +1018,33 @@ void UnitTestGBSurfaceFlush() {
   printf("UnitTestGBSurfaceFlush OK\n");
 }
 
+void UnitTestGBSurfaceIsSameAs() {
+  char* fileName = "./ImageRef.tga";
+  GBSurface* surfA = (GBSurface*)GBSurfaceImageCreateFromFile(fileName);
+  GBSurface* surfB = (GBSurface*)GBSurfaceImageCreateFromFile(fileName);
+  if (GBSurfaceIsSameAs(surfA, surfB) == false) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBSurfaceIsSameAs failed");
+    PBErrCatch(ShapoidErr);
+  }
+  VecSet(GBSurfaceDim(surfA), 0, 0);
+  if (GBSurfaceIsSameAs(surfA, surfB) == true) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBSurfaceIsSameAs failed");
+    PBErrCatch(ShapoidErr);
+  }
+  VecSet(GBSurfaceDim(surfA), 0, 10);
+  GBSurfaceFinalPixels(surfA)->_rgba[GBPixelAlpha] = 255;
+  if (GBSurfaceIsSameAs(surfA, surfB) == true) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBSurfaceIsSameAs failed");
+    PBErrCatch(ShapoidErr);
+  }
+  GBSurfaceFree(&surfA);
+  GBSurfaceFree(&surfB);
+  printf("UnitTestGBSurfaceIsSameAs OK\n");
+}
+
 void UnitTestGBSurface() {
   UnitTestGBSurfaceCreateFree();
   UnitTestGBSurfaceGetSet();
@@ -1031,6 +1058,7 @@ void UnitTestGBSurface() {
   UnitTestGBSurfaceUpdate();
   UnitTestGBSurfaceAddLayerFromFile();
   UnitTestGBSurfaceFlush();
+  UnitTestGBSurfaceIsSameAs();
   printf("UnitTestGBSurface OK\n");
 }
 
@@ -3456,12 +3484,39 @@ void UnitTestGenBrushCreateFromFile() {
       surf->_finalPix[iPix]._rgba[GBPixelAlpha] !=
       check[iPix * 4 + 3]) {
       ShapoidErr->_type = PBErrTypeUnitTestFailed;
-      sprintf(ShapoidErr->_msg, "GBSurfaceCreateFromFile failed");
+      sprintf(ShapoidErr->_msg, "GBCreateFromFile failed");
       PBErrCatch(ShapoidErr);
     }
   }
   GBFree(&gb);
   printf("UnitTestGenBrushCreateFromFile OK\n");
+}
+
+void UnitTestGenBrushIsSameAs() {
+  char* fileName = "./ImageRef.tga";
+  GenBrush* gbA = GBCreateFromFile(fileName);
+  GenBrush* gbB = GBCreateFromFile(fileName);
+  if (GBIsSameAs(gbA, gbB) == false) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBIsSameAs failed");
+    PBErrCatch(ShapoidErr);
+  }
+  VecSet(GBSurfaceDim(GBSurf(gbA)), 0, 0);
+  if (GBIsSameAs(gbA, gbB) == true) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBIsSameAs failed");
+    PBErrCatch(ShapoidErr);
+  }
+  VecSet(GBSurfaceDim(GBSurf(gbA)), 0, 10);
+  GBSurfaceFinalPixels(GBSurf(gbA))->_rgba[GBPixelAlpha] = 255;
+  if (GBIsSameAs(gbA, gbB) == true) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBIsSameAs failed");
+    PBErrCatch(ShapoidErr);
+  }
+  GBFree(&gbA);
+  GBFree(&gbB);
+  printf("UnitTestGenBrushIsSameAs OK\n");
 }
 
 void UnitTestGenBrush() {
@@ -3479,6 +3534,7 @@ void UnitTestGenBrush() {
   UnitTestGenBrushFlush();
   UnitTestGenBrushTouchLayers();
   UnitTestGenBrushCreateFromFile();
+  UnitTestGenBrushIsSameAs();
   
   printf("UnitTestGenBrush OK\n");
 }
