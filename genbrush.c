@@ -2219,6 +2219,27 @@ GenBrush* GBCreateImage(VecShort2D* dim) {
   return ret;
 }
 
+// Create a new GenBrush with one layer containing the content 
+// of the image located at 'fileName' and dimensions equal to the 
+// dimensions of the image
+// If the image couldn't be loaded return NULL
+GenBrush* GBCreateFromFile(char* fileName) {
+  // Declare the new GenBrush
+  GenBrush* ret = NULL;
+  // Load the image in a surface
+  GBSurfaceImage *img = GBSurfaceImageCreateFromFile(fileName);
+  if (img != NULL) {
+    // Declare the new GenBrush
+    ret = PBErrMalloc(GenBrushErr, sizeof(GenBrush));
+    // Set properties
+    ret->_surf = (GBSurface*)img;
+    ret->_pods = GSetCreateStatic();
+  }
+  // Return the new GenBrush
+  return ret;
+  
+}
+
 // Free memory used by the GenBrush 'that'
 void GBFree(GenBrush** that) {
   // If the pointer is null

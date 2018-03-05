@@ -1354,6 +1354,12 @@ GenBrush* GBCreateImage(VecShort2D* dim);
 // Free memory used by the GenBrush 'that'
 void GBFree(GenBrush** that);
 
+// Create a new GenBrush with one layer containing the content 
+// of the image located at 'fileName' and dimensions equal to the 
+// dimensions of the image
+// If the image couldn't be loaded return NULL
+GenBrush* GBCreateFromFile(char* fileName);
+
 // Get the GBSurface of the GenBrush 'that'
 #if BUILDMODE != 0
 inline

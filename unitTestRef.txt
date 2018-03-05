@@ -78,5 +78,6 @@ UnitTestGenBrushAddRemoveObj OK
 UnitTestGenBrushSetPod OK
 UnitTestGenBrushFlush OK
 UnitTestGenBrushTouchLayers OK
+UnitTestGenBrushCreateFromFile OK
 UnitTestGenBrush OK
 UnitTestAll OK

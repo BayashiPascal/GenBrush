@@ -3416,6 +3416,54 @@ void UnitTestGenBrushTouchLayers() {
   printf("UnitTestGenBrushTouchLayers OK\n");
 }
 
+void UnitTestGenBrushCreateFromFile() {
+  char* fileName = "./ImageRef.tga";
+  GenBrush* gb = GBCreateFromFile(fileName);
+  if (gb == NULL) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBCreateFromFile failed");
+    PBErrCatch(GenBrushErr);
+  }
+  GBSurface* surf = GBSurf(gb);
+  unsigned char check[400] = {
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 
+    0,255,0,255, 0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 
+    0,255,0,255, 0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 0,0,0,255, 
+    0,30,0,255, 0,60,0,255, 0,90,0,255, 0,120,0,255, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 26,30,0,255, 
+    0,0,0,255, 4,34,0,255, 7,67,0,255, 11,101,0,255, 120,184,120,255, 
+    0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 46,60,0,255, 
+    0,0,30,255, 7,34,26,255, 14,67,23,255, 21,101,19,255, 
+    120,184,136,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    148,90,90,255, 0,0,60,255, 11,34,53,255, 21,67,46,255, 
+    32,101,39,255, 120,184,152,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 184,120,120,255, 0,0,90,255, 14,34,79,255, 28,67,69,255, 
+    0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,120,255, 30,56,136,255, 60,106,152,255, 0,0,255,255, 
+    0,0,255,255, 0,0,255,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,255,255, 0,0,255,255, 0,0,255,255
+    };
+  for (int iPix = 0; iPix < GBSurfaceArea(surf); ++iPix) {
+    if (surf->_finalPix[iPix]._rgba[GBPixelRed] != 
+      check[iPix * 4] ||
+      surf->_finalPix[iPix]._rgba[GBPixelGreen] !=
+      check[iPix * 4 + 1] ||
+      surf->_finalPix[iPix]._rgba[GBPixelBlue] !=
+      check[iPix * 4 + 2] ||
+      surf->_finalPix[iPix]._rgba[GBPixelAlpha] !=
+      check[iPix * 4 + 3]) {
+      ShapoidErr->_type = PBErrTypeUnitTestFailed;
+      sprintf(ShapoidErr->_msg, "GBSurfaceCreateFromFile failed");
+      PBErrCatch(ShapoidErr);
+    }
+  }
+  GBFree(&gb);
+  printf("UnitTestGenBrushCreateFromFile OK\n");
+}
+
 void UnitTestGenBrush() {
   UnitTestGenBrushCreateFree();
   UnitTestGenBrushGetSet();
@@ -3430,6 +3478,7 @@ void UnitTestGenBrush() {
   UnitTestGenBrushSetPod();
   UnitTestGenBrushFlush();
   UnitTestGenBrushTouchLayers();
+  UnitTestGenBrushCreateFromFile();
   
   printf("UnitTestGenBrush OK\n");
 }
