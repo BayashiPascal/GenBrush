@@ -445,6 +445,23 @@ bool GBSurfaceIsSameAs(GBSurface* that, GBSurface* surf) {
     PBErrCatch(GenBrushErr);
   }
 #endif
+
+  // Display different pixels, for debugging purpose
+  /*VecShort2D p = VecShortCreateStatic2D();
+  do {
+    GBPixel* pA = GBSurfaceFinalPixel(that, &p);
+    GBPixel* pB = GBSurfaceFinalPixel(surf, &p);
+    if (pA->_rgba[0] != pB->_rgba[0] || 
+      pA->_rgba[1] != pB->_rgba[1] || 
+      pA->_rgba[2] != pB->_rgba[2] || 
+      pA->_rgba[3] != pB->_rgba[3]) {
+      VecPrint(&p, stdout);
+      printf(" %d,%d,%d,%d %d,%d,%d,%d\n", 
+        pA->_rgba[0], pA->_rgba[1], pA->_rgba[2], pA->_rgba[3], 
+        pB->_rgba[0], pB->_rgba[1], pB->_rgba[2], pB->_rgba[3]); 
+    }
+  } while (VecStep(&p, GBSurfaceDim(that)));*/
+
   if (VecIsEqual(GBSurfaceDim(that), GBSurfaceDim(surf)) &&
     memcmp(GBSurfaceFinalPixels(that), GBSurfaceFinalPixels(surf),
     sizeof(GBPixel) * VecGet(GBSurfaceDim(that), 0) *
