@@ -29,9 +29,14 @@ The library can easily be extended to match the user needs. Foreseen extensions 
 \item Layer: other blending modes, ...
 \end{itemize}
 
-A graphic can then be created with the GenBrush library by describing the scene as a set of Pods, which are combinations of an Object, an Eye, a Hand, a Tool, an Ink and a Layer. The rendering of each Pod processes sequentially the original Object through the other entities to generates pixels into the Layer. Once all the Pods have been processed, the Layers are blended to generate RGBA final pixels in the Surface. The scene description can be modified after creation. Pods use references to entities, meaning that if a parameter of, for example, an Ink is modified all the Pods attached to this Tool will be recalaculated at the next rendering.\\
+A graphic can then be created with the GenBrush library by describing the scene as a set of Pods, which are combinations of an Object, an Eye, a Hand, a Tool, an Ink and a Layer. The rendering of each Pod processes sequentially the original Object through the other entities to generates pixels into the Layer. Once all the Pods have been processed, the Layers are blended to generate RGBA final pixels in the Surface. The scene description can be modified after creation. Pods use references to entities, meaning that if a parameter of, for example, an Ink is modified all the Pods attached to this Ink will be recalculated at the next rendering.\\
 
 Several rendering of the same scene are optimized to recalculate only the final pixels affected by the entities which has been modified since the previous rendering. It is the reponsibility of the user to notify GenBrush when an entity has been modified.\\
+
+Finally, the user can apply post processing to the surface at the end of each rendering. Currently implemented post processing are:\\
+\begin{itemize}
+\item Normalization by hue
+\end{itemize}
 
 The GenBrush library uses the \begin{ttfamily}PBErr\end{ttfamily}, \begin{ttfamily}PBMath\end{ttfamily}, \begin{ttfamily}GSet\end{ttfamily}, \begin{ttfamily}Shapoid\end{ttfamily}, \begin{ttfamily}BCurve\end{ttfamily} libraries, and GTK if compiled as an interface for this library.\\
 
@@ -459,3 +464,16 @@ testTopLeft.tga:\\
 \end{figure}
 \end{center}
 
+GBSurfaceNormalizeHueTest.tga:\\
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=6cm]{./GBSurfaceNormalizeHueTest.png}\\
+\end{figure}
+\end{center}
+
+GBSurfaceNormalizeHueRef.tga:\\
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=6cm]{./GBSurfaceNormalizeHueRef.png}\\
+\end{figure}
+\end{center}
