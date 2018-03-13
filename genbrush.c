@@ -45,8 +45,7 @@ void GBTGAMergeBytes(GBPixel* pixel, unsigned char* p, int bytes);
 
 // Convert the indice of the TGA file data to the indice in layer's
 // pixel according to origin position
-int GBConvertToIndexLayerForTGA(int n, int xOrig, int yOrig, 
-  int width, int height);
+int GBConvertToIndexLayerForTGA(int n, GBTGAHeader* header);
 
 // Read the header of a TGA file from the stream 'stream' and store 
 // it into 'header'
@@ -99,6 +98,9 @@ void GBEyeOrthoGetProjVal(GBEyeOrtho* that, float* val);
   
 // Get the value for the projection matrix of a GBEyeIsometric
 void GBEyeIsometricGetProjVal(GBEyeIsometric* that, float* val);
+
+// Normalize in hue the final pixels of the GBSurface 'that'
+void GBSurfaceNormalizeHue(GBSurface* that);
   
 // ================ Functions implementation ====================
 
@@ -130,16 +132,15 @@ void GBTGAMergeBytes(GBPixel* pixel, unsigned char* p, int bytes) {
 
 // Convert the indice of the TGA file data to the indice in layer's
 // pixel according to origin position
-int GBConvertToIndexLayerForTGA(int n, int xOrig, int yOrig, 
-  int width, int height) {
-  if (xOrig == 0 && yOrig == height)
+int GBConvertToIndexLayerForTGA(int n, GBTGAHeader* header) {
+  if ((header->_imageDescriptor & 32) == 0)
+    // lower left hand corner
     return n;
-  else if (xOrig == 0 && yOrig == 0)
-    return 
-      (height - 1 - ((int)floor((float)n / (float)width))) * width + 
-      n % width;
   else
-    return n;
+    // upper left hand corner
+    return (header->_height - 1 - 
+      ((int)floor((float)n / (float)(header->_width)))) * 
+      header->_width + n % header->_width;
 }
 
 // Read the header of a TGA file from the stream 'stream' and store 
@@ -196,6 +197,14 @@ bool GBReadTGAHeader(FILE* stream, GBTGAHeader* header) {
   }
   header->_bitsPerPixel = fgetc(stream);
   header->_imageDescriptor = fgetc(stream);
+  // Origin of the screen
+  // TODO: Override the initial _yOrigin
+  /*if ((header->_imageDescriptor & 32) == 0)
+    // lower left hand corner
+    header->_yOrigin = header->_height;
+  else
+    // upper left hand corner
+    header->_yOrigin = 0;*/
   // Return the success code
   return true;
 }
@@ -224,8 +233,7 @@ bool GBReadTGABody(FILE *stream, GSet* pix, GBTGAHeader* header,
   // For each pixel
   int n = 0;
   while (n < header->_height * header->_width) {
-    int nLayer = GBConvertToIndexLayerForTGA(
-      n, header->_xOrigin, header->_yOrigin, header->_width, header->_height);
+    int nLayer = GBConvertToIndexLayerForTGA(n, header);
     // Read the pixel according to the data type, merge and 
     // move to the next pixel
     if (header->_dataTypeCode == 2) {
@@ -243,8 +251,7 @@ bool GBReadTGABody(FILE *stream, GSet* pix, GBTGAHeader* header,
       GSetAddSort(pix + nLayer, stacked, stacked->_depth);
       // Increment the index
       ++n;
-      nLayer = GBConvertToIndexLayerForTGA(
-        n, header->_xOrigin, header->_yOrigin, header->_width, header->_height);
+      nLayer = GBConvertToIndexLayerForTGA(n, header);
     } else if (header->_dataTypeCode == 10) {
       if (fread(p, 1, bytes2read + 1, stream) != bytes2read + 1)
         return false;
@@ -261,8 +268,7 @@ bool GBReadTGABody(FILE *stream, GSet* pix, GBTGAHeader* header,
       GSetAddSort(pix + nLayer, stacked, stacked->_depth);
       // Increment the index
       ++n;
-      nLayer = GBConvertToIndexLayerForTGA(
-        n, header->_xOrigin, header->_yOrigin, header->_width, header->_height);
+      nLayer = GBConvertToIndexLayerForTGA(n, header);
       if (p[0] & 0x80) {
         for (i = 0; i < j; ++i) {
           GBPixel mergedPix;
@@ -277,9 +283,7 @@ bool GBReadTGABody(FILE *stream, GSet* pix, GBTGAHeader* header,
           GSetAddSort(pix + nLayer, stacked, stacked->_depth);
           // Increment the index
           ++n;
-          nLayer = GBConvertToIndexLayerForTGA(
-            n, header->_xOrigin, header->_yOrigin, header->_width, 
-            header->_height);
+          nLayer = GBConvertToIndexLayerForTGA(n, header);
         }
       } else {
         for (i = 0; i < j; ++i) {
@@ -297,8 +301,7 @@ bool GBReadTGABody(FILE *stream, GSet* pix, GBTGAHeader* header,
           GSetAddSort(pix + nLayer, stacked, stacked->_depth);
           // Increment the index
           ++n;
-          nLayer = GBConvertToIndexLayerForTGA(
-            n, header->_xOrigin, header->_yOrigin, header->_width, header->_height);
+          nLayer = GBConvertToIndexLayerForTGA(n, header);
         }
       }
     }
@@ -595,6 +598,40 @@ Facoid* GBLayerGetBoundaryInSurface(GBLayer* that, GBSurface* surf,
   return bound;
 }
 
+// ---------------- GBPostProcessing --------------------------
+
+// Create a static GBPostProcessing with type 'type'
+GBPostProcessing* GBPostProcessingCreate(GBPPType type) {
+  // Declare the new GBPostProcessing
+  GBPostProcessing* ret = PBErrMalloc(GenBrushErr, 
+    sizeof(GBPostProcessing));
+  // Set the properties
+  ret->_type = type;
+  // Return the new post processing
+  return ret;
+}
+
+// Create a new static GBPostProcessing with type 'type'
+GBPostProcessing GBPostProcessingCreateStatic(GBPPType type) {
+  // Declare the new GBPostProcessing
+  GBPostProcessing ret;
+  // Set the properties
+  ret._type = type;
+  // Return the new post processing
+  return ret;
+}
+
+// Free the memory used by the GBPostProcessing 'that'
+void GBPostProcessingFree(GBPostProcessing** that) {
+  // Check argument
+  if (that == NULL || *that == NULL)
+    // Nothing to do
+    return;
+  // Free memory
+  free(*that);
+  *that = NULL;
+}
+
 // ---------------- GBSurface --------------------------
 
 // Create a new static GBSurface with dimension 'dim' and type 'type'
@@ -865,6 +902,80 @@ void GBSurfaceFlush(GBSurface* that) {
   GBSurfaceSetLayersModified(that, true);
 }
 
+// Apply the post processing 'post' to the final pixels in the 
+// GBSurface 'that'
+void GBSurfacePostProcess(GBSurface* that, GBPostProcessing* post) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (post == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'post' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  // Call the appropriate post processing
+  switch(GBPostProcessingGetType(post)) {
+    case GBPPTypeNormalizeHue:
+      GBSurfaceNormalizeHue(that);
+      break;
+    default:
+      return;
+  }
+}
+
+// Normalize in hue the final pixels of the GBSurface 'that'
+void GBSurfaceNormalizeHue(GBSurface* that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  // Declare a variable to memorize the maximum possible intensity
+  float maxIntensity = 255.0;
+  // Declare two variables to memorize the minimum and maximum hue 
+  // intensity
+  float min = maxIntensity;
+  float max = 0.0;
+  // Search the minimum and maximum intensity
+  VecShort2D p = VecShortCreateStatic2D();
+  do {
+    GBPixel* pix = GBSurfaceFinalPixel(that, &p);
+    float intensity = (float)MAX(pix->_rgba[GBPixelRed], 
+      MAX(pix->_rgba[GBPixelGreen], pix->_rgba[GBPixelBlue]));
+    if (intensity > max)
+      max = intensity;
+    intensity = (float)MIN(pix->_rgba[GBPixelRed], 
+      MIN(pix->_rgba[GBPixelGreen], pix->_rgba[GBPixelBlue]));
+    if (intensity < min)
+      min = intensity;
+  } while (VecStep(&p, GBSurfaceDim(that)));
+  // If the image is not already normalized and is normalizable
+  if (!ISEQUALF(min, max) && (min >= 1.0 || max <= maxIntensity)) {
+    // Declare a variable for optimization
+    float c = maxIntensity / (max - min);
+    // Normalize each final pixel color
+    VecSetNull(&p);
+    do {
+      GBPixel* pix = GBSurfaceFinalPixel(that, &p);
+      float intensity = ((float)(pix->_rgba[GBPixelRed]) - min) * c;
+      pix->_rgba[GBPixelRed] = 
+        (unsigned char)round(MIN(255.0, MAX(0.0, intensity)));
+      intensity = ((float)(pix->_rgba[GBPixelGreen]) - min) * c;
+      pix->_rgba[GBPixelGreen] = 
+        (unsigned char)round(MIN(255.0, MAX(0.0, intensity)));
+      intensity = ((float)(pix->_rgba[GBPixelBlue]) - min) * c;
+      pix->_rgba[GBPixelBlue] = 
+        (unsigned char)round(MIN(255.0, MAX(0.0, intensity)));
+    } while (VecStep(&p, GBSurfaceDim(that)));
+  }
+}
+
 // ---------------- GBSurfaceImage --------------------------
 
 // Create a new GBSurfaceImage with dimension 'dim'
@@ -984,9 +1095,10 @@ bool GBSurfaceImageSaveAsTGA(GBSurfaceImage* that) {
   h._width = VecGet(GBSurfaceDim((GBSurface*)that), 0);
   h._height = VecGet(GBSurfaceDim((GBSurface*)that), 1);
   h._xOrigin = 0;
-  h._yOrigin = h._height;
+  h._yOrigin = 0;
   h._bitsPerPixel = 32;
   h._imageDescriptor = 0;
+
   // Write the header
   ret = putc(h._idLength, fptr);
   if (ret == EOF) {
@@ -2215,6 +2327,7 @@ GenBrush* GBCreateImage(VecShort2D* dim) {
   // Set properties
   ret->_surf = (GBSurface*)GBSurfaceImageCreate(dim);
   ret->_pods = GSetCreateStatic();
+  ret->_postProcs = GSetCreateStatic();
   // Return the new GenBrush
   return ret;
 }
@@ -2234,6 +2347,7 @@ GenBrush* GBCreateFromFile(char* fileName) {
     // Set properties
     ret->_surf = (GBSurface*)img;
     ret->_pods = GSetCreateStatic();
+    ret->_postProcs = GSetCreateStatic();
   }
   // Return the new GenBrush
   return ret;
@@ -2257,10 +2371,8 @@ void GBFree(GenBrush** that) {
     default:
       break;
   }
-  while (GBGetNbPod(*that) > 0) {
-    GBObjPod* pod = GSetPop(&((*that)->_pods));
-    GBObjPodFree(&pod);
-  }
+  GBRemoveAllPod(*that);
+  GBRemoveAllPostProcess(*that);
   free(*that);
   *that = NULL;
 }
@@ -2274,7 +2386,7 @@ void GBUpdate(GenBrush* that) {
     PBErrCatch(GenBrushErr);
   }
 #endif
-  // Refresh the layers that I've been modified
+  // Refresh the layers that have been modified
   // If there is layers
   if (GBGetNbLayer(that) > 0) {
     // Declare an iterator on the layers
@@ -2292,6 +2404,15 @@ void GBUpdate(GenBrush* that) {
   }
   // Request the update of the surface
   GBSurfaceUpdate(GBSurf(that));
+  // Apply the post processing
+  if (GSetNbElem(GBPostProcs(that)) > 0) {
+    GSetIterForward iter = 
+      GSetIterForwardCreateStatic(GBPostProcs(that));
+    do {
+      GBPostProcessing* post = GSetIterGet(&iter);
+      GBSurfacePostProcess(GBSurf(that), post);
+    } while (GSetIterStep(&iter));
+  }
 }
 
 // Update the content of the layer 'layer' of the GenBrush 'that'

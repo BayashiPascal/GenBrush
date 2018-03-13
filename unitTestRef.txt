@@ -7,6 +7,9 @@ UnitTestGBLayerGetSet OK
 UnitTestGBLayerCreateFromFile OK
 UnitTestGBLayerGetBoundaryInSurface OK
 UnitTestGBLayer OK
+UnitTestGBPostProcessingCreateFree OK
+UnitTestGBPostProcessingGetSet OK
+UnitTestGBPostProcessing OK
 UnitTestGBSurfaceCreateFree OK
 UnitTestGBSurfaceGetSet OK
 UnitTestGBSurfaceArea OK
@@ -20,6 +23,7 @@ UnitTestGBSurfaceUpdate OK
 UnitTestGBSurfaceAddLayerFromFile OK
 UnitTestGBSurfaceFlush OK
 UnitTestGBSurfaceIsSameAs OK
+UnitTestGBSurfaceNormalizeHue OK
 UnitTestGBSurface OK
 UnitTestGBSurfaceImageCreateFree OK
 UnitTestGBSurfaceImageGetSet OK
@@ -81,5 +85,6 @@ UnitTestGenBrushFlush OK
 UnitTestGenBrushTouchLayers OK
 UnitTestGenBrushCreateFromFile OK
 UnitTestGenBrushIsSameAs OK
+UnitTestGenBrushAddRemovePostProcessing
 UnitTestGenBrush OK
 UnitTestAll OK

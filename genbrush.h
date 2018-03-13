@@ -30,7 +30,7 @@
 //   |
 //   -->x
 // In GBSurface, the final pixels are stored in rows from left to 
-// right, the first row is the bottom row in the surface.
+// right, the first row is the top row in the surface.
 
 // ================= Include =================
 
@@ -122,6 +122,14 @@ typedef struct GBLayer {
   // Position in stack
   GBLayerStackPosition _stackPos;
 } GBLayer;
+
+typedef enum GBPPType {
+  GBPPTypeNormalizeHue
+} GBPPType;
+
+typedef struct GBPostProcessing {
+  enum GBPPType _type;
+} GBPostProcessing;
 
 typedef enum GBSurfaceType {
   GBSurfaceTypeDefault,
@@ -287,6 +295,8 @@ typedef struct GenBrush {
   GBSurface* _surf;
   // Set of GBObjPod to be drawn
   GSet _pods;
+  // Set of GBPostProcessing to be apply at the end of GBUpdate
+  GSet _postProcs;
 } GenBrush;
 
 // ================ Functions declaration ====================
@@ -478,6 +488,23 @@ GBLayer* GBLayerCreateFromFile(char* fileName);
 // Return NULL if the layer is completely out of the surface
 Facoid* GBLayerGetBoundaryInSurface(GBLayer* that, GBSurface* surf,
   bool prevPos);
+
+// ---------------- GBPostProcessing --------------------------
+
+// Create a static GBPostProcessing with type 'type'
+GBPostProcessing* GBPostProcessingCreate(GBPPType type);
+
+// Create a new static GBPostProcessing with type 'type'
+GBPostProcessing GBPostProcessingCreateStatic(GBPPType type);
+
+// Free the memory used by the GBPostProcessing 'that'
+void GBPostProcessingFree(GBPostProcessing** that);
+
+// Return the type of the GBPostProcessing 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+GBPPType GBPostProcessingGetType(GBPostProcessing* that);
 
 // ---------------- GBSurface --------------------------
 
@@ -683,6 +710,10 @@ void GBSurfaceUpdate(GBSurface* that);
 // Reset all the final pix of the GBSurface 'that' to its 
 // background color, and reset all the modified flag of layers to true
 void GBSurfaceFlush(GBSurface* that);
+
+// Apply the post processing 'post' to the final pixels in the 
+// GBSurface 'that'
+void GBSurfacePostProcess(GBSurface* that, GBPostProcessing* post);
 
 // ---------------- GBSurfaceImage --------------------------
 
@@ -1474,6 +1505,49 @@ void _GBNotifyChangeFromTool(GenBrush* that, GBTool* tool);
 inline
 #endif 
 bool GBIsSameAs(GenBrush* that, GenBrush* gb);
+
+// Add a GBPostProcessing of type 'type' to the GenBrush 'that'
+// Return the GBPostProcessing
+#if BUILDMODE != 0
+inline
+#endif 
+GBPostProcessing* GBAddPostProcess(GenBrush* that, GBPPType type);
+
+// Remove the GBPostProcessing 'post' from the GenBrush 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+void GBRemovePostProcess(GenBrush* that, GBPostProcessing* post);
+
+// Remove all the GBPostProcessing from the GenBrush 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+void GBRemoveAllPostProcess(GenBrush* that);
+
+// Get the 'iPost'-th post process of the GenBrush 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+GBPostProcessing* GBGetPostProcess(GenBrush* that, int iPost);
+
+// Get the GSet of GBPostProcessing of the GenBrush 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+GSet* GBPostProcs(GenBrush* that);
+
+// Get the number of GBPostProcessing of the GenBrush 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+int GBGetNbPostProcs(GenBrush* that);
+
+// Remove all the GBObjPods from the GenBrush 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+void GBRemoveAllPod(GenBrush* that);
 
 #if BUILDWITHGRAPHICLIB == 1
 #include "genbrush-GTK.h"

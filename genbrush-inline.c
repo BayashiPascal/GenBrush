@@ -424,6 +424,23 @@ void GBLayerFlush(GBLayer* that) {
   }
 }
 
+// ---------------- GBPostProcessing --------------------------
+
+// Return the type of the GBPostProcessing 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+GBPPType GBPostProcessingGetType(GBPostProcessing* that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  return that->_type;
+}
+
 // ---------------- GBSurface --------------------------
 
 // Return true if the GBSurface 'that' has same dimension and same
@@ -2481,6 +2498,133 @@ bool GBIsSameAs(GenBrush* that, GenBrush* gb) {
 #endif
   return GBSurfaceIsSameAs(GBSurf(that), GBSurf(gb));
 }
+
+// Add a GBPostProcessing of type 'type' to the GenBrush 'that'
+// Return the GBPostProcessing
+#if BUILDMODE != 0
+inline
+#endif 
+GBPostProcessing* GBAddPostProcess(GenBrush* that, GBPPType type) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  GBPostProcessing* post = GBPostProcessingCreate(type);
+  GSetAppend(&(that->_postProcs), post);
+  return post;
+}
+
+// Remove the GBPostProcessing 'post' from the GenBrush 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+void GBRemovePostProcess(GenBrush* that, GBPostProcessing* post) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  if (GBGetNbPostProcs(that) > 0) {
+    GSetIterForward iter = 
+      GSetIterForwardCreateStatic(GBPostProcs(that));
+    bool flag = true;
+    do {
+      GBPostProcessing* p = GSetIterGet(&iter);
+      if (post == p) {
+        GBPostProcessingFree(&p);
+        GSetIterRemoveElem(&iter);
+      }
+    } while (flag == true && GSetIterStep(&iter));
+  }
+  GSetRemoveFirst(&(that->_postProcs), post);
+}
+
+// Remove all the GBPostProcessing from the GenBrush 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+void GBRemoveAllPostProcess(GenBrush* that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  while (GBGetNbPostProcs(that) > 0) {
+    GBPostProcessing* post = GSetPop(&(that->_postProcs));
+    GBPostProcessingFree(&post);
+  }
+}
+
+// Get the 'iPost'-th post process of the GenBrush 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+GBPostProcessing* GBGetPostProcess(GenBrush* that, int iPost) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  return GSetGet(&(that->_postProcs), iPost);
+}
+
+// Get the GSet of GBPostProcessing of the GenBrush 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+GSet* GBPostProcs(GenBrush* that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  return &(that->_postProcs);
+}
+
+// Get the number of GBPostProcessing of the GenBrush 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+int GBGetNbPostProcs(GenBrush* that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  return GSetNbElem(&(that->_postProcs));
+}
+
+// Remove all the GBObjPods from the GenBrush 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+void GBRemoveAllPod(GenBrush* that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  while (GBGetNbPod(that) > 0) {
+    GBObjPod* pod = GSetPop(&(that->_pods));
+    GBObjPodFree(&pod);
+  }
+}
+
 
 // ================ GTK Functions ====================
 
