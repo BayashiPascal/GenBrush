@@ -833,7 +833,7 @@ inline
 void _GBEyeProcess(GBEye* that, GBObjPod* pod); 
 
 // Return the projection through the GBEye 'that' of the Point 'point' 
-VecFloat* GBEyeGetProjectedPoint(GBEye* that, VecFloat* point);
+VecFloat* GBEyeGetProjectedPoint(GBEye* that, const VecFloat* const point);
 
 // Return the projection through the GBEye 'that' of the SCurve 'curve' 
 SCurve* GBEyeGetProjectedCurve(GBEye* that, SCurve* curve);

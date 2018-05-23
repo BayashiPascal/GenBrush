@@ -1315,7 +1315,7 @@ void GBEyeUpdateProj(GBEye* that) {
 }
 
 // Return the projection through the GBEye 'that' of the Point 'point' 
-VecFloat* GBEyeGetProjectedPoint(GBEye* that, VecFloat* point) {
+VecFloat* GBEyeGetProjectedPoint(GBEye* that, const VecFloat* const point) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1401,7 +1401,7 @@ Shapoid* GBEyeGetProjectedShapoid(GBEye* that, Shapoid* shap) {
   // Project each axis
   for (int iAxis = ShapoidGetDim(ret); iAxis--;) {
     proj = GBEyeGetProjectedPoint(that, ShapoidAxis(ret, iAxis));
-    VecCopy(ShapoidAxis(ret, iAxis), proj);
+    ShapoidSetAxis(ret, iAxis, proj);
     VecFree(&proj);
   }
   // Return the new shapoid
