@@ -828,9 +828,9 @@ void GBSurfaceUpdate(GBSurface* that) {
       // Facoid values are float, we need to convert to short for
       // pixel coordinates
       for (int i = 2; i--;) {
-        VecSet(&from, i, (short)round(VecGet(ShapoidPos(area), i)));
-        VecSet(&to, i, (short)round(VecGet(ShapoidPos(area), i) + 
-          VecGet(ShapoidAxis(area, i), i)));
+        VecSet(&from, i, (short)round(ShapoidPosGet(area, i)));
+        VecSet(&to, i, (short)round(ShapoidPosGet(area, i) + 
+          ShapoidAxisGet(area, i, i)));
       }
       // For each pixel in the current area
       VecCopy(&pCoord, &from);
@@ -1934,16 +1934,16 @@ void GBToolPlotterDrawShapoid(GBToolPlotter* that, Shapoid* shap,
   for (int iAxis = ShapoidGetDim(bound); iAxis--;) {
     if (iAxis < 2) {
       VecSet(from, iAxis, 
-        (short)round(MAX(VecGet(ShapoidPos(bound), iAxis), 0.0)));
-      short v = (short)round(VecGet(ShapoidPos(bound), iAxis) + 
-        VecGet(ShapoidAxis(bound, iAxis), iAxis)) + 1;
+        (short)round(MAX(ShapoidPosGet(bound, iAxis), 0.0)));
+      short v = (short)round(ShapoidPosGet(bound, iAxis) + 
+        ShapoidAxisGet(bound, iAxis, iAxis)) + 1;
       VecSet(to, iAxis, 
         MIN(v, VecGet(GBLayerDim(GBObjPodGetLayer(pod)),iAxis)));
     } else {
       VecSet(from, iAxis, 
-        (short)round(VecGet(ShapoidPos(bound), iAxis)));
-      short v = (short)round(VecGet(ShapoidPos(bound), iAxis) + 
-        VecGet(ShapoidAxis(bound, iAxis), iAxis)) + 1;
+        (short)round(ShapoidPosGet(bound, iAxis)));
+      short v = (short)round(ShapoidPosGet(bound, iAxis) + 
+        ShapoidAxisGet(bound, iAxis, iAxis)) + 1;
       VecSet(to, iAxis, v);
     }
   }
