@@ -329,10 +329,10 @@ void UnitTestGBLayerCreateFromFile() {
     PBErrCatch(GenBrushErr);
   }
   unsigned char check[48] = {
-    255,0,0,255, 226,0,28,230, 184,0,70,209,
-    211,0,43,221, 168,0,86,204, 121,0,133,193,
+    91,0,163,192, 52,0,202,194, 23,0,231,205, 
     153,0,102,200, 106,0,148,192, 64,0,190,193, 
-    91,0,163,192, 52,0,202,194, 23,0,231,205
+    211,0,43,221, 168,0,86,204, 121,0,133,193, 
+    255,0,0,255, 226,0,28,230, 184,0,70,209
   };
   for (int iPix = 0; iPix < 12; iPix++) {
     GBPixel pix = 
@@ -342,7 +342,7 @@ void UnitTestGBLayerCreateFromFile() {
       pix._rgba[GBPixelBlue] != check[4 * iPix + 2] ||
       pix._rgba[GBPixelAlpha] != check[4 * iPix + 3]) {
       GenBrushErr->_type = PBErrTypeUnitTestFailed;
-      sprintf(GenBrushErr->_msg, "GBLayerCreateFromFile failed");
+      sprintf(GenBrushErr->_msg, "GBLayerCreateFromFile1 failed");
       PBErrCatch(GenBrushErr);
     }
   }
@@ -366,7 +366,7 @@ void UnitTestGBLayerCreateFromFile() {
       pix._rgba[GBPixelBlue] != check[4 * iPix + 2] ||
       pix._rgba[GBPixelAlpha] != check[4 * iPix + 3]) {
       GenBrushErr->_type = PBErrTypeUnitTestFailed;
-      sprintf(GenBrushErr->_msg, "GBLayerCreateFromFile failed");
+      sprintf(GenBrushErr->_msg, "GBLayerCreateFromFile2 failed");
       PBErrCatch(GenBrushErr);
     }
   }
@@ -499,6 +499,48 @@ void UnitTestGBLayer() {
   UnitTestGBLayerGetBoundaryInSurface();
   
   printf("UnitTestGBLayer OK\n");
+}
+
+void UnitTestGBPostProcessingCreateFree() {
+  GBPostProcessing pp = 
+    GBPostProcessingCreateStatic(GBPPTypeNormalizeHue);
+  if (pp._type != GBPPTypeNormalizeHue) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBPostProcessingCreateStatic failed");
+    PBErrCatch(GenBrushErr);
+  }
+  GBPostProcessing* pp2 = 
+    GBPostProcessingCreate(GBPPTypeNormalizeHue);
+  if (pp2->_type != GBPPTypeNormalizeHue) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBPostProcessingCreate failed");
+    PBErrCatch(GenBrushErr);
+  }
+  GBPostProcessingFree(&pp2);
+  if (pp2 != NULL) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBPostProcessingFree failed");
+    PBErrCatch(GenBrushErr);
+  }
+  printf("UnitTestGBPostProcessingCreateFree OK\n");
+}
+
+void UnitTestGBPostProcessingGetSet() {
+  GBPostProcessing pp = 
+    GBPostProcessingCreateStatic(GBPPTypeNormalizeHue);
+  if (GBPostProcessingGetType(&pp) != GBPPTypeNormalizeHue) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBPostProcessingGetType failed");
+    PBErrCatch(GenBrushErr);
+  }
+  printf("UnitTestGBPostProcessingGetSet OK\n");
+}
+
+void UnitTestGBPostProcessing() {
+  UnitTestGBPostProcessingCreateFree();
+  UnitTestGBPostProcessingGetSet();
+  
+  printf("UnitTestGBPostProcessing OK\n");
 }
 
 void UnitTestGBSurfaceCreateFree() {
@@ -958,23 +1000,23 @@ void UnitTestGBSurfaceAddLayerFromFile() {
   unsigned char check[400] = {
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 
-    0,255,0,255, 0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 
-    0,255,0,255, 0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 0,0,0,255, 
-    0,30,0,255, 0,60,0,255, 0,90,0,255, 0,120,0,255, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 26,30,0,255, 
-    0,0,0,255, 4,34,0,255, 7,67,0,255, 11,101,0,255, 120,184,120,255, 
-    0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 46,60,0,255, 
-    0,0,30,255, 7,34,26,255, 14,67,23,255, 21,101,19,255, 
-    120,184,136,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
-    148,90,90,255, 0,0,60,255, 11,34,53,255, 21,67,46,255, 
-    32,101,39,255, 120,184,152,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 184,120,120,255, 0,0,90,255, 14,34,79,255, 28,67,69,255, 
-    0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 0,0,120,255, 30,56,136,255, 60,106,152,255, 0,0,255,255, 
-    0,0,255,255, 0,0,255,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,255,255, 0,0,255,255, 0,0,255,255
+    0,255,0,255, 0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 0,255,0,255, 
+    0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,255,0,255, 0,255,0,255, 0,0,0,255, 0,30,0,255, 
+    0,60,0,255, 0,90,0,255, 0,120,0,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,255,0,255, 0,255,0,255, 26,30,0,255, 0,0,0,255, 4,34,0,255, 
+    7,67,0,255, 11,101,0,255, 120,184,120,255, 0,0,0,0, 0,0,0,0, 
+    0,255,0,255, 0,255,0,255, 46,60,0,255, 0,0,30,255, 7,34,26,255, 
+    14,67,23,255, 21,101,19,255, 120,184,136,255, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 148,90,90,255, 0,0,60,255, 11,34,53,255, 
+    21,67,46,255, 32,101,39,255, 120,184,152,255, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 184,120,120,255, 0,0,90,255, 14,34,79,255, 
+    28,67,69,255, 0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,120,255, 30,56,136,255, 
+    60,106,152,255, 0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,255,255, 0,0,255,255, 0,0,255,255
     };
   for (int iPix = 0; iPix < GBSurfaceArea(surf); ++iPix) {
     if (surf->_finalPix[iPix]._rgba[GBPixelRed] != 
@@ -1045,6 +1087,62 @@ void UnitTestGBSurfaceIsSameAs() {
   printf("UnitTestGBSurfaceIsSameAs OK\n");
 }
 
+void UnitTestGBSurfaceNormalizeHue() {
+  VecShort2D dim = VecShortCreateStatic2D();
+  VecSet(&dim, 0, 3); VecSet(&dim, 1, 3); 
+  GBSurface* surf = GBSurfaceCreate(GBSurfaceTypeImage, &dim);
+  unsigned char in[27] = {
+    20,20,20, 10,20,30, 60,50,40,
+    30,30,30, 20,30,40, 50,40,30,
+    40,40,40, 30,40,50, 40,30,20
+    };
+  VecShort2D p = VecShortCreateStatic2D();
+  int iPix = 0;
+  do {
+    GBPixel* pix = GBSurfaceFinalPixel(surf, &p);
+    pix->_rgba[GBPixelRed] = in[iPix * 3];
+    pix->_rgba[GBPixelGreen] = in[iPix * 3 + 1];
+    pix->_rgba[GBPixelBlue] = in[iPix * 3 + 2];
+    ++iPix;
+  } while (VecStep(&p, GBSurfaceDim(surf)));
+  GBPostProcessing post = 
+    GBPostProcessingCreateStatic(GBPPTypeNormalizeHue);
+  GBSurfacePostProcess(surf, &post);
+  VecSetNull(&p);
+  iPix = 0;
+  unsigned char out[27] = {
+    51,51,51, 0,51,102, 255,204,153, 
+    102,102,102, 51,102,153, 204,153,102, 
+    153,153,153, 102,153,204, 153,102,51
+    };
+  do {
+    GBPixel* pix = GBSurfaceFinalPixel(surf, &p);
+    if (pix->_rgba[GBPixelRed] != out[iPix * 3] ||
+      pix->_rgba[GBPixelGreen] != out[iPix * 3 + 1] ||
+      pix->_rgba[GBPixelBlue] != out[iPix * 3 + 2]) {
+      ShapoidErr->_type = PBErrTypeUnitTestFailed;
+      sprintf(ShapoidErr->_msg, "UnitTestGBSurfaceNormalizeHue failed");
+      PBErrCatch(ShapoidErr);
+    }
+    ++iPix;
+  } while (VecStep(&p, GBSurfaceDim(surf)));
+  GBSurfaceFree(&surf);
+  GBSurfaceImage* img = GBSurfaceImageCreateFromFile(
+    "./GBSurfaceNormalizeHueTest.tga");
+  GBSurfacePostProcess((GBSurface*)img, &post);
+  GBSurfaceImage* ref = GBSurfaceImageCreateFromFile(
+    "./GBSurfaceNormalizeHueRef.tga");
+  if (GBSurfaceIsSameAs((GBSurface*)img, (GBSurface*)ref) == false) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "UnitTestGBSurfaceNormalizeHue failed");
+    PBErrCatch(ShapoidErr);
+  }
+  GBSurfaceFree(&surf);
+  GBSurfaceImageFree(&img);
+  GBSurfaceImageFree(&ref);
+  printf("UnitTestGBSurfaceNormalizeHue OK\n");
+}
+
 void UnitTestGBSurface() {
   UnitTestGBSurfaceCreateFree();
   UnitTestGBSurfaceGetSet();
@@ -1059,6 +1157,7 @@ void UnitTestGBSurface() {
   UnitTestGBSurfaceAddLayerFromFile();
   UnitTestGBSurfaceFlush();
   UnitTestGBSurfaceIsSameAs();
+  UnitTestGBSurfaceNormalizeHue();
   printf("UnitTestGBSurface OK\n");
 }
 
@@ -1207,23 +1306,23 @@ void UnitTestGBSurfaceImageCreateFromFile() {
   unsigned char check[400] = {
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 
-    0,255,0,255, 0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 
-    0,255,0,255, 0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 0,0,0,255, 
-    0,30,0,255, 0,60,0,255, 0,90,0,255, 0,120,0,255, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 26,30,0,255, 
-    0,0,0,255, 4,34,0,255, 7,67,0,255, 11,101,0,255, 120,184,120,255, 
-    0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 46,60,0,255, 
-    0,0,30,255, 7,34,26,255, 14,67,23,255, 21,101,19,255, 
-    120,184,136,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
-    148,90,90,255, 0,0,60,255, 11,34,53,255, 21,67,46,255, 
-    32,101,39,255, 120,184,152,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 184,120,120,255, 0,0,90,255, 14,34,79,255, 28,67,69,255, 
-    0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 0,0,120,255, 30,56,136,255, 60,106,152,255, 0,0,255,255, 
-    0,0,255,255, 0,0,255,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,255,255, 0,0,255,255, 0,0,255,255
+    0,255,0,255, 0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 0,255,0,255, 
+    0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,255,0,255, 0,255,0,255, 0,0,0,255, 0,30,0,255, 
+    0,60,0,255, 0,90,0,255, 0,120,0,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,255,0,255, 0,255,0,255, 26,30,0,255, 0,0,0,255, 4,34,0,255, 
+    7,67,0,255, 11,101,0,255, 120,184,120,255, 0,0,0,0, 0,0,0,0, 
+    0,255,0,255, 0,255,0,255, 46,60,0,255, 0,0,30,255, 7,34,26,255, 
+    14,67,23,255, 21,101,19,255, 120,184,136,255, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 148,90,90,255, 0,0,60,255, 11,34,53,255, 
+    21,67,46,255, 32,101,39,255, 120,184,152,255, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 184,120,120,255, 0,0,90,255, 14,34,79,255, 
+    28,67,69,255, 0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,120,255, 30,56,136,255, 
+    60,106,152,255, 0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,255,255, 0,0,255,255, 0,0,255,255
     };
   for (int iPix = 0; iPix < GBSurfaceArea(surf); ++iPix) {
     if (surf->_finalPix[iPix]._rgba[GBPixelRed] != 
@@ -1429,8 +1528,8 @@ void UnitTestGBEyeOrthoProcessPoint() {
 void UnitTestGBEyeOrthoProcessCurve() {
   SCurve* curve = SCurveCreate(1, 2, 2);
   for (int iCtrl = SCurveGetNbCtrl(curve); iCtrl--;) {
-    VecSet(SCurveCtrl(curve, iCtrl), 0, (float)iCtrl);
-    VecSet(SCurveCtrl(curve, iCtrl), 1, (float)iCtrl * 2.0);
+    SCurveCtrlSet(curve, iCtrl, 0, (float)iCtrl);
+    SCurveCtrlSet(curve, iCtrl, 1, (float)iCtrl * 2.0);
   }
   GBEyeOrtho* eye = GBEyeOrthoCreate(GBEyeOrthoViewFront);
   float theta = PBMATH_HALFPI;
@@ -1442,13 +1541,13 @@ void UnitTestGBEyeOrthoProcessCurve() {
     PBErrCatch(GenBrushErr);
   }
   for (int iCtrl = SCurveGetNbCtrl(curve); iCtrl--;) {
-    if (ISEQUALF(VecGet(SCurveCtrl(projCurve, iCtrl), 0), 
+    if (ISEQUALF(SCurveCtrlGet(projCurve, iCtrl, 0), 
       (float)iCtrl * -2.0) == false) {
       GenBrushErr->_type = PBErrTypeUnitTestFailed;
       sprintf(GenBrushErr->_msg, "GBEyeOrthoGetProjectedCurve failed");
       PBErrCatch(GenBrushErr);
     }
-    if (ISEQUALF(VecGet(SCurveCtrl(projCurve, iCtrl), 1), 
+    if (ISEQUALF(SCurveCtrlGet(projCurve, iCtrl, 1), 
       (float)iCtrl) == false) {
       GenBrushErr->_type = PBErrTypeUnitTestFailed;
       sprintf(GenBrushErr->_msg, "GBEyeOrthoGetProjectedCurve failed");
@@ -1747,8 +1846,8 @@ void UnitTestGBEyeIsometricProcessPoint() {
 void UnitTestGBEyeIsometricProcessCurve() {
   SCurve* curve = SCurveCreate(1, 2, 2);
   for (int iCtrl = SCurveGetNbCtrl(curve); iCtrl--;) {
-    VecSet(SCurveCtrl(curve, iCtrl), 0, (float)iCtrl);
-    VecSet(SCurveCtrl(curve, iCtrl), 1, (float)iCtrl * 2.0);
+    SCurveCtrlSet(curve, iCtrl, 0, (float)iCtrl);
+    SCurveCtrlSet(curve, iCtrl, 1, (float)iCtrl * 2.0);
   }
   GBEyeIsometric* eye = GBEyeIsometricCreate();
   SCurve* projCurve = GBEyeGetProjectedCurve((GBEye*)eye, curve);
@@ -1764,9 +1863,9 @@ void UnitTestGBEyeIsometricProcessCurve() {
     {1.414214,3.828427}
     };
   for (int iCtrl = SCurveGetNbCtrl(curve); iCtrl--;) {
-    if (ISEQUALF(VecGet(SCurveCtrl(projCurve, iCtrl), 0), 
+    if (ISEQUALF(SCurveCtrlGet(projCurve, iCtrl, 0), 
       check[iCtrl][0]) == false ||
-      ISEQUALF(VecGet(SCurveCtrl(projCurve, iCtrl), 1), 
+      ISEQUALF(SCurveCtrlGet(projCurve, iCtrl, 1), 
       check[iCtrl][1]) == false) {
       GenBrushErr->_type = PBErrTypeUnitTestFailed;
       sprintf(GenBrushErr->_msg, 
@@ -1955,7 +2054,7 @@ void UnitTestGBHandDefaultProcess() {
     GBObjPodCreatePoint(&point, &eye, hand, &tool, &ink, &layer);
   GBHandProcess(hand, pod);
   if (GSetNbElem(&(pod->_handPoints)) == 0 ||
-    VecIsEqual(GSetGetFirst(&(pod->_handPoints)), 
+    VecIsEqual(GSetFirst(&(pod->_handPoints)), 
       &point) == false) {
     ShapoidErr->_type = PBErrTypeUnitTestFailed;
     sprintf(ShapoidErr->_msg, "GBHandDefaultProcess failed");
@@ -3174,23 +3273,23 @@ void UnitTestGenBrushAddLayerFromFile() {
   unsigned char check[400] = {
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 
-    0,255,0,255, 0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 
-    0,255,0,255, 0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 0,0,0,255, 
-    0,30,0,255, 0,60,0,255, 0,90,0,255, 0,120,0,255, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 26,30,0,255, 
-    0,0,0,255, 4,34,0,255, 7,67,0,255, 11,101,0,255, 120,184,120,255, 
-    0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 46,60,0,255, 
-    0,0,30,255, 7,34,26,255, 14,67,23,255, 21,101,19,255, 
-    120,184,136,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
-    148,90,90,255, 0,0,60,255, 11,34,53,255, 21,67,46,255, 
-    32,101,39,255, 120,184,152,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 184,120,120,255, 0,0,90,255, 14,34,79,255, 28,67,69,255, 
-    0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 0,0,120,255, 30,56,136,255, 60,106,152,255, 0,0,255,255, 
-    0,0,255,255, 0,0,255,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,255,255, 0,0,255,255, 0,0,255,255
+    0,255,0,255, 0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 0,255,0,255, 
+    0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,255,0,255, 0,255,0,255, 0,0,0,255, 0,30,0,255, 
+    0,60,0,255, 0,90,0,255, 0,120,0,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,255,0,255, 0,255,0,255, 26,30,0,255, 0,0,0,255, 4,34,0,255, 
+    7,67,0,255, 11,101,0,255, 120,184,120,255, 0,0,0,0, 0,0,0,0, 
+    0,255,0,255, 0,255,0,255, 46,60,0,255, 0,0,30,255, 7,34,26,255, 
+    14,67,23,255, 21,101,19,255, 120,184,136,255, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 148,90,90,255, 0,0,60,255, 11,34,53,255, 
+    21,67,46,255, 32,101,39,255, 120,184,152,255, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 184,120,120,255, 0,0,90,255, 14,34,79,255, 
+    28,67,69,255, 0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,120,255, 30,56,136,255, 
+    60,106,152,255, 0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,255,255, 0,0,255,255, 0,0,255,255
     };
   for (int iPix = 0; iPix < GBSurfaceArea(surf); ++iPix) {
     if (surf->_finalPix[iPix]._rgba[GBPixelRed] != 
@@ -3456,23 +3555,23 @@ void UnitTestGenBrushCreateFromFile() {
   unsigned char check[400] = {
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 
-    0,255,0,255, 0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 
-    0,255,0,255, 0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 0,0,0,255, 
-    0,30,0,255, 0,60,0,255, 0,90,0,255, 0,120,0,255, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 26,30,0,255, 
-    0,0,0,255, 4,34,0,255, 7,67,0,255, 11,101,0,255, 120,184,120,255, 
-    0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 46,60,0,255, 
-    0,0,30,255, 7,34,26,255, 14,67,23,255, 21,101,19,255, 
-    120,184,136,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
-    148,90,90,255, 0,0,60,255, 11,34,53,255, 21,67,46,255, 
-    32,101,39,255, 120,184,152,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 184,120,120,255, 0,0,90,255, 14,34,79,255, 28,67,69,255, 
-    0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 0,0,120,255, 30,56,136,255, 60,106,152,255, 0,0,255,255, 
-    0,0,255,255, 0,0,255,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,255,255, 0,0,255,255, 0,0,255,255
+    0,255,0,255, 0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,255,0,255, 0,255,0,255, 0,255,0,255, 
+    0,255,0,255, 0,255,0,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,255,0,255, 0,255,0,255, 0,0,0,255, 0,30,0,255, 
+    0,60,0,255, 0,90,0,255, 0,120,0,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,255,0,255, 0,255,0,255, 26,30,0,255, 0,0,0,255, 4,34,0,255, 
+    7,67,0,255, 11,101,0,255, 120,184,120,255, 0,0,0,0, 0,0,0,0, 
+    0,255,0,255, 0,255,0,255, 46,60,0,255, 0,0,30,255, 7,34,26,255, 
+    14,67,23,255, 21,101,19,255, 120,184,136,255, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 148,90,90,255, 0,0,60,255, 11,34,53,255, 
+    21,67,46,255, 32,101,39,255, 120,184,152,255, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 184,120,120,255, 0,0,90,255, 14,34,79,255, 
+    28,67,69,255, 0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,120,255, 30,56,136,255, 
+    60,106,152,255, 0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,255,255, 0,0,255,255, 0,0,255,255
     };
   for (int iPix = 0; iPix < GBSurfaceArea(surf); ++iPix) {
     if (surf->_finalPix[iPix]._rgba[GBPixelRed] != 
@@ -3519,6 +3618,56 @@ void UnitTestGenBrushIsSameAs() {
   printf("UnitTestGenBrushIsSameAs OK\n");
 }
 
+void UnitTestGenBrushAddRemovePostProcessing() {
+  GenBrush* gb = GBCreateFromFile("./GBSurfaceNormalizeHueTest.tga");
+  if (GBPostProcs(gb) != &(gb->_postProcs)) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBPostProcs failed");
+    PBErrCatch(ShapoidErr);
+  }
+  GBPostProcessing* postA = GBAddPostProcess(gb, GBPPTypeNormalizeHue);
+  if (gb->_postProcs._head->_data != (void*)postA) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBAddPostProcess failed");
+    PBErrCatch(ShapoidErr);
+  }
+  if (GBGetPostProcess(gb, 0) != (void*)postA) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBGetPostProcess failed");
+    PBErrCatch(ShapoidErr);
+  }
+  GBUpdate(gb);
+  GBSurfaceImage* ref = GBSurfaceImageCreateFromFile(
+    "./GBSurfaceNormalizeHueRef.tga");
+  if (GBSurfaceIsSameAs(GBSurf(gb), (GBSurface*)ref) == false) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBUpdate failed");
+    PBErrCatch(ShapoidErr);
+  }
+  GBRemovePostProcess(gb, postA);
+  if (GSetNbElem(GBPostProcs(gb)) != 0) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBRemovePostProcess failed");
+    PBErrCatch(ShapoidErr);
+  }
+  postA = GBAddPostProcess(gb, GBPPTypeNormalizeHue);
+  postA = GBAddPostProcess(gb, GBPPTypeNormalizeHue);
+  if (GBGetNbPostProcs(gb) != 2) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBGetNbPostProcs failed");
+    PBErrCatch(ShapoidErr);
+  }
+  GBRemoveAllPostProcess(gb);
+  if (GSetNbElem(GBPostProcs(gb)) != 0) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBRemoveAllPostProcess failed");
+    PBErrCatch(ShapoidErr);
+  }
+  postA = GBAddPostProcess(gb, GBPPTypeNormalizeHue);
+  GBFree(&gb);
+  GBSurfaceImageFree(&ref);
+  printf("UnitTestGenBrushAddRemovePostProcessing\n");
+}
 void UnitTestGenBrush() {
   UnitTestGenBrushCreateFree();
   UnitTestGenBrushGetSet();
@@ -3535,6 +3684,7 @@ void UnitTestGenBrush() {
   UnitTestGenBrushTouchLayers();
   UnitTestGenBrushCreateFromFile();
   UnitTestGenBrushIsSameAs();
+  UnitTestGenBrushAddRemovePostProcessing();
   
   printf("UnitTestGenBrush OK\n");
 }
@@ -3542,6 +3692,7 @@ void UnitTestGenBrush() {
 void UnitTestAll() {
   UnitTestGBPixel();
   UnitTestGBLayer();
+  UnitTestGBPostProcessing();
   UnitTestGBSurface();
   UnitTestGBSurfaceImage();
   UnitTestGBEye();
