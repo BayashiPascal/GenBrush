@@ -76,28 +76,30 @@ GBSurfaceImage* GBSurfaceImageCreateFromTGA(const char* const fileName);
 
 // Draw the Point 'point' in the GBObjPod 'pod' with the 
 // GBToolPlotter 'that'
-void GBToolPlotterDrawPoint(const GBToolPlotter* const that, const VecFloat* const point, 
-  const GBObjPod* const pod);
+void GBToolPlotterDrawPoint(const GBToolPlotter* const that, 
+  const VecFloat* const point, const GBObjPod* const pod);
   
 // Draw the Shapoid 'shap' in the GBObjPod 'pod' with the 
 // GBToolPlotter 'that'
-void GBToolPlotterDrawShapoid(const GBToolPlotter* const that, const Shapoid* const shap, 
-  const GBObjPod* const pod);
+void GBToolPlotterDrawShapoid(const GBToolPlotter* const that, 
+  const Shapoid* const shap, const GBObjPod* const pod);
   
 // Draw the SCurve 'curve' in the GBObjPod 'pod' with the 
 // GBToolPlotter 'that'
-void GBToolPlotterDrawSCurve(const GBToolPlotter* const that, const SCurve* const curve, 
-  const GBObjPod* const pod);
+void GBToolPlotterDrawSCurve(const GBToolPlotter* const that, 
+  const SCurve* const curve, const GBObjPod* const pod);
 
 // Update the content of the layer 'layer' of the GenBrush 'that'
 // Flush the content of the layer and redraw all the pod attached to it
 void GBUpdateLayer(GenBrush* const that, GBLayer* const layer);
 
 // Get the value for the projection matrix of a GBEyeOrtho
-void GBEyeOrthoGetProjVal(const GBEyeOrtho* const that, float* const val);
+void GBEyeOrthoGetProjVal(const GBEyeOrtho* const that, 
+  float* const val);
   
 // Get the value for the projection matrix of a GBEyeIsometric
-void GBEyeIsometricGetProjVal(const GBEyeIsometric* const that, float* const val);
+void GBEyeIsometricGetProjVal(const GBEyeIsometric* const that, 
+  float* const val);
 
 // Normalize in hue the final pixels of the GBSurface 'that'
 void GBSurfaceNormalizeHue(GBSurface* const that);
@@ -378,7 +380,8 @@ void GBPixelBlendOver(GBPixel* const that, const GBPixel* const pix) {
 // If there is transparency down to the bottom of the stack, use the 
 // background color 'bgColor'
 // If the stack is empty, return a transparent pixel
-GBPixel GBPixelStackBlend(const GSet* const stack, const GBPixel* const bgColor) {
+GBPixel GBPixelStackBlend(const GSet* const stack, 
+  const GBPixel* const bgColor) {
 #if BUILDMODE == 0
   if (stack == NULL) {
     GenBrushErr->_type = PBErrTypeInvalidArg;
@@ -556,8 +559,8 @@ GBLayer* GBLayerCreateFromFileTGA(const char* const fileName) {
 // If the flag 'prevPos' is true, gives the bounday at the previous
 // position
 // Return NULL if the layer is completely out of the surface
-Facoid* GBLayerGetBoundaryInSurface(const GBLayer* const that, const GBSurface* const surf,
-  const bool prevPos) {
+Facoid* GBLayerGetBoundaryInSurface(const GBLayer* const that, 
+  const GBSurface* const surf, const bool prevPos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -637,7 +640,8 @@ void GBPostProcessingFree(GBPostProcessing** that) {
 // Create a new static GBSurface with dimension 'dim' and type 'type'
 // _finalPix is set to 0
 // _bgColor is set to white
-GBSurface GBSurfaceCreateStatic(const GBSurfaceType type, const VecShort2D* const dim) {
+GBSurface GBSurfaceCreateStatic(const GBSurfaceType type, 
+  const VecShort2D* const dim) {
 #if BUILDMODE == 0
   if (dim == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -672,7 +676,8 @@ GBSurface GBSurfaceCreateStatic(const GBSurfaceType type, const VecShort2D* cons
 // Create a new GBSurface with dimension 'dim' and type 'type'
 // _finalPix is set to 0
 // _bgColor is set to white
-GBSurface* GBSurfaceCreate(const GBSurfaceType type, const VecShort2D* const dim) {
+GBSurface* GBSurfaceCreate(const GBSurfaceType type, 
+  const VecShort2D* const dim) {
 #if BUILDMODE == 0
   if (dim == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -904,7 +909,8 @@ void GBSurfaceFlush(GBSurface* const that) {
 
 // Apply the post processing 'post' to the final pixels in the 
 // GBSurface 'that'
-void GBSurfacePostProcess(GBSurface* const that, const GBPostProcessing* const post) {
+void GBSurfacePostProcess(GBSurface* const that, 
+  const GBPostProcessing* const post) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1200,7 +1206,8 @@ bool GBSurfaceImageSaveAsTGA(const GBSurfaceImage* const that) {
 // of the image located at 'fileName' and dimensions equal to the 
 // dimensions of the image
 // If the image couldn't be loaded return NULL
-GBSurfaceImage* GBSurfaceImageCreateFromFile(const char* const fileName) {
+GBSurfaceImage* GBSurfaceImageCreateFromFile(
+  const char* const fileName) {
 #if BUILDMODE == 0
   if (fileName == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1315,7 +1322,8 @@ void GBEyeUpdateProj(GBEye* const that) {
 }
 
 // Return the projection through the GBEye 'that' of the Point 'point' 
-VecFloat* GBEyeGetProjectedPoint(const GBEye* const that, const VecFloat* const point) {
+VecFloat* GBEyeGetProjectedPoint(const GBEye* const that, 
+  const VecFloat* const point) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1350,7 +1358,8 @@ VecFloat* GBEyeGetProjectedPoint(const GBEye* const that, const VecFloat* const 
 }
   
 // Return the projection through the GBEye 'that' of the SCurve 'curve' 
-SCurve* GBEyeGetProjectedCurve(const GBEye* const that, const SCurve* const curve) {
+SCurve* GBEyeGetProjectedCurve(const GBEye* const that, 
+  const SCurve* const curve) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1379,7 +1388,8 @@ SCurve* GBEyeGetProjectedCurve(const GBEye* const that, const SCurve* const curv
 }
 
 // Return the projection through the GBEye 'that' of the Shapoid 'shap' 
-Shapoid* GBEyeGetProjectedShapoid(const GBEye* const that, const Shapoid* const shap) {
+Shapoid* GBEyeGetProjectedShapoid(const GBEye* const that, 
+  const Shapoid* const shap) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1440,7 +1450,8 @@ void GBEyeOrthoFree(GBEyeOrtho** that) {
 }
 
 // Get the value for the projection matrix of a GBEyeOrtho
-void GBEyeOrthoGetProjVal(const GBEyeOrtho* const that, float* const val) {
+void GBEyeOrthoGetProjVal(const GBEyeOrtho* const that, 
+  float* const val) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1534,7 +1545,8 @@ void GBEyeOrthoGetProjVal(const GBEyeOrtho* const that, float* const val) {
 
 // Process the object of the GBObjPod 'pod' to update the viewed object 
 // through the GBEyeOrtho 'that'
-void GBEyeOrthoProcess(const GBEyeOrtho* const that, GBObjPod* const pod) {
+void GBEyeOrthoProcess(const GBEyeOrtho* const that, 
+  GBObjPod* const pod) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1601,7 +1613,8 @@ void GBEyeIsometricFree(GBEyeIsometric** that) {
 
 // Process the object of the GBObjPod 'pod' to update the viewed object 
 // through the GBEyeIsometric 'that'
-void GBEyeIsometricProcess(const GBEyeIsometric* const that, GBObjPod* const pod) {
+void GBEyeIsometricProcess(const GBEyeIsometric* const that, 
+  GBObjPod* const pod) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1639,7 +1652,8 @@ void GBEyeIsometricProcess(const GBEyeIsometric* const that, GBObjPod* const pod
 }
 
 // Get the value for the projection matrix of a GBEyeIsometric
-void GBEyeIsometricGetProjVal(const GBEyeIsometric* const that, float* val) {
+void GBEyeIsometricGetProjVal(const GBEyeIsometric* const that, 
+  float* val) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1723,7 +1737,8 @@ void GBHandDefaultFree(GBHandDefault** that) {
 
 // Process the viewed projection of the object in GBObjPod 'pod' into
 // its handed projection through the GBHandDefault 'that' 
-void GBHandDefaultProcess(const GBHandDefault* const that, GBObjPod* const pod) {
+void GBHandDefaultProcess(const GBHandDefault* const that, 
+  GBObjPod* const pod) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1822,7 +1837,8 @@ void GBToolPlotterFree(GBToolPlotter** that) {
 }
 
 // Draw the object in the GBObjPod 'pod' with the GBToolPlotter 'that'
-void GBToolPlotterDraw(const GBToolPlotter* const that, const GBObjPod* const pod) {
+void GBToolPlotterDraw(const GBToolPlotter* const that, 
+  const GBObjPod* const pod) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1872,8 +1888,8 @@ void GBToolPlotterDraw(const GBToolPlotter* const that, const GBObjPod* const po
 
 // Draw the Point 'point' in the GBObjPod 'pod' with the 
 // GBToolPlotter 'that'
-void GBToolPlotterDrawPoint(const GBToolPlotter* const that,  const VecFloat*  const point, 
-  const GBObjPod*  const pod) {
+void GBToolPlotterDrawPoint(const GBToolPlotter* const that, 
+  const VecFloat*  const point, const GBObjPod*  const pod) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1912,8 +1928,8 @@ void GBToolPlotterDrawPoint(const GBToolPlotter* const that,  const VecFloat*  c
   
 // Draw the Shapoid 'shap' in the GBObjPod 'pod' with the 
 // GBToolPlotter 'that'
-void GBToolPlotterDrawShapoid(const GBToolPlotter* const that, const Shapoid* const shap, 
-  const GBObjPod* const pod) {
+void GBToolPlotterDrawShapoid(const GBToolPlotter* const that, 
+  const Shapoid* const shap, const GBObjPod* const pod) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1992,8 +2008,8 @@ void GBToolPlotterDrawShapoid(const GBToolPlotter* const that, const Shapoid* co
 
 // Draw the SCurve 'curve' in the GBObjPod 'pod' with the 
 // GBToolPlotter 'that'
-void GBToolPlotterDrawSCurve(const GBToolPlotter* const that, const SCurve* const curve, 
-  const GBObjPod* const pod) {
+void GBToolPlotterDrawSCurve(const GBToolPlotter* const that, 
+  const SCurve* const curve, const GBObjPod* const pod) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2071,8 +2087,9 @@ void GBToolPlotterDrawSCurve(const GBToolPlotter* const that, const SCurve* cons
 // posInternal represents the position in the object internal space
 // posExternal represents the position in the global coordinates system
 // posLayer represents the position in the destination layer
-GBPixel _GBInkGet(const GBInk* const that, const GBTool* const tool, const GBObjPod* const pod, 
-  const VecFloat* const posInternal, const VecFloat* const posExternal, const VecShort* const posLayer) {
+GBPixel _GBInkGet(const GBInk* const that, const GBTool* const tool, 
+  const GBObjPod* const pod, const VecFloat* const posInternal, 
+  const VecFloat* const posExternal, const VecShort* const posLayer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2143,8 +2160,9 @@ void GBInkSolidFree(GBInkSolid** that) {
 // drawn with 'eye', 'hand', 'tool' and 'ink' in layer 'layer'
 // 'pos' must be a vector of 2 or more dimensions
 // If 'eye', 'hand, 'tool', 'ink' or 'layer' is null return null
-GBObjPod* _GBObjPodCreatePoint(VecFloat* const pos, GBEye* const eye, GBHand* const hand, 
-  GBTool* const tool, GBInk* const ink, GBLayer* const layer) {
+GBObjPod* _GBObjPodCreatePoint(VecFloat* const pos, GBEye* const eye, 
+  GBHand* const hand, GBTool* const tool, GBInk* const ink, 
+  GBLayer* const layer) {
 #if BUILDMODE == 0
   if (pos == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2189,7 +2207,8 @@ GBObjPod* _GBObjPodCreatePoint(VecFloat* const pos, GBEye* const eye, GBHand* co
 // 'shap' 's dimension must be 2 or more
 // If 'eye', 'hand, 'tool', 'ink' or 'layer' is null return null
 GBObjPod* _GBObjPodCreateShapoid(Shapoid* const shap, GBEye* const eye, 
-  GBHand* const hand, GBTool* const tool, GBInk* const ink, GBLayer* const layer) {
+  GBHand* const hand, GBTool* const tool, GBInk* const ink, 
+  GBLayer* const layer) {
 #if BUILDMODE == 0
   if (shap == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2234,7 +2253,8 @@ GBObjPod* _GBObjPodCreateShapoid(Shapoid* const shap, GBEye* const eye,
 // 'curve' 's dimension must be 2 or more
 // If 'eye', 'hand, 'tool', 'ink' or 'layer' is null return null
 GBObjPod* _GBObjPodCreateSCurve(SCurve* const curve, GBEye* const eye, 
-  GBHand* const hand, GBTool* const tool, GBInk* const ink, GBLayer* const layer) {
+  GBHand* const hand, GBTool* const tool, GBInk* const ink, 
+  GBLayer* const layer) {
 #if BUILDMODE == 0
   if (curve == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2495,8 +2515,10 @@ bool GBRender(GenBrush* const that) {
 // GBRemovePod(that, elemA, NULL, handA, NULL, NULL, NULL) removes 
 // all the pods related to both the object 'elemA' AND 'handA'
 // If all the filters are null it removes all the pods
-void _GBRemovePod(GenBrush* const that, const void* const obj, const GBEye* const eye, const GBHand* const hand, 
-  const GBTool* const tool, const GBInk* const ink, const GBLayer* const layer) {
+void _GBRemovePod(GenBrush* const that, const void* const obj, 
+  const GBEye* const eye, const GBHand* const hand, 
+  const GBTool* const tool, const GBInk* const ink, 
+  const GBLayer* const layer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2543,8 +2565,10 @@ void _GBRemovePod(GenBrush* const that, const void* const obj, const GBEye* cons
 // affects all the pods related to both the object 'elemA' AND 'handA'
 // If all the filters are null it affects all the pods
 // If 'toEye' is null, do nothing
-void _GBSetPodEye(GenBrush* const that, GBEye* const toEye, const void* const obj, const GBEye* const eye, 
-  const GBHand* const hand, const GBTool* const tool, const GBInk* const ink, const GBLayer* const layer) {
+void _GBSetPodEye(GenBrush* const that, GBEye* const toEye, 
+  const void* const obj, const GBEye* const eye, 
+  const GBHand* const hand, const GBTool* const tool, 
+  const GBInk* const ink, const GBLayer* const layer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2583,8 +2607,10 @@ void _GBSetPodEye(GenBrush* const that, GBEye* const toEye, const void* const ob
 // affects all the pods related to both the object 'elemA' AND 'handA'
 // If all the filters are null it affects all the pods
 // If 'toHand' is null, do nothing
-void _GBSetPodHand(GenBrush* const that, GBHand* const toHand, const void* const obj, 
-  const GBEye* const eye, const GBHand* const hand, const GBTool* const tool, const GBInk* const ink, const GBLayer* const layer) {
+void _GBSetPodHand(GenBrush* const that, GBHand* const toHand, 
+  const void* const obj, const GBEye* const eye, 
+  const GBHand* const hand, const GBTool* const tool, 
+  const GBInk* const ink, const GBLayer* const layer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2623,8 +2649,10 @@ void _GBSetPodHand(GenBrush* const that, GBHand* const toHand, const void* const
 // all the pods related to both the object 'elemA' AND 'handA'
 // If all the filters are null it affects all the pods
 // If 'toTool' is null, do nothing
-void _GBSetPodTool(GenBrush* const that, GBTool* const toTool, const void* const obj, 
-  const GBEye* const eye, const GBHand* const hand, const GBTool* const tool, const GBInk* const ink, const GBLayer* const layer) {
+void _GBSetPodTool(GenBrush* const that, GBTool* const toTool, 
+  const void* const obj, const GBEye* const eye, 
+  const GBHand* const hand, const GBTool* const tool, 
+  const GBInk* const ink, const GBLayer* const layer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2663,8 +2691,10 @@ void _GBSetPodTool(GenBrush* const that, GBTool* const toTool, const void* const
 // all the pods related to both the object 'elemA' AND 'handA'
 // If all the filters are null it affects all the pods
 // If 'toInk' is null, do nothing
-void _GBSetPodInk(GenBrush* const that, GBInk* const toInk, const void* const obj, 
-  const GBEye* const eye, const GBHand* const hand, const GBTool* const tool, const GBInk* const ink, const GBLayer* const layer) {
+void _GBSetPodInk(GenBrush* const that, GBInk* const toInk, 
+  const void* const obj, const GBEye* const eye, 
+  const GBHand* const hand, const GBTool* const tool, 
+  const GBInk* const ink, const GBLayer* const layer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2703,8 +2733,10 @@ void _GBSetPodInk(GenBrush* const that, GBInk* const toInk, const void* const ob
 // affects all the pods related to both the object 'elemA' AND 'handA'
 // If all the filters are null it affects all the pods
 // If 'toLayer' is null, do nothing
-void _GBSetPodLayer(GenBrush* const that, GBLayer* const toLayer, const void* const obj, 
-  const GBEye* const eye, const GBHand* const hand, const GBTool* const tool, const GBInk* const ink, const GBLayer* const layer) {
+void _GBSetPodLayer(GenBrush* const that, GBLayer* const toLayer, 
+  const void* const obj, const GBEye* const eye, 
+  const GBHand* const hand, const GBTool* const tool, 
+  const GBInk* const ink, const GBLayer* const layer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2736,7 +2768,8 @@ void _GBSetPodLayer(GenBrush* const that, GBLayer* const toLayer, const void* co
 
 // Set to true the modified flag of the layers of pods attached to the
 // object 'obj' in the list of pods of the GenBrush 'that'
-void _GBNotifyChangeFromObj(GenBrush* const that, const void* const obj) {
+void _GBNotifyChangeFromObj(GenBrush* const that, 
+  const void* const obj) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2772,7 +2805,8 @@ void _GBNotifyChangeFromObj(GenBrush* const that, const void* const obj) {
 
 // Set to true the modified flag of the layers of pods attached to the
 // GBEye 'eye' in the list of pods of the GenBrush 'that'
-void _GBNotifyChangeFromEye(GenBrush* const that, const GBEye* const eye) {
+void _GBNotifyChangeFromEye(GenBrush* const that, 
+  const GBEye* const eye) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2808,7 +2842,8 @@ void _GBNotifyChangeFromEye(GenBrush* const that, const GBEye* const eye) {
 
 // Set to true the modified flag of the layers of pods attached to the
 // GBInk 'ink' in the list of pods of the GenBrush 'that'
-void _GBNotifyChangeFromInk(GenBrush* const that, const GBInk* const ink) {
+void _GBNotifyChangeFromInk(GenBrush* const that, 
+  const GBInk* const ink) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2840,7 +2875,8 @@ void _GBNotifyChangeFromInk(GenBrush* const that, const GBInk* const ink) {
 
 // Set to true the modified flag of the layers of pods attached to the
 // GBHand 'hand' in the list of pods of the GenBrush 'that'
-void _GBNotifyChangeFromHand(GenBrush* const that, const GBHand* const hand) {
+void _GBNotifyChangeFromHand(GenBrush* const that, 
+  const GBHand* const hand) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2874,7 +2910,8 @@ void _GBNotifyChangeFromHand(GenBrush* const that, const GBHand* const hand) {
 
 // Set to true the modified flag of the layers of pods attached to the
 // GBTool 'tool' in the list of pods of the GenBrush 'that'
-void _GBNotifyChangeFromTool(GenBrush* const that, const GBTool* const tool) {
+void _GBNotifyChangeFromTool(GenBrush* const that, 
+  const GBTool* const tool) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;

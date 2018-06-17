@@ -95,7 +95,8 @@ void GBSurfaceAppCallbackActivate(GtkApplication* app,
 // dimensions 'dim'
 // The surface is initialized with one layer of white pixels
 // (rgba = {255})
-GBSurfaceApp* GBSurfaceAppCreate(const VecShort2D* const dim, const char* const title) {
+GBSurfaceApp* GBSurfaceAppCreate(const VecShort2D* const dim, 
+  const char* const title) {
 #if BUILDMODE == 0
   if (dim == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -191,7 +192,8 @@ void GBSurfaceWidgetFree(GBSurfaceWidget** that) {
 }
 
 // Create a GenBrush with a blank GBSurfaceApp
-GenBrush* GBCreateApp(const VecShort2D* const dim, const char* const title) {
+GenBrush* GBCreateApp(const VecShort2D* const dim, 
+  const char* const title) {
 #if BUILDMODE == 0
   if (dim == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -219,7 +221,8 @@ GenBrush* GBCreateApp(const VecShort2D* const dim, const char* const title) {
 // gint tick(gpointer data)
 // the argument of 'idleFun' is a pointer to GBSurfaceApp
 // If the surface of the app is not a GBSurfaceTypeApp, do nothing
-void GBSetIdle(GenBrush* that const , gint (*idleFun)(gpointer), const int idleMs) {
+void GBSetIdle(GenBrush* that const , gint (*idleFun)(gpointer), 
+  const int idleMs) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;

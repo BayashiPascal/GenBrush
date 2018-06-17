@@ -40,7 +40,8 @@ typedef struct GBSurfaceWidget {
 
 // Create a new GBSurfaceApp with title 'title' and 
 // dimensions 'dim'
-GBSurfaceApp* GBSurfaceAppCreate(const VecShort2D* const dim, const char* const title);
+GBSurfaceApp* GBSurfaceAppCreate(const VecShort2D* const dim, 
+  const char* const title);
 
 // Free the GBSurfaceApp 'that'
 void GBSurfaceAppFree(GBSurfaceApp** that);
@@ -92,7 +93,8 @@ GtkWidget* GBSurfaceAppGtkWidget(const GBSurfaceApp* const that);
 void GBSurfaceWidgetRender(const GBSurfaceWidget* const that);
 
 // Create a GenBrush with a blank GBSurfaceApp
-GenBrush* GBCreateApp(const VecShort2D* const dim, const char* const title);
+GenBrush* GBCreateApp(const VecShort2D* const dim, 
+  const char* const title);
 
 // Set the idle function of the GBSurfaceApp of the GenBrush 'that' 
 // to 'idleFun' with a timeout of 'idleMs'
@@ -100,7 +102,8 @@ GenBrush* GBCreateApp(const VecShort2D* const dim, const char* const title);
 // gint tick(gpointer data)
 // the argument of 'idleFun' is a pointer to GBSurfaceApp
 // If the surface of the app is not a GBSurfaceTypeApp, do nothing
-void GBSetIdle(GenBrush* that const , gint (*idleFun)(gpointer), const int idleMs);
+void GBSetIdle(GenBrush* that const , gint (*idleFun)(gpointer), 
+  const int idleMs);
 
 // Create a GenBrush with a blank GBSurfaceWidget
 GenBrush* GBCreateWidget(const VecShort2D* const dim);

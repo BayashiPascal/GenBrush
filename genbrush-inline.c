@@ -156,7 +156,8 @@ GBLayerBlendMode GBLayerGetBlendMode(const GBLayer* const that) {
 #if BUILDMODE != 0
 inline
 #endif 
-void GBLayerSetBlendMode(GBLayer* const that, const GBLayerBlendMode blend) {
+void GBLayerSetBlendMode(GBLayer* const that, 
+  const GBLayerBlendMode blend) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -218,7 +219,8 @@ GBLayerStackPosition GBLayerGetStackPos(const GBLayer* const that) {
 #if BUILDMODE != 0
 inline
 #endif 
-void GBLayerSetStackPos(GBLayer* const that, const GBLayerStackPosition pos) {
+void GBLayerSetStackPos(GBLayer* const that, 
+  const GBLayerStackPosition pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -250,7 +252,8 @@ GSet* GBLayerPixels(const GBLayer* const that) {
 #if BUILDMODE != 0
 inline
 #endif 
-GSet* GBLayerPixel(const GBLayer* const that, const VecShort2D* const pos) {
+GSet* GBLayerPixel(const GBLayer* const that, 
+  const VecShort2D* const pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -278,7 +281,8 @@ GSet* GBLayerPixel(const GBLayer* const that, const VecShort2D* const pos) {
 #if BUILDMODE != 0
 inline
 #endif 
-GSet* GBLayerPixelSafe(const GBLayer* const that, const VecShort2D* const pos) {
+GSet* GBLayerPixelSafe(const GBLayer* const that, 
+  const VecShort2D* const pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -306,8 +310,8 @@ GSet* GBLayerPixelSafe(const GBLayer* const that, const VecShort2D* const pos) {
 #if BUILDMODE != 0
 inline
 #endif 
-void GBLayerAddPixel(GBLayer* const that, const VecShort2D* const pos, const GBPixel* const pix,
-  const float depth) {
+void GBLayerAddPixel(GBLayer* const that, const VecShort2D* const pos, 
+  const GBPixel* const pix, const float depth) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -353,7 +357,8 @@ void GBLayerAddPixel(GBLayer* const that, const VecShort2D* const pos, const GBP
 #if BUILDMODE != 0
 inline
 #endif 
-void GBLayerAddPixelSafe(GBLayer* const that, const VecShort2D* const pos, const GBPixel* const pix,
+void GBLayerAddPixelSafe(GBLayer* const that, 
+  const VecShort2D* const pos, const GBPixel* const pix,
   const float depth) {
 #if BUILDMODE == 0
   if (that == NULL) {
@@ -381,7 +386,8 @@ void GBLayerAddPixelSafe(GBLayer* const that, const VecShort2D* const pos, const
 #if BUILDMODE != 0
 inline
 #endif 
-bool GBLayerIsPosInside(const GBLayer* const that, const VecShort2D* const pos) {
+bool GBLayerIsPosInside(const GBLayer* const that, 
+  const VecShort2D* const pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -449,7 +455,8 @@ GBPPType GBPostProcessingGetType(const GBPostProcessing* const that) {
 #if BUILDMODE != 0
 inline
 #endif 
-bool GBSurfaceIsSameAs(const GBSurface* const that, const GBSurface* const surf) {
+bool GBSurfaceIsSameAs(const GBSurface* const that, 
+  const GBSurface* const surf) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -553,7 +560,8 @@ GBPixel* GBSurfaceFinalPixels(const GBSurface* const that) {
 #if BUILDMODE != 0
 inline
 #endif 
-GBPixel* GBSurfaceFinalPixel(const GBSurface* const that, const VecShort2D* const pos) {
+GBPixel* GBSurfaceFinalPixel(const GBSurface* const that, 
+  const VecShort2D* const pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -582,7 +590,8 @@ GBPixel* GBSurfaceFinalPixel(const GBSurface* const that, const VecShort2D* cons
 #if BUILDMODE != 0
 inline
 #endif 
-GBPixel GBSurfaceGetFinalPixel(const GBSurface* const that, const VecShort2D* const pos) {
+GBPixel GBSurfaceGetFinalPixel(const GBSurface* const that, 
+  const VecShort2D* const pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -611,8 +620,8 @@ GBPixel GBSurfaceGetFinalPixel(const GBSurface* const that, const VecShort2D* co
 #if BUILDMODE != 0
 inline
 #endif 
-void GBSurfaceSetFinalPixel(GBSurface* const that, const VecShort2D* const pos, 
-  const GBPixel* const pix) {
+void GBSurfaceSetFinalPixel(GBSurface* const that, 
+  const VecShort2D* const pos, const GBPixel* const pix) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -640,7 +649,8 @@ void GBSurfaceSetFinalPixel(GBSurface* const that, const VecShort2D* const pos,
 #if BUILDMODE != 0
 inline
 #endif 
-GBPixel* GBSurfaceFinalPixelSafe(const GBSurface* const that, const VecShort2D* const pos) {
+GBPixel* GBSurfaceFinalPixelSafe(const GBSurface* const that, 
+  const VecShort2D* const pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -665,7 +675,8 @@ GBPixel* GBSurfaceFinalPixelSafe(const GBSurface* const that, const VecShort2D* 
 #if BUILDMODE != 0
 inline
 #endif 
-GBPixel GBSurfaceGetFinalPixelSafe(const GBSurface* const that, const VecShort2D* const pos) {
+GBPixel GBSurfaceGetFinalPixelSafe(const GBSurface* const that, 
+  const VecShort2D* const pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -690,8 +701,8 @@ GBPixel GBSurfaceGetFinalPixelSafe(const GBSurface* const that, const VecShort2D
 #if BUILDMODE != 0
 inline
 #endif 
-void GBSurfaceSetFinalPixelSafe(GBSurface* const that, const VecShort2D* const pos, 
-  const GBPixel* const pix) {
+void GBSurfaceSetFinalPixelSafe(GBSurface* const that, 
+  const VecShort2D* const pos, const GBPixel* const pix) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -762,7 +773,8 @@ GBPixel GBSurfaceGetBgColor(const GBSurface* const that) {
 #if BUILDMODE != 0
 inline
 #endif 
-void GBSurfaceSetBgColor(GBSurface* const that, const GBPixel* const col) {
+void GBSurfaceSetBgColor(GBSurface* const that, 
+  const GBPixel* const col) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -783,7 +795,8 @@ void GBSurfaceSetBgColor(GBSurface* const that, const GBPixel* const col) {
 #if BUILDMODE != 0
 inline
 #endif 
-bool GBSurfaceIsPosInside(const GBSurface* const that, const VecShort2D* const pos) {
+bool GBSurfaceIsPosInside(const GBSurface* const that, 
+  const VecShort2D* const pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -826,7 +839,8 @@ GSet* GBSurfaceLayers(const GBSurface* const that) {
 #if BUILDMODE != 0
 inline
 #endif 
-GBLayer* GBSurfaceAddLayer(GBSurface* const that, const VecShort2D* const dim) {
+GBLayer* GBSurfaceAddLayer(GBSurface* const that, 
+  const VecShort2D* const dim) {
 #if BUILDMODE == 0
   if (dim == NULL) {
     GenBrushErr->_type = PBErrTypeInvalidArg;
@@ -854,7 +868,8 @@ GBLayer* GBSurfaceAddLayer(GBSurface* const that, const VecShort2D* const dim) {
 #if BUILDMODE != 0
 inline
 #endif 
-GBLayer* GBSurfaceAddLayerFromFile(GBSurface* const that, const char* const fileName) {
+GBLayer* GBSurfaceAddLayerFromFile(GBSurface* const that, 
+  const char* const fileName) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -946,7 +961,8 @@ void GBSurfaceSetLayersModified(GBSurface* const that, const bool flag) {
 #if BUILDMODE != 0
 inline
 #endif 
-void GBSurfaceSetLayerStackPos(GBSurface* const that, GBLayer* const layer, const int pos) {
+void GBSurfaceSetLayerStackPos(GBSurface* const that, 
+  GBLayer* const layer, const int pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeInvalidArg;
@@ -1022,7 +1038,8 @@ char* GBSurfaceImageFileName(const GBSurfaceImage* const that) {
 #if BUILDMODE != 0
 inline
 #endif 
-void GBSurfaceImageSetFileName(GBSurfaceImage* const that, const char* const fileName) {
+void GBSurfaceImageSetFileName(GBSurfaceImage* const that, 
+  const char* const fileName) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1296,7 +1313,8 @@ void _GBEyeProcess(const GBEye* const that, GBObjPod* const pod) {
 #if BUILDMODE != 0
 inline
 #endif 
-void GBEyeOrthoSetView(GBEyeOrtho* const that, const GBEyeOrthoView view) {
+void GBEyeOrthoSetView(GBEyeOrtho* const that, 
+  const GBEyeOrthoView view) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1315,7 +1333,8 @@ void GBEyeOrthoSetView(GBEyeOrtho* const that, const GBEyeOrthoView view) {
 #if BUILDMODE != 0
 inline
 #endif 
-void GBEyeIsometricSetRotY(GBEyeIsometric* const that, const float theta) {
+void GBEyeIsometricSetRotY(GBEyeIsometric* const that, 
+  const float theta) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1334,7 +1353,8 @@ void GBEyeIsometricSetRotY(GBEyeIsometric* const that, const float theta) {
 #if BUILDMODE != 0
 inline
 #endif 
-void GBEyeIsometricSetRotRight(GBEyeIsometric* const that, const float theta) {
+void GBEyeIsometricSetRotRight(GBEyeIsometric* const that, 
+  const float theta) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1927,7 +1947,8 @@ GBPixel* GBFinalPixels(const GenBrush* const that) {
 #if BUILDMODE != 0
 inline
 #endif 
-GBPixel* GBFinalPixel(const GenBrush* const that, const VecShort2D* const pos) {
+GBPixel* GBFinalPixel(const GenBrush* const that, 
+  const VecShort2D* const pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1955,7 +1976,8 @@ GBPixel* GBFinalPixel(const GenBrush* const that, const VecShort2D* const pos) {
 #if BUILDMODE != 0
 inline
 #endif 
-GBPixel GBGetFinalPixel(const GenBrush* const that, const VecShort2D* const pos) {
+GBPixel GBGetFinalPixel(const GenBrush* const that, 
+  const VecShort2D* const pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1983,7 +2005,8 @@ GBPixel GBGetFinalPixel(const GenBrush* const that, const VecShort2D* const pos)
 #if BUILDMODE != 0
 inline
 #endif 
-void GBSetFinalPixel(GenBrush* const that, const VecShort2D* const pos, const GBPixel* const pix) {
+void GBSetFinalPixel(GenBrush* const that, const VecShort2D* const pos, 
+  const GBPixel* const pix) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2016,7 +2039,8 @@ void GBSetFinalPixel(GenBrush* const that, const VecShort2D* const pos, const GB
 #if BUILDMODE != 0
 inline
 #endif 
-GBPixel* GBFinalPixelSafe(const GenBrush* const that, const VecShort2D* const pos) {
+GBPixel* GBFinalPixelSafe(const GenBrush* const that, 
+  const VecShort2D* const pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2041,7 +2065,8 @@ GBPixel* GBFinalPixelSafe(const GenBrush* const that, const VecShort2D* const po
 #if BUILDMODE != 0
 inline
 #endif 
-GBPixel GBGetFinalPixelSafe(const GenBrush* const that, const VecShort2D* const pos) {
+GBPixel GBGetFinalPixelSafe(const GenBrush* const that, 
+  const VecShort2D* const pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2066,7 +2091,8 @@ GBPixel GBGetFinalPixelSafe(const GenBrush* const that, const VecShort2D* const 
 #if BUILDMODE != 0
 inline
 #endif 
-void GBSetFinalPixelSafe(GenBrush* const that, const VecShort2D* const pos, const GBPixel* const pix) {
+void GBSetFinalPixelSafe(GenBrush* const that, 
+  const VecShort2D* const pos, const GBPixel* const pix) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2213,7 +2239,8 @@ int GBArea(const GenBrush* const that) {
 #if BUILDMODE != 0
 inline
 #endif 
-bool GBIsPosInside(const GenBrush* const that, const VecShort2D* const pos) {
+bool GBIsPosInside(const GenBrush* const that, 
+  const VecShort2D* const pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2279,7 +2306,8 @@ GBLayer* GBAddLayer(GenBrush* const that, const VecShort2D* const dim) {
 #if BUILDMODE != 0
 inline
 #endif 
-GBLayer* GBAddLayerFromFile(GenBrush* const that, const char* const fileName) {
+GBLayer* GBAddLayerFromFile(GenBrush* const that, 
+  const char* const fileName) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2340,7 +2368,8 @@ int GBGetNbLayer(const GenBrush* const that) {
 #if BUILDMODE != 0
 inline
 #endif 
-void GBSetLayerStackPos(GenBrush* const that, GBLayer* const layer, const int pos) {
+void GBSetLayerStackPos(GenBrush* const that, GBLayer* const layer, 
+  const int pos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeInvalidArg;
@@ -2408,8 +2437,9 @@ int GBGetNbPod(const GenBrush* const that) {
 #if BUILDMODE != 0
 inline
 #endif 
-void _GBAddPoint(GenBrush* const that, VecFloat* const pos, GBEye* const eye, 
-  GBHand* const hand, GBTool* const tool, GBInk* const ink, GBLayer* const layer) {
+void _GBAddPoint(GenBrush* const that, VecFloat* const pos, 
+  GBEye* const eye, GBHand* const hand, GBTool* const tool, 
+  GBInk* const ink, GBLayer* const layer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeInvalidArg;
@@ -2432,8 +2462,9 @@ void _GBAddPoint(GenBrush* const that, VecFloat* const pos, GBEye* const eye,
 #if BUILDMODE != 0
 inline
 #endif 
-void _GBAddShapoid(GenBrush* const that, Shapoid* const shap, GBEye* const eye, 
-  GBHand* const hand, GBTool* const tool, GBInk* const ink, GBLayer* const layer) {
+void _GBAddShapoid(GenBrush* const that, Shapoid* const shap, 
+  GBEye* const eye, GBHand* const hand, GBTool* const tool, 
+  GBInk* const ink, GBLayer* const layer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeInvalidArg;
@@ -2456,8 +2487,9 @@ void _GBAddShapoid(GenBrush* const that, Shapoid* const shap, GBEye* const eye,
 #if BUILDMODE != 0
 inline
 #endif 
-void _GBAddSCurve(GenBrush* const that, SCurve* const curve, GBEye* const eye, 
-  GBHand* const hand, GBTool* const tool, GBInk* const ink, GBLayer* const layer) {
+void _GBAddSCurve(GenBrush* const that, SCurve* const curve, 
+  GBEye* const eye, GBHand* const hand, GBTool* const tool, 
+  GBInk* const ink, GBLayer* const layer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeInvalidArg;
@@ -2517,7 +2549,8 @@ bool GBIsSameAs(const GenBrush* const that, const GenBrush* const gb) {
 #if BUILDMODE != 0
 inline
 #endif 
-GBPostProcessing* GBAddPostProcess(GenBrush* const that, const GBPPType type) {
+GBPostProcessing* GBAddPostProcess(GenBrush* const that, 
+  const GBPPType type) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeInvalidArg;
@@ -2534,7 +2567,8 @@ GBPostProcessing* GBAddPostProcess(GenBrush* const that, const GBPPType type) {
 #if BUILDMODE != 0
 inline
 #endif 
-void GBRemovePostProcess(GenBrush* const that, const GBPostProcessing* const post) {
+void GBRemovePostProcess(GenBrush* const that, 
+  const GBPostProcessing* const post) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeInvalidArg;
@@ -2579,7 +2613,8 @@ void GBRemoveAllPostProcess(GenBrush* const that) {
 #if BUILDMODE != 0
 inline
 #endif 
-GBPostProcessing* GBPostProcess(const GenBrush* const that, const int iPost) {
+GBPostProcessing* GBPostProcess(const GenBrush* const that, 
+  const int iPost) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeInvalidArg;
