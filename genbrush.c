@@ -62,45 +62,45 @@ bool GBReadTGABody(FILE *stream, GSet* pix, GBTGAHeader* header,
 // Create a new GBLayer with dimensions and content given by the 
 // TGA image on disk at location 'fileName'
 // Return NULL if we couldn't create the layer
-GBLayer* GBLayerCreateFromFileTGA(char* fileName);
+GBLayer* GBLayerCreateFromFileTGA(const char* const fileName);
 
 // Save the GBSurfaceImage 'that' as a TGA file
 // Return false if the image couldn't be saved, true else
-bool GBSurfaceImageSaveAsTGA(GBSurfaceImage* that);
+bool GBSurfaceImageSaveAsTGA(const GBSurfaceImage* const that);
 
 // Create a new GBSurfaceImage with one layer containing the content 
 // of the TGA image located at 'fileName' and dimensions equal to the 
 // dimensions of the image
 // If the image couldn't be loaded return NULL
-GBSurfaceImage* GBSurfaceImageCreateFromTGA(char* fileName);
+GBSurfaceImage* GBSurfaceImageCreateFromTGA(const char* const fileName);
 
 // Draw the Point 'point' in the GBObjPod 'pod' with the 
 // GBToolPlotter 'that'
-void GBToolPlotterDrawPoint(GBToolPlotter* that, VecFloat* point, 
-  GBObjPod* pod);
+void GBToolPlotterDrawPoint(const GBToolPlotter* const that, const VecFloat* const point, 
+  const GBObjPod* const pod);
   
 // Draw the Shapoid 'shap' in the GBObjPod 'pod' with the 
 // GBToolPlotter 'that'
-void GBToolPlotterDrawShapoid(GBToolPlotter* that, Shapoid* shap, 
-  GBObjPod* pod);
+void GBToolPlotterDrawShapoid(const GBToolPlotter* const that, const Shapoid* const shap, 
+  const GBObjPod* const pod);
   
 // Draw the SCurve 'curve' in the GBObjPod 'pod' with the 
 // GBToolPlotter 'that'
-void GBToolPlotterDrawSCurve(GBToolPlotter* that, SCurve* curve, 
-  GBObjPod* pod);
+void GBToolPlotterDrawSCurve(const GBToolPlotter* const that, const SCurve* const curve, 
+  const GBObjPod* const pod);
 
 // Update the content of the layer 'layer' of the GenBrush 'that'
 // Flush the content of the layer and redraw all the pod attached to it
-void GBUpdateLayer(GenBrush* that, GBLayer* layer);
+void GBUpdateLayer(GenBrush* const that, GBLayer* const layer);
 
 // Get the value for the projection matrix of a GBEyeOrtho
-void GBEyeOrthoGetProjVal(GBEyeOrtho* that, float* val);
+void GBEyeOrthoGetProjVal(const GBEyeOrtho* const that, float* const val);
   
 // Get the value for the projection matrix of a GBEyeIsometric
-void GBEyeIsometricGetProjVal(GBEyeIsometric* that, float* val);
+void GBEyeIsometricGetProjVal(const GBEyeIsometric* const that, float* const val);
 
 // Normalize in hue the final pixels of the GBSurface 'that'
-void GBSurfaceNormalizeHue(GBSurface* that);
+void GBSurfaceNormalizeHue(GBSurface* const that);
   
 // ================ Functions implementation ====================
 
@@ -315,7 +315,7 @@ bool GBReadTGABody(FILE *stream, GSet* pix, GBTGAHeader* header,
 // Blend the pixel 'pix' into the pixel 'that'
 // BlendNormal mixes colors according to their relative alpha value
 // and add the alpha values
-void GBPixelBlendNormal(GBPixel* that, GBPixel* pix) {
+void GBPixelBlendNormal(GBPixel* const that , const GBPixel* const pix) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -347,7 +347,7 @@ void GBPixelBlendNormal(GBPixel* that, GBPixel* pix) {
 // Blend the pixel 'pix' into the pixel 'that'
 // BlendOver mixes colors according to the alpha value of 'pix'
 // and add the alpha values
-void GBPixelBlendOver(GBPixel* that, GBPixel* pix) {
+void GBPixelBlendOver(GBPixel* const that, const GBPixel* const pix) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -378,7 +378,7 @@ void GBPixelBlendOver(GBPixel* that, GBPixel* pix) {
 // If there is transparency down to the bottom of the stack, use the 
 // background color 'bgColor'
 // If the stack is empty, return a transparent pixel
-GBPixel GBPixelStackBlend(GSet* stack, GBPixel* bgColor) {
+GBPixel GBPixelStackBlend(const GSet* const stack, const GBPixel* const bgColor) {
 #if BUILDMODE == 0
   if (stack == NULL) {
     GenBrushErr->_type = PBErrTypeInvalidArg;
@@ -453,7 +453,7 @@ GBPixel GBPixelStackBlend(GSet* stack, GBPixel* bgColor) {
 // _pos = (0,0)
 // blendMode = GBLayerBlendModeDefault
 // stackPos = GBLayerStackPosBg
-GBLayer* GBLayerCreate(VecShort2D* dim) {
+GBLayer* GBLayerCreate(const VecShort2D* const dim) {
 #if BUILDMODE == 0
   if (dim == NULL) {
     GenBrushErr->_type = PBErrTypeInvalidArg;
@@ -501,7 +501,7 @@ void GBLayerFree(GBLayer** that) {
 // Create a new GBLayer with dimensions and content given by the 
 // image on disk at location 'fileName'
 // Return NULL if we couldn't create the layer
-GBLayer* GBLayerCreateFromFile(char* fileName) {
+GBLayer* GBLayerCreateFromFile(const char* const fileName) {
   // If the fileName is NULL
   if (fileName == NULL)
     // Nothing to do
@@ -516,7 +516,7 @@ GBLayer* GBLayerCreateFromFile(char* fileName) {
 // Create a new GBLayer with dimensions and content given by the 
 // TGA image on disk at location 'fileName'
 // Return NULL if we couldn't create the layer
-GBLayer* GBLayerCreateFromFileTGA(char* fileName) {
+GBLayer* GBLayerCreateFromFileTGA(const char* const fileName) {
   // Open the file
   FILE* fptr = fopen(fileName,"r");
   // If we couldn't open the file
@@ -556,8 +556,8 @@ GBLayer* GBLayerCreateFromFileTGA(char* fileName) {
 // If the flag 'prevPos' is true, gives the bounday at the previous
 // position
 // Return NULL if the layer is completely out of the surface
-Facoid* GBLayerGetBoundaryInSurface(GBLayer* that, GBSurface* surf,
-  bool prevPos) {
+Facoid* GBLayerGetBoundaryInSurface(const GBLayer* const that, const GBSurface* const surf,
+  const bool prevPos) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -601,7 +601,7 @@ Facoid* GBLayerGetBoundaryInSurface(GBLayer* that, GBSurface* surf,
 // ---------------- GBPostProcessing --------------------------
 
 // Create a static GBPostProcessing with type 'type'
-GBPostProcessing* GBPostProcessingCreate(GBPPType type) {
+GBPostProcessing* GBPostProcessingCreate(const GBPPType type) {
   // Declare the new GBPostProcessing
   GBPostProcessing* ret = PBErrMalloc(GenBrushErr, 
     sizeof(GBPostProcessing));
@@ -612,7 +612,7 @@ GBPostProcessing* GBPostProcessingCreate(GBPPType type) {
 }
 
 // Create a new static GBPostProcessing with type 'type'
-GBPostProcessing GBPostProcessingCreateStatic(GBPPType type) {
+GBPostProcessing GBPostProcessingCreateStatic(const GBPPType type) {
   // Declare the new GBPostProcessing
   GBPostProcessing ret;
   // Set the properties
@@ -637,7 +637,7 @@ void GBPostProcessingFree(GBPostProcessing** that) {
 // Create a new static GBSurface with dimension 'dim' and type 'type'
 // _finalPix is set to 0
 // _bgColor is set to white
-GBSurface GBSurfaceCreateStatic(GBSurfaceType type, VecShort2D* dim) {
+GBSurface GBSurfaceCreateStatic(const GBSurfaceType type, const VecShort2D* const dim) {
 #if BUILDMODE == 0
   if (dim == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -672,7 +672,7 @@ GBSurface GBSurfaceCreateStatic(GBSurfaceType type, VecShort2D* dim) {
 // Create a new GBSurface with dimension 'dim' and type 'type'
 // _finalPix is set to 0
 // _bgColor is set to white
-GBSurface* GBSurfaceCreate(GBSurfaceType type, VecShort2D* dim) {
+GBSurface* GBSurfaceCreate(const GBSurfaceType type, const VecShort2D* const dim) {
 #if BUILDMODE == 0
   if (dim == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -695,7 +695,7 @@ GBSurface* GBSurfaceCreate(GBSurfaceType type, VecShort2D* dim) {
 }
 
 // Free the memory used by the properties of the GBSurface 'that'
-void GBSurfaceFreeStatic(GBSurface* that) {
+void GBSurfaceFreeStatic(GBSurface* const that) {
   // If the pointer is null
   if (that == NULL)
     // Nothing to do
@@ -722,7 +722,7 @@ void GBSurfaceFree(GBSurface** that) {
 }
 
 // Clone the GBSurface 'that'
-GBSurface GBSurfaceClone(GBSurface* that) {
+GBSurface GBSurfaceClone(const GBSurface* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -744,7 +744,7 @@ GBSurface GBSurfaceClone(GBSurface* that) {
 // Get a GSet of Facoid representing the sub areas of the GBSurface 
 // 'that' affected by layers with _modified flag equal to true
 // If there is no modified sub area return an empty GSet
-GSetShapoid* GBSurfaceGetModifiedArea(GBSurface* that) {
+GSetShapoid* GBSurfaceGetModifiedArea(const GBSurface* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -800,7 +800,7 @@ GSetShapoid* GBSurfaceGetModifiedArea(GBSurface* that) {
 // Update the final pixels according to layers of the GBSurface 'that'
 // Update only pixels affected by layers with the _modified flag 
 // equals to true
-void GBSurfaceUpdate(GBSurface* that) {
+void GBSurfaceUpdate(GBSurface* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -887,7 +887,7 @@ void GBSurfaceUpdate(GBSurface* that) {
 
 // Reset all the final pix of the GBSurface 'that' to its 
 // background color, and reset all the modified flag of layers to true
-void GBSurfaceFlush(GBSurface* that) {
+void GBSurfaceFlush(GBSurface* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -904,7 +904,7 @@ void GBSurfaceFlush(GBSurface* that) {
 
 // Apply the post processing 'post' to the final pixels in the 
 // GBSurface 'that'
-void GBSurfacePostProcess(GBSurface* that, GBPostProcessing* post) {
+void GBSurfacePostProcess(GBSurface* const that, const GBPostProcessing* const post) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -928,7 +928,7 @@ void GBSurfacePostProcess(GBSurface* that, GBPostProcessing* post) {
 }
 
 // Normalize in hue the final pixels of the GBSurface 'that'
-void GBSurfaceNormalizeHue(GBSurface* that) {
+void GBSurfaceNormalizeHue(GBSurface* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -979,7 +979,7 @@ void GBSurfaceNormalizeHue(GBSurface* that) {
 // ---------------- GBSurfaceImage --------------------------
 
 // Create a new GBSurfaceImage with dimension 'dim'
-GBSurfaceImage* GBSurfaceImageCreate(VecShort2D* dim) {
+GBSurfaceImage* GBSurfaceImageCreate(const VecShort2D* const dim) {
 #if BUILDMODE == 0
   if (dim == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1020,7 +1020,7 @@ void GBSurfaceImageFree(GBSurfaceImage** that) {
 }
 
 // Clone the GBSurfaceImage 'that'
-GBSurfaceImage* GBSurfaceImageClone(GBSurfaceImage* that) {
+GBSurfaceImage* GBSurfaceImageClone(const GBSurfaceImage* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1048,7 +1048,7 @@ GBSurfaceImage* GBSurfaceImageClone(GBSurfaceImage* that) {
 // Save a GBSurfaceImage 'that'
 // If the filename is not set do nothing and return false
 // Return true if it could save the surface, false else
-bool GBSurfaceImageSave(GBSurfaceImage* that) {
+bool GBSurfaceImageSave(const GBSurfaceImage* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1075,7 +1075,7 @@ bool GBSurfaceImageSave(GBSurfaceImage* that) {
 
 // Save the GBSurfaceImage 'that' as a TGA file
 // Return false if the image couldn't be saved, true else
-bool GBSurfaceImageSaveAsTGA(GBSurfaceImage* that) {
+bool GBSurfaceImageSaveAsTGA(const GBSurfaceImage* const that) {
   int ret;
   // Open the file
   FILE* fptr = fopen(that->_fileName, "w");
@@ -1200,7 +1200,7 @@ bool GBSurfaceImageSaveAsTGA(GBSurfaceImage* that) {
 // of the image located at 'fileName' and dimensions equal to the 
 // dimensions of the image
 // If the image couldn't be loaded return NULL
-GBSurfaceImage* GBSurfaceImageCreateFromFile(char* fileName) {
+GBSurfaceImage* GBSurfaceImageCreateFromFile(const char* const fileName) {
 #if BUILDMODE == 0
   if (fileName == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1222,7 +1222,7 @@ GBSurfaceImage* GBSurfaceImageCreateFromFile(char* fileName) {
 // of the TGA image located at 'fileName' and dimensions equal to the 
 // dimensions of the image
 // If the image couldn't be loaded return NULL
-GBSurfaceImage* GBSurfaceImageCreateFromTGA(char* fileName) {
+GBSurfaceImage* GBSurfaceImageCreateFromTGA(const char* const fileName) {
 #if BUILDMODE == 0
   if (fileName == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1253,7 +1253,7 @@ GBSurfaceImage* GBSurfaceImageCreateFromTGA(char* fileName) {
 
 // Return a new GBEye with type 'type'
 // scale is initialized to (1,1), trans to (0,0) and rot to 0
-GBEye GBEyeCreateStatic(GBEyeType type) {
+GBEye GBEyeCreateStatic(const GBEyeType type) {
   // Declare a GBEye
   GBEye that;
   // Set properties
@@ -1273,7 +1273,7 @@ GBEye GBEyeCreateStatic(GBEyeType type) {
 }
 
 // Free the memory used by the GBEye
-void GBEyeFreeStatic(GBEye* that) {
+void GBEyeFreeStatic(GBEye* const that) {
   if (that == NULL)
     return;
   // Free memory
@@ -1282,7 +1282,7 @@ void GBEyeFreeStatic(GBEye* that) {
 
 // Update the projection matrix of the GBEye according to scale, rot
 // and origin
-void GBEyeUpdateProj(GBEye* that) {
+void GBEyeUpdateProj(GBEye* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1315,7 +1315,7 @@ void GBEyeUpdateProj(GBEye* that) {
 }
 
 // Return the projection through the GBEye 'that' of the Point 'point' 
-VecFloat* GBEyeGetProjectedPoint(GBEye* that, const VecFloat* const point) {
+VecFloat* GBEyeGetProjectedPoint(const GBEye* const that, const VecFloat* const point) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1350,7 +1350,7 @@ VecFloat* GBEyeGetProjectedPoint(GBEye* that, const VecFloat* const point) {
 }
   
 // Return the projection through the GBEye 'that' of the SCurve 'curve' 
-SCurve* GBEyeGetProjectedCurve(GBEye* that, SCurve* curve) {
+SCurve* GBEyeGetProjectedCurve(const GBEye* const that, const SCurve* const curve) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1379,7 +1379,7 @@ SCurve* GBEyeGetProjectedCurve(GBEye* that, SCurve* curve) {
 }
 
 // Return the projection through the GBEye 'that' of the Shapoid 'shap' 
-Shapoid* GBEyeGetProjectedShapoid(GBEye* that, Shapoid* shap) {
+Shapoid* GBEyeGetProjectedShapoid(const GBEye* const that, const Shapoid* const shap) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1399,11 +1399,17 @@ Shapoid* GBEyeGetProjectedShapoid(GBEye* that, Shapoid* shap) {
   ShapoidSetPos(ret, proj);
   VecFree(&proj);
   // Project each axis
+  GSetVecFloat* set = GSetVecFloatCreate();
   for (int iAxis = ShapoidGetDim(ret); iAxis--;) {
     proj = GBEyeGetProjectedPoint(that, ShapoidAxis(ret, iAxis));
-    ShapoidSetAxis(ret, iAxis, proj);
+    GSetPush(set, proj);
+  }
+  ShapoidSetAllAxis(ret, set);
+  while (GSetNbElem(set) > 0) {
+    proj = GSetPop(set);
     VecFree(&proj);
   }
+  GSetFree(&set);
   // Return the new shapoid
   return ret;
 }
@@ -1412,7 +1418,7 @@ Shapoid* GBEyeGetProjectedShapoid(GBEye* that, Shapoid* shap) {
 
 // Return a new GBEyeOrtho with orientation 'view'
 // scale is initialized to (1,1), trans to (0,0) and rot to 0
-GBEyeOrtho* GBEyeOrthoCreate(GBEyeOrthoView view) {
+GBEyeOrtho* GBEyeOrthoCreate(const GBEyeOrthoView view) {
   // Allocate memory
   GBEyeOrtho* that = PBErrMalloc(GenBrushErr, sizeof(GBEyeOrtho));
   // Set properties
@@ -1434,7 +1440,7 @@ void GBEyeOrthoFree(GBEyeOrtho** that) {
 }
 
 // Get the value for the projection matrix of a GBEyeOrtho
-void GBEyeOrthoGetProjVal(GBEyeOrtho* that, float* val) {
+void GBEyeOrthoGetProjVal(const GBEyeOrtho* const that, float* const val) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1528,7 +1534,7 @@ void GBEyeOrthoGetProjVal(GBEyeOrtho* that, float* val) {
 
 // Process the object of the GBObjPod 'pod' to update the viewed object 
 // through the GBEyeOrtho 'that'
-void GBEyeOrthoProcess(GBEyeOrtho* that, GBObjPod* pod) {
+void GBEyeOrthoProcess(const GBEyeOrtho* const that, GBObjPod* const pod) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1595,7 +1601,7 @@ void GBEyeIsometricFree(GBEyeIsometric** that) {
 
 // Process the object of the GBObjPod 'pod' to update the viewed object 
 // through the GBEyeIsometric 'that'
-void GBEyeIsometricProcess(GBEyeIsometric* that, GBObjPod* pod) {
+void GBEyeIsometricProcess(const GBEyeIsometric* const that, GBObjPod* const pod) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1633,7 +1639,7 @@ void GBEyeIsometricProcess(GBEyeIsometric* that, GBObjPod* pod) {
 }
 
 // Get the value for the projection matrix of a GBEyeIsometric
-void GBEyeIsometricGetProjVal(GBEyeIsometric* that, float* val) {
+void GBEyeIsometricGetProjVal(const GBEyeIsometric* const that, float* val) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1677,7 +1683,7 @@ void GBEyeIsometricGetProjVal(GBEyeIsometric* that, float* val) {
 // ---------------- GBHand --------------------------
 
 // Create a new GBHand with type 'type'
-GBHand GBHandCreateStatic(GBHandType type) {
+GBHand GBHandCreateStatic(const GBHandType type) {
   // Declare the new hand
   GBHand hand;
   // Set properties
@@ -1687,7 +1693,7 @@ GBHand GBHandCreateStatic(GBHandType type) {
 }
 
 // Free the memory used by the GBHand 'that'
-void GBHandFreeStatic(GBHand* that) {
+void GBHandFreeStatic(GBHand* const that) {
   // Nothing to do
   (void)that;
 }
@@ -1717,7 +1723,7 @@ void GBHandDefaultFree(GBHandDefault** that) {
 
 // Process the viewed projection of the object in GBObjPod 'pod' into
 // its handed projection through the GBHandDefault 'that' 
-void GBHandDefaultProcess(GBHandDefault* that, GBObjPod* pod) {
+void GBHandDefaultProcess(const GBHandDefault* const that, GBObjPod* const pod) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1729,7 +1735,7 @@ void GBHandDefaultProcess(GBHandDefault* that, GBObjPod* pod) {
     sprintf(GenBrushErr->_msg, "'pod' is null");
     PBErrCatch(GenBrushErr);
   }
-  if (GBObjPodGetEyeObj(pod) == NULL) {
+  if (GBObjPodEyeObj(pod) == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
     sprintf(GenBrushErr->_msg, "Viewed object of 'pod' is null");
     PBErrCatch(GenBrushErr);
@@ -1776,7 +1782,7 @@ void GBHandDefaultProcess(GBHandDefault* that, GBObjPod* pod) {
 // ---------------- GBTool --------------------------
 
 // Create a static GBTool with GBToolType 'type'
-GBTool GBToolCreateStatic(GBToolType type) {
+GBTool GBToolCreateStatic(const GBToolType type) {
   // Declare the GBTool
   GBTool that;
   // Set properties
@@ -1786,7 +1792,7 @@ GBTool GBToolCreateStatic(GBToolType type) {
 }
 
 // Free the memory used by the GBTool 'that'
-void GBToolFreeStatic(GBTool* that) {
+void GBToolFreeStatic(GBTool* const that) {
   // Nothing to do
   (void)that;
 }
@@ -1816,7 +1822,7 @@ void GBToolPlotterFree(GBToolPlotter** that) {
 }
 
 // Draw the object in the GBObjPod 'pod' with the GBToolPlotter 'that'
-void GBToolPlotterDraw(GBToolPlotter* that, GBObjPod* pod) {
+void GBToolPlotterDraw(const GBToolPlotter* const that, const GBObjPod* const pod) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1866,8 +1872,8 @@ void GBToolPlotterDraw(GBToolPlotter* that, GBObjPod* pod) {
 
 // Draw the Point 'point' in the GBObjPod 'pod' with the 
 // GBToolPlotter 'that'
-void GBToolPlotterDrawPoint(GBToolPlotter* that, VecFloat* point, 
-  GBObjPod* pod) {
+void GBToolPlotterDrawPoint(const GBToolPlotter* const that,  const VecFloat*  const point, 
+  const GBObjPod*  const pod) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1893,21 +1899,21 @@ void GBToolPlotterDrawPoint(GBToolPlotter* that, VecFloat* point,
   // As the point as no internal parameters create a null 3d vector
   // instead
   VecFloat3D null = VecFloatCreateStatic3D();
-  GBPixel pixColor = GBInkGet(GBObjPodGetInk(pod), that, pod, &null, 
+  GBPixel pixColor = GBInkGet(GBObjPodInk(pod), that, pod, &null, 
     point, &posLayer);
   // Get the depth
   float depth = 0.0;
   if (VecGetDim(point) > 2)
     depth = VecGet(point, 2);
   // Add the pixel at the point position in the layer
-  GBLayerAddPixelSafe(GBObjPodGetLayer(pod), &posLayer, 
+  GBLayerAddPixelSafe(GBObjPodLayer(pod), &posLayer, 
     &pixColor, depth); 
 }
   
 // Draw the Shapoid 'shap' in the GBObjPod 'pod' with the 
 // GBToolPlotter 'that'
-void GBToolPlotterDrawShapoid(GBToolPlotter* that, Shapoid* shap, 
-  GBObjPod* pod) {
+void GBToolPlotterDrawShapoid(const GBToolPlotter* const that, const Shapoid* const shap, 
+  const GBObjPod* const pod) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -1938,7 +1944,7 @@ void GBToolPlotterDrawShapoid(GBToolPlotter* that, Shapoid* shap,
       short v = (short)round(ShapoidPosGet(bound, iAxis) + 
         ShapoidAxisGet(bound, iAxis, iAxis)) + 1;
       VecSet(to, iAxis, 
-        MIN(v, VecGet(GBLayerDim(GBObjPodGetLayer(pod)),iAxis)));
+        MIN(v, VecGet(GBLayerDim(GBObjPodLayer(pod)),iAxis)));
     } else {
       VecSet(from, iAxis, 
         (short)round(ShapoidPosGet(bound, iAxis)));
@@ -1962,14 +1968,14 @@ void GBToolPlotterDrawShapoid(GBToolPlotter* that, Shapoid* shap,
       VecFloat* posExt = 
         ShapoidExportCoord(GBObjPodGetObjAsShapoid(pod), posIn);
       // Get the ink at this position
-      GBPixel pixColor = GBInkGet(GBObjPodGetInk(pod), that, pod, 
+      GBPixel pixColor = GBInkGet(GBObjPodInk(pod), that, pod, 
         posIn, posExt, posLayer);
       // Get the depth
       float depth = 0.0;
       if (VecGetDim(posLayerFloat) > 2)
         depth = VecGet(posLayerFloat, 2);
       // Add the pixel to the layer
-      GBLayerAddPixelSafe(GBObjPodGetLayer(pod), (VecShort2D*)posLayer, 
+      GBLayerAddPixelSafe(GBObjPodLayer(pod), (VecShort2D*)posLayer, 
         &pixColor, depth); 
       // Free memory
       VecFree(&posIn);
@@ -1986,8 +1992,8 @@ void GBToolPlotterDrawShapoid(GBToolPlotter* that, Shapoid* shap,
 
 // Draw the SCurve 'curve' in the GBObjPod 'pod' with the 
 // GBToolPlotter 'that'
-void GBToolPlotterDrawSCurve(GBToolPlotter* that, SCurve* curve, 
-  GBObjPod* pod) {
+void GBToolPlotterDrawSCurve(const GBToolPlotter* const that, const SCurve* const curve, 
+  const GBObjPod* const pod) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2035,14 +2041,14 @@ void GBToolPlotterDrawSCurve(GBToolPlotter* that, SCurve* curve,
       // Get the external position
       VecFloat* posExt = SCurveGet(GBObjPodGetObjAsSCurve(pod), p);
       // Get the ink at this position
-      GBPixel pixColor = GBInkGet(GBObjPodGetInk(pod), that, pod, 
+      GBPixel pixColor = GBInkGet(GBObjPodInk(pod), that, pod, 
         posIn, posExt, posLayer);
       // Get the depth
       float depth = 0.0;
       if (VecGetDim(posLayerFloat) > 2)
         depth = VecGet(posLayerFloat, 2);
       // Add the pixel to the layer
-      GBLayerAddPixelSafe(GBObjPodGetLayer(pod), (VecShort2D*)posLayer, 
+      GBLayerAddPixelSafe(GBObjPodLayer(pod), (VecShort2D*)posLayer, 
         &pixColor, depth); 
       // Free memory
       VecFree(&posExt);
@@ -2065,8 +2071,8 @@ void GBToolPlotterDrawSCurve(GBToolPlotter* that, SCurve* curve,
 // posInternal represents the position in the object internal space
 // posExternal represents the position in the global coordinates system
 // posLayer represents the position in the destination layer
-GBPixel _GBInkGet(GBInk* that, GBTool* tool, GBObjPod* pod, 
-  VecFloat* posInternal, VecFloat* posExternal, VecShort* posLayer) {
+GBPixel _GBInkGet(const GBInk* const that, const GBTool* const tool, const GBObjPod* const pod, 
+  const VecFloat* const posInternal, const VecFloat* const posExternal, const VecShort* const posLayer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2094,7 +2100,7 @@ GBPixel _GBInkGet(GBInk* that, GBTool* tool, GBObjPod* pod,
 // ---------------- GBInk --------------------------
 
 // Free the memory used by the GBInk 'that'
-void GBInkFree(GBInk* that) {
+void GBInkFree(GBInk* const that) {
   // Nothing to do
   (void)that;
 }
@@ -2102,7 +2108,7 @@ void GBInkFree(GBInk* that) {
 // ---------------- GBInkSolid --------------------------
 
 // Create a new GBInkSolid with color 'col'
-GBInkSolid* GBInkSolidCreate(GBPixel* col) {
+GBInkSolid* GBInkSolidCreate(const GBPixel* const col) {
 #if BUILDMODE == 0
   if (col == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2137,8 +2143,8 @@ void GBInkSolidFree(GBInkSolid** that) {
 // drawn with 'eye', 'hand', 'tool' and 'ink' in layer 'layer'
 // 'pos' must be a vector of 2 or more dimensions
 // If 'eye', 'hand, 'tool', 'ink' or 'layer' is null return null
-GBObjPod* _GBObjPodCreatePoint(VecFloat* pos, GBEye* eye, GBHand* hand, 
-  GBTool* tool, GBInk* ink, GBLayer* layer) {
+GBObjPod* _GBObjPodCreatePoint(VecFloat* const pos, GBEye* const eye, GBHand* const hand, 
+  GBTool* const tool, GBInk* const ink, GBLayer* const layer) {
 #if BUILDMODE == 0
   if (pos == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2182,8 +2188,8 @@ GBObjPod* _GBObjPodCreatePoint(VecFloat* pos, GBEye* eye, GBHand* hand,
 // drawn with 'eye', 'hand', 'tool' and 'ink' in layer 'layer'
 // 'shap' 's dimension must be 2 or more
 // If 'eye', 'hand, 'tool', 'ink' or 'layer' is null return null
-GBObjPod* _GBObjPodCreateShapoid(Shapoid* shap, GBEye* eye, 
-  GBHand* hand, GBTool* tool, GBInk* ink, GBLayer* layer) {
+GBObjPod* _GBObjPodCreateShapoid(Shapoid* const shap, GBEye* const eye, 
+  GBHand* const hand, GBTool* const tool, GBInk* const ink, GBLayer* const layer) {
 #if BUILDMODE == 0
   if (shap == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2227,8 +2233,8 @@ GBObjPod* _GBObjPodCreateShapoid(Shapoid* shap, GBEye* eye,
 // drawn with 'eye', 'hand', 'tool' and 'ink' in layer 'layer'
 // 'curve' 's dimension must be 2 or more
 // If 'eye', 'hand, 'tool', 'ink' or 'layer' is null return null
-GBObjPod* _GBObjPodCreateSCurve(SCurve* curve, GBEye* eye, 
-  GBHand* hand, GBTool* tool, GBInk* ink, GBLayer* layer) {
+GBObjPod* _GBObjPodCreateSCurve(SCurve* const curve, GBEye* const eye, 
+  GBHand* const hand, GBTool* const tool, GBInk* const ink, GBLayer* const layer) {
 #if BUILDMODE == 0
   if (curve == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2308,7 +2314,7 @@ void GBObjPodFree(GBObjPod** that) {
 
 // Create a new GenBrush with a GBSurface of type GBSurfaceTypeImage
 // and dimensions 'dim'
-GenBrush* GBCreateImage(VecShort2D* dim) {
+GenBrush* GBCreateImage(const VecShort2D* const dim) {
 #if BUILDMODE == 0
   if (dim == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2336,7 +2342,7 @@ GenBrush* GBCreateImage(VecShort2D* dim) {
 // of the image located at 'fileName' and dimensions equal to the 
 // dimensions of the image
 // If the image couldn't be loaded return NULL
-GenBrush* GBCreateFromFile(char* fileName) {
+GenBrush* GBCreateFromFile(const char* const fileName) {
   // Declare the new GenBrush
   GenBrush* ret = NULL;
   // Load the image in a surface
@@ -2378,7 +2384,7 @@ void GBFree(GenBrush** that) {
 }
 
 // Update the GBSurface of the GenBrush 'that'
-void GBUpdate(GenBrush* that) {
+void GBUpdate(GenBrush* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2417,7 +2423,7 @@ void GBUpdate(GenBrush* that) {
 
 // Update the content of the layer 'layer' of the GenBrush 'that'
 // Flush the content of the layer and redraw all the pod attached to it
-void GBUpdateLayer(GenBrush* that, GBLayer* layer) {
+void GBUpdateLayer(GenBrush* const that, GBLayer* const layer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeInvalidArg;
@@ -2445,13 +2451,13 @@ void GBUpdateLayer(GenBrush* that, GBLayer* layer) {
     // If the pod is attahced ot the requested layer
     if (pod->_layer == layer)
       // Redraw the pod
-      GBToolDraw(GBObjPodGetTool(pod), pod);
+      GBToolDraw(GBObjPodTool(pod), pod);
   } while (GSetIterStep(&iter));
 }
 
 // Render the GBSurface (save on disk, display on screen, ...) of
 // the GenBrush 'that'
-bool GBRender(GenBrush* that) {
+bool GBRender(GenBrush* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2489,8 +2495,8 @@ bool GBRender(GenBrush* that) {
 // GBRemovePod(that, elemA, NULL, handA, NULL, NULL, NULL) removes 
 // all the pods related to both the object 'elemA' AND 'handA'
 // If all the filters are null it removes all the pods
-void _GBRemovePod(GenBrush* that, void* obj, GBEye* eye, GBHand* hand, 
-  GBTool* tool, GBInk* ink, GBLayer* layer) {
+void _GBRemovePod(GenBrush* const that, const void* const obj, const GBEye* const eye, const GBHand* const hand, 
+  const GBTool* const tool, const GBInk* const ink, const GBLayer* const layer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2537,8 +2543,8 @@ void _GBRemovePod(GenBrush* that, void* obj, GBEye* eye, GBHand* hand,
 // affects all the pods related to both the object 'elemA' AND 'handA'
 // If all the filters are null it affects all the pods
 // If 'toEye' is null, do nothing
-void _GBSetPodEye(GenBrush* that, GBEye* toEye, void* obj, GBEye* eye, 
-  GBHand* hand, GBTool* tool, GBInk* ink, GBLayer* layer) {
+void _GBSetPodEye(GenBrush* const that, GBEye* const toEye, const void* const obj, const GBEye* const eye, 
+  const GBHand* const hand, const GBTool* const tool, const GBInk* const ink, const GBLayer* const layer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2577,8 +2583,8 @@ void _GBSetPodEye(GenBrush* that, GBEye* toEye, void* obj, GBEye* eye,
 // affects all the pods related to both the object 'elemA' AND 'handA'
 // If all the filters are null it affects all the pods
 // If 'toHand' is null, do nothing
-void _GBSetPodHand(GenBrush* that, GBHand* toHand, void* obj, 
-  GBEye* eye, GBHand* hand, GBTool* tool, GBInk* ink, GBLayer* layer) {
+void _GBSetPodHand(GenBrush* const that, GBHand* const toHand, const void* const obj, 
+  const GBEye* const eye, const GBHand* const hand, const GBTool* const tool, const GBInk* const ink, const GBLayer* const layer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2617,8 +2623,8 @@ void _GBSetPodHand(GenBrush* that, GBHand* toHand, void* obj,
 // all the pods related to both the object 'elemA' AND 'handA'
 // If all the filters are null it affects all the pods
 // If 'toTool' is null, do nothing
-void _GBSetPodTool(GenBrush* that, GBTool* toTool, void* obj, 
-  GBEye* eye, GBHand* hand, GBTool* tool, GBInk* ink, GBLayer* layer) {
+void _GBSetPodTool(GenBrush* const that, GBTool* const toTool, const void* const obj, 
+  const GBEye* const eye, const GBHand* const hand, const GBTool* const tool, const GBInk* const ink, const GBLayer* const layer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2657,8 +2663,8 @@ void _GBSetPodTool(GenBrush* that, GBTool* toTool, void* obj,
 // all the pods related to both the object 'elemA' AND 'handA'
 // If all the filters are null it affects all the pods
 // If 'toInk' is null, do nothing
-void _GBSetPodInk(GenBrush* that, GBInk* toInk, void* obj, 
-  GBEye* eye, GBHand* hand, GBTool* tool, GBInk* ink, GBLayer* layer) {
+void _GBSetPodInk(GenBrush* const that, GBInk* const toInk, const void* const obj, 
+  const GBEye* const eye, const GBHand* const hand, const GBTool* const tool, const GBInk* const ink, const GBLayer* const layer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2697,8 +2703,8 @@ void _GBSetPodInk(GenBrush* that, GBInk* toInk, void* obj,
 // affects all the pods related to both the object 'elemA' AND 'handA'
 // If all the filters are null it affects all the pods
 // If 'toLayer' is null, do nothing
-void _GBSetPodLayer(GenBrush* that, GBLayer* toLayer, void* obj, 
-  GBEye* eye, GBHand* hand, GBTool* tool, GBInk* ink, GBLayer* layer) {
+void _GBSetPodLayer(GenBrush* const that, GBLayer* const toLayer, const void* const obj, 
+  const GBEye* const eye, const GBHand* const hand, const GBTool* const tool, const GBInk* const ink, const GBLayer* const layer) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2730,7 +2736,7 @@ void _GBSetPodLayer(GenBrush* that, GBLayer* toLayer, void* obj,
 
 // Set to true the modified flag of the layers of pods attached to the
 // object 'obj' in the list of pods of the GenBrush 'that'
-void _GBNotifyChangeFromObj(GenBrush* that, void* obj) {
+void _GBNotifyChangeFromObj(GenBrush* const that, const void* const obj) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2754,10 +2760,10 @@ void _GBNotifyChangeFromObj(GenBrush* that, void* obj) {
     // Get the current pod
     GBObjPod* pod = GSetIterGet(&iter);
     // If the pod matches the filter
-    if (GBObjPodGetObj(pod) == obj) {
+    if (GBObjPodObj(pod) == obj) {
       // Reprocess the object
-      GBEyeProcess(GBObjPodGetEye(pod), pod);
-      GBHandProcess(GBObjPodGetHand(pod), pod);
+      GBEyeProcess(GBObjPodEye(pod), pod);
+      GBHandProcess(GBObjPodHand(pod), pod);
       // Set the layer flag
       GBLayerSetModified(pod->_layer, true);
     }
@@ -2766,7 +2772,7 @@ void _GBNotifyChangeFromObj(GenBrush* that, void* obj) {
 
 // Set to true the modified flag of the layers of pods attached to the
 // GBEye 'eye' in the list of pods of the GenBrush 'that'
-void _GBNotifyChangeFromEye(GenBrush* that, GBEye* eye) {
+void _GBNotifyChangeFromEye(GenBrush* const that, const GBEye* const eye) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2790,10 +2796,10 @@ void _GBNotifyChangeFromEye(GenBrush* that, GBEye* eye) {
     // Get the current pod
     GBObjPod* pod = GSetIterGet(&iter);
     // If the pod matches the filter
-    if (GBObjPodGetEye(pod) == eye) {
+    if (GBObjPodEye(pod) == eye) {
       // Reprocess the object
-      GBEyeProcess(GBObjPodGetEye(pod), pod);
-      GBHandProcess(GBObjPodGetHand(pod), pod);
+      GBEyeProcess(GBObjPodEye(pod), pod);
+      GBHandProcess(GBObjPodHand(pod), pod);
       // Set the layer flag
       GBLayerSetModified(pod->_layer, true);
     }
@@ -2802,7 +2808,7 @@ void _GBNotifyChangeFromEye(GenBrush* that, GBEye* eye) {
 
 // Set to true the modified flag of the layers of pods attached to the
 // GBInk 'ink' in the list of pods of the GenBrush 'that'
-void _GBNotifyChangeFromInk(GenBrush* that, GBInk* ink) {
+void _GBNotifyChangeFromInk(GenBrush* const that, const GBInk* const ink) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2834,7 +2840,7 @@ void _GBNotifyChangeFromInk(GenBrush* that, GBInk* ink) {
 
 // Set to true the modified flag of the layers of pods attached to the
 // GBHand 'hand' in the list of pods of the GenBrush 'that'
-void _GBNotifyChangeFromHand(GenBrush* that, GBHand* hand) {
+void _GBNotifyChangeFromHand(GenBrush* const that, const GBHand* const hand) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -2858,8 +2864,8 @@ void _GBNotifyChangeFromHand(GenBrush* that, GBHand* hand) {
     // Get the current pod
     GBObjPod* pod = GSetIterGet(&iter);
     // If the pod matches the filter
-    if (GBObjPodGetHand(pod) == hand) {
-      GBHandProcess(GBObjPodGetHand(pod), pod);
+    if (GBObjPodHand(pod) == hand) {
+      GBHandProcess(GBObjPodHand(pod), pod);
       // Set the layer flag
       GBLayerSetModified(pod->_layer, true);
     }
@@ -2868,7 +2874,7 @@ void _GBNotifyChangeFromHand(GenBrush* that, GBHand* hand) {
 
 // Set to true the modified flag of the layers of pods attached to the
 // GBTool 'tool' in the list of pods of the GenBrush 'that'
-void _GBNotifyChangeFromTool(GenBrush* that, GBTool* tool) {
+void _GBNotifyChangeFromTool(GenBrush* const that, const GBTool* const tool) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;

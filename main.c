@@ -9,8 +9,6 @@
 
 #define RANDOMSEED 0
 
-
-
 void UnitTestGBPixelBlendNormal() {
   GBPixel pixA;
   GBPixel pixB;
@@ -788,7 +786,7 @@ void UnitTestGBSurfaceGetLayerNbLayer() {
     PBErrCatch(GenBrushErr);
   }
   for (int iLayer = 0; iLayer< 3; ++iLayer) {
-    if (GBSurfaceGetLayer(&surf, iLayer) != layers[iLayer]) {
+    if (GBSurfaceLayer(&surf, iLayer) != layers[iLayer]) {
       GenBrushErr->_type = PBErrTypeUnitTestFailed;
       sprintf(GenBrushErr->_msg, "GBSurfaceGetLayer failed");
       PBErrCatch(GenBrushErr);
@@ -825,18 +823,18 @@ void UnitTestGBSurfaceSetLayersModified() {
   printf("UnitTestGBSurfaceSetLayersModified OK\n");
 }
 
-void UnitTestGBSurfaceSetLayerPos() {
+void UnitTestGBSurfaceSetLayerStackPos() {
   VecShort2D dim = VecShortCreateStatic2D();
   VecSet(&dim, 0, 4); VecSet(&dim, 1, 3); 
   GBSurface surf = GBSurfaceCreateStatic(GBSurfaceTypeImage, &dim);
   GBLayer* layers[3] = {NULL};
   for (int iLayer = 0; iLayer< 3; ++iLayer)
     layers[iLayer] = GBSurfaceAddLayer(&surf, &dim);
-  GBSurfaceSetLayerPos(&surf, layers[2], 0);
-  GBSurfaceSetLayerPos(&surf, layers[0], 2);
-  if (GBSurfaceGetLayer(&surf, 0) != layers[2] ||
-    GBSurfaceGetLayer(&surf, 1) != layers[1] ||
-    GBSurfaceGetLayer(&surf, 2) != layers[0] ||
+  GBSurfaceSetLayerStackPos(&surf, layers[2], 0);
+  GBSurfaceSetLayerStackPos(&surf, layers[0], 2);
+  if (GBSurfaceLayer(&surf, 0) != layers[2] ||
+    GBSurfaceLayer(&surf, 1) != layers[1] ||
+    GBSurfaceLayer(&surf, 2) != layers[0] ||
     GBLayerIsModified(layers[0]) != true ||
     GBLayerIsModified(layers[1]) != true ||
     GBLayerIsModified(layers[2]) != true) {
@@ -1151,7 +1149,7 @@ void UnitTestGBSurface() {
   UnitTestGBSurfaceAddRemoveLayer();
   UnitTestGBSurfaceGetLayerNbLayer();
   UnitTestGBSurfaceSetLayersModified();
-  UnitTestGBSurfaceSetLayerPos();
+  UnitTestGBSurfaceSetLayerStackPos();
   UnitTestGBSurfaceGetModifiedArea();
   UnitTestGBSurfaceUpdate();
   UnitTestGBSurfaceAddLayerFromFile();
@@ -2054,7 +2052,7 @@ void UnitTestGBHandDefaultProcess() {
     GBObjPodCreatePoint(&point, &eye, hand, &tool, &ink, &layer);
   GBHandProcess(hand, pod);
   if (GSetNbElem(&(pod->_handPoints)) == 0 ||
-    VecIsEqual(GSetFirst(&(pod->_handPoints)), 
+    VecIsEqual(GSetHead(&(pod->_handPoints)), 
       &point) == false) {
     ShapoidErr->_type = PBErrTypeUnitTestFailed;
     sprintf(ShapoidErr->_msg, "GBHandDefaultProcess failed");
@@ -2208,6 +2206,30 @@ void UnitTestGBToolPlotterDrawFacoid() {
     GBObjPodCreateShapoid(shap, &eye, &hand, tool, ink, layer);
   GBToolPlotterDraw(tool, pod);
   GBSurfaceUpdate(surf);
+#if BUILDMODE == 0
+  unsigned char check[400] = {
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,255,255, 0,0,255,255, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,255,255, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,255,255, 
+    0,0,255,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,255,255, 0,0,255,255, 0,0,255,255, 0,0,255,255, 
+    0,0,255,255, 0,0,255,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,255,255, 0,0,255,255, 0,0,255,255, 
+    0,0,255,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0
+    };
+#else
   unsigned char check[400] = {
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
@@ -2230,6 +2252,7 @@ void UnitTestGBToolPlotterDrawFacoid() {
     0,0,0,0, 0,0,0,0, 0,0,255,255, 0,0,255,255, 0,0,255,255, 
     0,0,255,255, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0
     };
+#endif
   for (int iPix = 0; iPix < GBSurfaceArea(surf); ++iPix) {
     if (surf->_finalPix[iPix]._rgba[GBPixelRed] != 
       check[iPix * 4] ||
@@ -2425,6 +2448,30 @@ void UnitTestGBToolPlotterDrawFacoid3D() {
     GBObjPodCreateShapoid(shap, &eye, &hand, tool, ink, layer);
   GBToolPlotterDraw(tool, pod);
   GBSurfaceUpdate(surf);
+#if BUILDMODE==0
+  unsigned char checka[400] = {
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,235,20, 0,0,215,40, 0,0,195,60, 
+    0,0,195,60, 0,0,195,60, 0,0,215,40, 0,0,235,20, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,235,20, 0,0,215,40, 0,0,195,60, 
+    0,0,195,60, 0,0,195,60, 0,0,215,40, 0,0,235,20, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,235,20, 0,0,215,40, 0,0,195,60, 
+    0,0,195,60, 0,0,195,60, 0,0,215,40, 0,0,235,20, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,235,20, 0,0,215,40, 0,0,195,60, 
+    0,0,195,60, 0,0,195,60, 0,0,215,40, 0,0,235,20, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0
+    };
+#else
   unsigned char checka[400] = {
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
@@ -2447,6 +2494,7 @@ void UnitTestGBToolPlotterDrawFacoid3D() {
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0
     };
+#endif
   for (int iPix = 0; iPix < GBSurfaceArea(surf); ++iPix) {
     if (surf->_finalPix[iPix]._rgba[GBPixelRed] != 
       checka[iPix * 4] ||
@@ -2790,27 +2838,27 @@ void UnitTestGBObjPodGetSet() {
     sprintf(GenBrushErr->_msg, "GBObjPodGetEyeObjAsShapoid failed");
     PBErrCatch(GenBrushErr);
   }
-  if (GBObjPodGetEye(pod) != (GBEye*)eye) {
+  if (GBObjPodEye(pod) != (GBEye*)eye) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
     sprintf(GenBrushErr->_msg, "GBObjPodGetEye failed");
     PBErrCatch(GenBrushErr);
   }
-  if (GBObjPodGetHand(pod) != (GBHand*)hand) {
+  if (GBObjPodHand(pod) != (GBHand*)hand) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
     sprintf(GenBrushErr->_msg, "GBObjPodGetHand failed");
     PBErrCatch(GenBrushErr);
   }
-  if (GBObjPodGetTool(pod) != tool) {
+  if (GBObjPodTool(pod) != tool) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
     sprintf(GenBrushErr->_msg, "GBObjPodGetTool failed");
     PBErrCatch(GenBrushErr);
   }
-  if (GBObjPodGetInk(pod) != ink) {
+  if (GBObjPodInk(pod) != ink) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
     sprintf(GenBrushErr->_msg, "GBObjPodGetInk failed");
     PBErrCatch(GenBrushErr);
   }
-  if (GBObjPodGetLayer(pod) != layer) {
+  if (GBObjPodLayer(pod) != layer) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
     sprintf(GenBrushErr->_msg, "GBObjPodGetLayer failed");
     PBErrCatch(GenBrushErr);
@@ -2832,27 +2880,27 @@ void UnitTestGBObjPodGetSet() {
   GBObjPodSetTool(pod, toolB);
   GBObjPodSetInk(pod, inkB);
   GBObjPodSetLayer(pod, layerB);
-  if (GBObjPodGetEye(pod) != (GBEye*)eyeB) {
+  if (GBObjPodEye(pod) != (GBEye*)eyeB) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
     sprintf(GenBrushErr->_msg, "GBObjPodSetEye failed");
     PBErrCatch(GenBrushErr);
   }
-  if (GBObjPodGetHand(pod) != (GBHand*)handB) {
+  if (GBObjPodHand(pod) != (GBHand*)handB) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
     sprintf(GenBrushErr->_msg, "GBObjPodSetHand failed");
     PBErrCatch(GenBrushErr);
   }
-  if (GBObjPodGetTool(pod) != toolB) {
+  if (GBObjPodTool(pod) != toolB) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
     sprintf(GenBrushErr->_msg, "GBObjPodSetTool failed");
     PBErrCatch(GenBrushErr);
   }
-  if (GBObjPodGetInk(pod) != inkB) {
+  if (GBObjPodInk(pod) != inkB) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
     sprintf(GenBrushErr->_msg, "GBObjPodSetInk failed");
     PBErrCatch(GenBrushErr);
   }
-  if (GBObjPodGetLayer(pod) != layerB) {
+  if (GBObjPodLayer(pod) != layerB) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
     sprintf(GenBrushErr->_msg, "GBObjPodSetLayer failed");
     PBErrCatch(GenBrushErr);
@@ -3227,7 +3275,7 @@ void UnitTestGenBrushGetLayerNbLayer() {
     PBErrCatch(GenBrushErr);
   }
   for (int iLayer = 0; iLayer< 3; ++iLayer) {
-    if (GBGetLayer(gb, iLayer) != layers[iLayer]) {
+    if (GBLay(gb, iLayer) != layers[iLayer]) {
       GenBrushErr->_type = PBErrTypeUnitTestFailed;
       sprintf(GenBrushErr->_msg, "GBGetLayer failed");
       PBErrCatch(GenBrushErr);
@@ -3244,11 +3292,11 @@ void UnitTestGenBrushSetLayerPos() {
   GBLayer* layers[3] = {NULL};
   for (int iLayer = 0; iLayer< 3; ++iLayer)
     layers[iLayer] = GBAddLayer(gb, &dim);
-  GBSetLayerPos(gb, layers[2], 0);
-  GBSetLayerPos(gb, layers[0], 2);
-  if (GBGetLayer(gb, 0) != layers[2] ||
-    GBGetLayer(gb, 1) != layers[1] ||
-    GBGetLayer(gb, 2) != layers[0] ||
+  GBSetLayerStackPos(gb, layers[2], 0);
+  GBSetLayerStackPos(gb, layers[0], 2);
+  if (GBLay(gb, 0) != layers[2] ||
+    GBLay(gb, 1) != layers[1] ||
+    GBLay(gb, 2) != layers[0] ||
     GBLayerIsModified(layers[0]) != true ||
     GBLayerIsModified(layers[1]) != true ||
     GBLayerIsModified(layers[2]) != true) {
@@ -3631,7 +3679,7 @@ void UnitTestGenBrushAddRemovePostProcessing() {
     sprintf(ShapoidErr->_msg, "GBAddPostProcess failed");
     PBErrCatch(ShapoidErr);
   }
-  if (GBGetPostProcess(gb, 0) != (void*)postA) {
+  if (GBPostProcess(gb, 0) != (void*)postA) {
     ShapoidErr->_type = PBErrTypeUnitTestFailed;
     sprintf(ShapoidErr->_msg, "GBGetPostProcess failed");
     PBErrCatch(ShapoidErr);
@@ -3714,7 +3762,7 @@ void UnitTestAll() {
 
 #elif BUILDWITHGRAPHICLIB == 1
 
-  void UnitTestPaintSurface(GBSurface* surf, VecShort2D* dim, 
+  void UnitTestPaintSurface(const GBSurface* const surf, VecShort2D* dim, 
     int green) {
     // Declare a vector to memorize position in the surface
     VecShort2D pos = VecShortCreateStatic2D();

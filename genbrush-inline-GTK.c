@@ -6,7 +6,7 @@
 #if BUILDMODE != 0
 inline
 #endif 
-void GBSurfaceAppClose(GBSurfaceApp* that) {
+void GBSurfaceAppClose(const GBSurfaceApp* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -22,7 +22,7 @@ void GBSurfaceAppClose(GBSurfaceApp* that) {
 #if BUILDMODE != 0
 inline
 #endif 
-void GBSurfaceAppRefresh(GBSurfaceApp* that) {
+void GBSurfaceAppRefresh(const GBSurfaceApp* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -39,7 +39,7 @@ void GBSurfaceAppRefresh(GBSurfaceApp* that) {
 #if BUILDMODE != 0
 inline
 #endif 
-GtkWidget* GBSurfaceWidgetGetGtkWidget(GBSurfaceWidget* that) {
+GtkWidget* GBSurfaceWidgetGtkWidget(const GBSurfaceWidget* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -54,7 +54,7 @@ GtkWidget* GBSurfaceWidgetGetGtkWidget(GBSurfaceWidget* that) {
 #if BUILDMODE != 0
 inline
 #endif 
-GtkWidget* GBSurfaceAppGetGtkWidget(GBSurfaceApp* that) {
+GtkWidget* GBSurfaceAppGtkWidget(const GBSurfaceApp* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -70,7 +70,7 @@ GtkWidget* GBSurfaceAppGetGtkWidget(GBSurfaceApp* that) {
 #if BUILDMODE != 0
 inline
 #endif 
-GtkWidget* GBGetGtkWidget(GenBrush* that) {
+GtkWidget* GBGetGtkWidget(const GenBrush* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -79,7 +79,7 @@ GtkWidget* GBGetGtkWidget(GenBrush* that) {
   }
 #endif
   if (GBSurfaceGetType(that->_surf) == GBSurfaceTypeWidget)
-    return GBSurfaceWidgetGetGtkWidget((GBSurfaceWidget*)(that->_surf));
+    return GBSurfaceWidgetGtkWidget((GBSurfaceWidget*)(that->_surf));
   else
     return NULL;
 }

@@ -95,7 +95,7 @@ void GBSurfaceAppCallbackActivate(GtkApplication* app,
 // dimensions 'dim'
 // The surface is initialized with one layer of white pixels
 // (rgba = {255})
-GBSurfaceApp* GBSurfaceAppCreate(VecShort2D* dim, char* title) {
+GBSurfaceApp* GBSurfaceAppCreate(const VecShort2D* const dim, const char* const title) {
 #if BUILDMODE == 0
   if (dim == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -136,7 +136,7 @@ GBSurfaceApp* GBSurfaceAppCreate(VecShort2D* dim, char* title) {
 // The interface of the 'idleFun' is 
 // gint tick(gpointer data)
 // the argument of 'idleFun' is a pointer to GBSurfaceApp
-void GBSurfaceSetIdle(GBSurfaceApp* that, 
+void GBSurfaceSetIdle(const GBSurfaceApp* const that, 
   gint (*idleFun)(gpointer), int idleMs) {
 #if BUILDMODE == 0
   if (that == NULL) {
@@ -158,7 +158,7 @@ void GBSurfaceSetIdle(GBSurfaceApp* that,
 // Render the GBSurfaceApp 'that'
 // This function block the execution until the app is killed
 // Return true if the status of the app when closed was 0, false else
-bool GBSurfaceAppRender(GBSurfaceApp* that) {
+bool GBSurfaceAppRender(const GBSurfaceApp* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -191,7 +191,7 @@ void GBSurfaceWidgetFree(GBSurfaceWidget** that) {
 }
 
 // Create a GenBrush with a blank GBSurfaceApp
-GenBrush* GBCreateApp(VecShort2D* dim, char* title) {
+GenBrush* GBCreateApp(const VecShort2D* const dim, const char* const title) {
 #if BUILDMODE == 0
   if (dim == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -219,7 +219,7 @@ GenBrush* GBCreateApp(VecShort2D* dim, char* title) {
 // gint tick(gpointer data)
 // the argument of 'idleFun' is a pointer to GBSurfaceApp
 // If the surface of the app is not a GBSurfaceTypeApp, do nothing
-void GBSetIdle(GenBrush* that, gint (*idleFun)(gpointer), int idleMs) {
+void GBSetIdle(GenBrush* that const , gint (*idleFun)(gpointer), const int idleMs) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -239,7 +239,7 @@ void GBSetIdle(GenBrush* that, gint (*idleFun)(gpointer), int idleMs) {
 // Create a GenBrush with a blank GBSurfaceWidget and an eye
 // of type 'eyeType'
 // If 'eyeType' is GBEyeTypeOrtho the view is front
-GenBrush* GBCreateWidget(VecShort2D* dim) {
+GenBrush* GBCreateWidget(const VecShort2D* const dim) {
 #if BUILDMODE == 0
   if (dim == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -257,7 +257,7 @@ GenBrush* GBCreateWidget(VecShort2D* dim) {
 }
 
 // Create a new GBSurfaceWidget with dimensions 'dim'
-GBSurfaceWidget* GBSurfaceWidgetCreate(VecShort2D* dim) {
+GBSurfaceWidget* GBSurfaceWidgetCreate(const VecShort2D* const dim) {
 #if BUILDMODE == 0
   if (dim == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -298,7 +298,7 @@ gboolean GBSurfaceWidgetCallbackDraw(GtkWidget *widget, cairo_t *cr,
 }
 
 // Render the GBSurfaceWidget 'that'
-void GBSurfaceWidgetRender(GBSurfaceWidget* that) {
+void GBSurfaceWidgetRender(const GBSurfaceWidget* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;

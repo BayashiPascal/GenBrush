@@ -40,7 +40,7 @@ typedef struct GBSurfaceWidget {
 
 // Create a new GBSurfaceApp with title 'title' and 
 // dimensions 'dim'
-GBSurfaceApp* GBSurfaceAppCreate(VecShort2D* dim, char* title);
+GBSurfaceApp* GBSurfaceAppCreate(const VecShort2D* const dim, const char* const title);
 
 // Free the GBSurfaceApp 'that'
 void GBSurfaceAppFree(GBSurfaceApp** that);
@@ -48,30 +48,30 @@ void GBSurfaceAppFree(GBSurfaceApp** that);
 // Render the GBSurfaceApp 'that'
 // This function block the execution until the app is killed
 // Return true if the status of the app when closed was 0, false else
-bool GBSurfaceAppRender(GBSurfaceApp* that);
+bool GBSurfaceAppRender(const GBSurfaceApp* const that);
 
 // Close the GBSurfaceApp 'that'
 #if BUILDMODE != 0
 inline
 #endif 
-void GBSurfaceAppClose(GBSurfaceApp* that);
+void GBSurfaceAppClose(const GBSurfaceApp* const that);
 
 // Refresh the content of the GBSurfaceApp 'that'
 #if BUILDMODE != 0
 inline
 #endif 
-void GBSurfaceAppRefresh(GBSurfaceApp* that);
+void GBSurfaceAppRefresh(const GBSurfaceApp* const that);
 
 // Set the idle function of the GBSurfaceApp 'that' to 'idleFun' 
 // with a timeout of 'idleMs'
 // The interface of the 'idleFun' is 
 // gint tick(gpointer data)
 // the argument of 'idleFun' is a pointer to GBSurfaceApp
-void GBSurfaceSetIdle(GBSurfaceApp* that, 
+void GBSurfaceSetIdle(const GBSurfaceApp* const that, 
   gint (*idleFun)(gpointer), int idleMs);
 
 // Create a new GBSurfaceWidget with dimensions 'dim'
-GBSurfaceWidget* GBSurfaceWidgetCreate(VecShort2D* dim);
+GBSurfaceWidget* GBSurfaceWidgetCreate(const VecShort2D* const dim);
 
 // Free the GBSurfaceWidget 'that'
 void GBSurfaceWidgetFree(GBSurfaceWidget** that);
@@ -80,19 +80,19 @@ void GBSurfaceWidgetFree(GBSurfaceWidget** that);
 #if BUILDMODE != 0
 inline
 #endif 
-GtkWidget* GBSurfaceWidgetGetGtkWidget(GBSurfaceWidget* that);
+GtkWidget* GBSurfaceWidgetGtkWidget(const GBSurfaceWidget* const that);
 
 // Return the GtkWidget of the GBSurfaceApp 'that'
 #if BUILDMODE != 0
 inline
 #endif 
-GtkWidget* GBSurfaceAppGetGtkWidget(GBSurfaceApp* that);
+GtkWidget* GBSurfaceAppGtkWidget(const GBSurfaceApp* const that);
 
 // Render the GBSurfaceWidget 'that'
-void GBSurfaceWidgetRender(GBSurfaceWidget* that);
+void GBSurfaceWidgetRender(const GBSurfaceWidget* const that);
 
 // Create a GenBrush with a blank GBSurfaceApp
-GenBrush* GBCreateApp(VecShort2D* dim, char* title);
+GenBrush* GBCreateApp(const VecShort2D* const dim, const char* const title);
 
 // Set the idle function of the GBSurfaceApp of the GenBrush 'that' 
 // to 'idleFun' with a timeout of 'idleMs'
@@ -100,14 +100,14 @@ GenBrush* GBCreateApp(VecShort2D* dim, char* title);
 // gint tick(gpointer data)
 // the argument of 'idleFun' is a pointer to GBSurfaceApp
 // If the surface of the app is not a GBSurfaceTypeApp, do nothing
-void GBSetIdle(GenBrush* that, gint (*idleFun)(gpointer), int idleMs);
+void GBSetIdle(GenBrush* that const , gint (*idleFun)(gpointer), const int idleMs);
 
 // Create a GenBrush with a blank GBSurfaceWidget
-GenBrush* GBCreateWidget(VecShort2D* dim);
+GenBrush* GBCreateWidget(const VecShort2D* const dim);
 
 // Return the GtkWidget of the GenBrush 'that', or NULL if the surface
 // of the GenBursh is not a GBSurfaceWidget 
 #if BUILDMODE != 0
 inline
 #endif 
-GtkWidget* GBGetGtkWidget(GenBrush* that);
+GtkWidget* GBGetGtkWidget(const GenBrush* const that);
