@@ -1341,7 +1341,7 @@ VecFloat* GBEyeGetProjectedPoint(const GBEye* const that,
   // Create a VecFloat3D to perform the product with the projection
   // matrix
   VecFloat3D v = VecFloatCreateStatic3D();
-  for (int i = MIN(VecGetDim(point), 3); i--;)
+  for (long i = MIN(VecGetDim(point), 3); i--;)
     VecSet(&v, i, VecGet(point, i));
   // Perform the product
   VecFloat* w = MatGetProdVec(that->_proj, &v);
@@ -1349,7 +1349,7 @@ VecFloat* GBEyeGetProjectedPoint(const GBEye* const that,
   for (int i = 2; i--;)
     VecSet(w, i, VecGet(w, i) + VecGet(&(that->_orig), i));
   // Copy the values into the result
-  for (int i = MIN(VecGetDim(point), 3); i--;)
+  for (long i = MIN(VecGetDim(point), 3); i--;)
     VecSet(ret, i, VecGet(w, i));
   // Free the memory used for the product
   VecFree(&w);
@@ -1973,7 +1973,7 @@ void GBToolPlotterDrawShapoid(const GBToolPlotter* const that,
   VecShort* posLayer = VecClone(from);
   VecFloat* posLayerFloat = VecFloatCreate(VecGetDim(posLayer));
   do {
-    for (int iAxis = VecGetDim(posLayer); iAxis--;)
+    for (long iAxis = VecGetDim(posLayer); iAxis--;)
       VecSet(posLayerFloat, iAxis, 
         (float)VecGet(posLayer, iAxis) + 0.5);
     // If this pixel is inside the Shapoid
@@ -2045,7 +2045,7 @@ void GBToolPlotterDrawSCurve(const GBToolPlotter* const that,
     float p = SCurveIterGetPos(&iter);
     // Get the position in layer
     VecFloat* posLayerFloat = SCurveIterGet(&iter);
-    for (int iAxis = VecGetDim(posLayer); iAxis--;)
+    for (long iAxis = VecGetDim(posLayer); iAxis--;)
       VecSet(posLayer, iAxis, 
         (short)round(VecGet(posLayerFloat, iAxis)));
     // Ensure the position is different (at pixel level) with the 
@@ -2172,7 +2172,7 @@ GBObjPod* _GBObjPodCreatePoint(VecFloat* const pos, GBEye* const eye,
   if (VecGetDim(pos) < 2) {
     GenBrushErr->_type = PBErrTypeInvalidArg;
     sprintf(GenBrushErr->_msg, 
-    "'pos' 's dimension is invalid (%d>=2)",
+    "'pos' 's dimension is invalid (%ld>=2)",
     VecGetDim(pos));
     PBErrCatch(GenBrushErr);
   }
