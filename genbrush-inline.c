@@ -728,7 +728,7 @@ void GBSurfaceSetFinalPixelSafe(GBSurface* const that,
 #if BUILDMODE != 0
 inline
 #endif 
-int GBSurfaceArea(const GBSurface* const that) {
+long GBSurfaceArea(const GBSurface* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
