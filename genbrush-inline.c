@@ -906,7 +906,7 @@ GBLayer* GBSurfaceLayer(const GBSurface* const that, const int iLayer) {
   }
   if (iLayer < 0 || iLayer >= GSetNbElem(&(that->_layers))) {
     GenBrushErr->_type = PBErrTypeInvalidArg;
-    sprintf(GenBrushErr->_msg, "'iLayer' is invalid (0<=%d<%d)",
+    sprintf(GenBrushErr->_msg, "'iLayer' is invalid (0<=%d<%ld)",
       iLayer, GSetNbElem(&(that->_layers)));
     PBErrCatch(GenBrushErr);
   }
@@ -976,7 +976,7 @@ void GBSurfaceSetLayerStackPos(GBSurface* const that,
   }
   if (pos < 0 || pos >= GSetNbElem(&(that->_layers))) {
     GenBrushErr->_type = PBErrTypeInvalidArg;
-    sprintf(GenBrushErr->_msg, "'pos' is invalid (0<=%d<%d)",
+    sprintf(GenBrushErr->_msg, "'pos' is invalid (0<=%d<%ld)",
       pos, GSetNbElem(&(that->_layers)));
     PBErrCatch(GenBrushErr);
   }
@@ -2338,7 +2338,7 @@ GBLayer* GBLay(const GenBrush* const that, const int iLayer) {
   if (iLayer < 0 || 
     iLayer >= GSetNbElem(GBSurfaceLayers(GBSurf(that)))) {
     GenBrushErr->_type = PBErrTypeInvalidArg;
-    sprintf(GenBrushErr->_msg, "'iLayer' is invalid (0<=%d<%d)",
+    sprintf(GenBrushErr->_msg, "'iLayer' is invalid (0<=%d<%ld)",
       iLayer, GSetNbElem(GBSurfaceLayers(GBSurf(that))));
     PBErrCatch(GenBrushErr);
   }
