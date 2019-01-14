@@ -103,7 +103,12 @@ void GBEyeIsometricGetProjVal(const GBEyeIsometric* const that,
 
 // Normalize in hue the final pixels of the GBSurface 'that'
 void GBSurfaceNormalizeHue(GBSurface* const that);
-  
+
+// Return a clone of the GenBrush 'that' with its final surface scaled
+// to the dimensions 'dim' according to the scaling method AvgNeighbour
+GenBrush* GBScaleAvgNeighbour(const GenBrush* const that, 
+  const VecShort2D* const dim);
+    
 // ================ Functions implementation ====================
 
 // Function to decode rgba values when loading a TGA file
@@ -2941,6 +2946,186 @@ void _GBNotifyChangeFromTool(GenBrush* const that,
   } while (GSetIterStep(&iter));
 }
 
+// Return a clone of the GenBrush 'that' with its final surface scaled
+// to the dimensions 'dim' according to the scaling method 'scaleMethod'
+GenBrush* GBScale(const GenBrush* const that, 
+  const VecShort2D* const dim, const GBScaleMethod scaleMethod) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (dim == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'dim' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (VecGet(dim, 0) <= 0 || VecGet(dim, 1) <= 0) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'dim' is invalid (%d>0,%d>0)",
+      VecGet(dim, 0), VecGet(dim, 1));
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  // Declare the scaled version of the GenBrush
+  GenBrush* scaledGB = NULL;
+  // Call the appropriate scaling method
+  switch (scaleMethod) {
+    case GBScaleMethod_AvgNeighbour:
+      scaledGB = GBScaleAvgNeighbour(that, dim);
+      break;
+    default:
+      break;
+  }
+  // Return the scaled version of the GenBrush
+  return scaledGB;
+}
+
+// Return a clone of the GenBrush 'that' with its final surface scaled
+// to the dimensions 'dim' according to the scaling method AvgNeighbour
+GenBrush* GBScaleAvgNeighbour(const GenBrush* const that, 
+  const VecShort2D* const dim) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (dim == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'dim' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (VecGet(dim, 0) <= 0 || VecGet(dim, 1) <= 0) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'dim' is invalid (%d>0,%d>0)",
+      VecGet(dim, 0), VecGet(dim, 1));
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  // Declare the scaled version of the GenBrush
+  GenBrush* scaledGB = GBCreateImage(dim);
+  // Calculate the scale factors along each axis
+  VecFloat2D scaleFactor = VecFloatCreateStatic2D();
+  VecSet(&scaleFactor, 0, 
+    (float)VecGet(dim, 0) / (float)VecGet(GBDim(that), 0));
+  VecSet(&scaleFactor, 1, 
+    (float)VecGet(dim, 1) / (float)VecGet(GBDim(that), 1));
+  // Declare variables to calculate the average of pixels in the 
+  // original image
+  int nbPix = 0;
+  VecFloat* avgPix = VecFloatCreate(4);
+  // Declare a variable to loop on the scaled image
+  VecShort2D posScaled = VecShortCreateStatic2D();
+  // Loop on pixels of the scaled image
+  do {
+    // Get the floating point position in the original image of
+    // the lower left and upper right of the 3x3 cell around for this
+    // pixel
+    VecFloat2D posLLFloat = VecFloatCreateStatic2D();
+    VecSet(&posLLFloat, 0, 
+      (float)(VecGet(&posScaled, 0) - 1) / VecGet(&scaleFactor, 0));
+    VecSet(&posLLFloat, 1, 
+      (float)(VecGet(&posScaled, 1) - 1) / VecGet(&scaleFactor, 1));
+    VecFloat2D posURFloat = VecFloatCreateStatic2D();
+    VecSet(&posURFloat, 0, 
+      (float)(VecGet(&posScaled, 0) + 1) / VecGet(&scaleFactor, 0));
+    VecSet(&posURFloat, 1, 
+      (float)(VecGet(&posScaled, 1) + 1) / VecGet(&scaleFactor, 1));
+    // Get the integer position in the original image of
+    // the lower left and upper right of the 3x3 cell around for this
+    // pixel
+    // Ensure the positions are inside the original image
+    VecShort2D posLL = VecShortCreateStatic2D();
+    VecSet(&posLL, 0, MAX(0, (short)floor(VecGet(&posLLFloat, 0))));
+    VecSet(&posLL, 1, MAX(0, (short)floor(VecGet(&posLLFloat, 1))));
+    VecShort2D posUR = VecShortCreateStatic2D();
+    VecSet(&posUR, 0, 
+      MIN(VecGet(GBDim(that), 0), (short)floor(VecGet(&posURFloat, 0))));
+    VecSet(&posUR, 1, 
+      MIN(VecGet(GBDim(that), 1), (short)floor(VecGet(&posURFloat, 1))));
+    // Init the variables to calculate the average of pixels in the 
+    // original image
+    nbPix = 0;
+    VecSetNull(avgPix);
+    // Declare a variable to loop on the original image
+    VecShort2D posOrig = posLL;
+    // Loop on the pixels of the original image
+    do {
+      // Get the pixel in the original image
+      const GBPixel* pix = GBSurfaceFinalPixel(GBSurf(that), &posOrig);
+      // Calculate the average pixel
+      ++nbPix;
+      for (int i = 4; i--;)
+        VecSet(avgPix, i, VecGet(avgPix, i) + (float)(pix->_rgba[i]));
+    } while (VecShiftStep(&posOrig, &posLL, &posUR));
+    // Calculate the average pixel
+    VecScale(avgPix, 1.0 / (float)nbPix);
+    // Get the pixel in the original image
+    GBPixel* pixScaled = 
+      GBSurfaceFinalPixel(GBSurf(scaledGB), &posScaled);
+    // Update the pixel in the scaled image with the average pixel
+    for (int i = 4; i--;)
+      pixScaled->_rgba[i] = (unsigned char)VecGet(avgPix, i);
+  } while (VecStep(&posScaled, dim));
+  // Free memory
+  VecFree(&avgPix);
+  // Return the scaled version of the GenBrush
+  return scaledGB;
+}
+
+// Return a clone of the GenBrush 'that' with its final surface cropped
+// to the dimensions 'dim' from the lower right position 'posLR'
+// If the cropping area is partially or totally outside of the 
+// original image, pixels outside of the image are filled with 
+// 'fillPix' or left to their default value (cf GBSurfaceCreate) if
+// 'fillPix is NULL
+GenBrush* GBCrop(const GenBrush* const that, 
+  const VecShort2D* const posLR, const VecShort2D* const dim,
+  const GBPixel* const fillPix) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (dim == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'dim' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (VecGet(dim, 0) <= 0 || VecGet(dim, 1) <= 0) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'dim' is invalid (%d>0,%d>0)",
+      VecGet(dim, 0), VecGet(dim, 1));
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  // Declare the cropped version of the GenBrush
+  GenBrush* croppedGB = GBCreateImage(dim);
+  // Declare a variable to loop on the cropped image
+  VecShort2D posCropped = VecShortCreateStatic2D();
+  // Loop on pixels of the scaled image
+  do {
+    // Get the position in the original image
+    VecShort2D posOrig = VecGetOp(posLR, 1, &posCropped, 1);
+    // Get the pixel in the original image
+    const GBPixel* pixOrig = 
+      GBSurfaceFinalPixelSafe(GBSurf(that), &posOrig);
+    // If the pixel is inside the image
+    if (pixOrig != NULL) {
+      // Copy the pixel in the cropped image
+      GBSurfaceSetFinalPixel(GBSurf(croppedGB), &posCropped, pixOrig);
+    } else if (fillPix != NULL) {
+      // Copy the filling pixel in the cropped image
+      GBSurfaceSetFinalPixel(GBSurf(croppedGB), &posCropped, fillPix);
+    }
+  } while (VecStep(&posCropped, dim));
+  // Return the cropped version of the GenBrush
+  return croppedGB;
+}
+    
 // ================ GTK Functions ====================
 #if BUILDWITHGRAPHICLIB == 1
   #include "genbrush-GTK.c"

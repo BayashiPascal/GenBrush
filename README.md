@@ -1,5 +1,40 @@
 # GenBrush
+
 GenBrush is a C library providing structures and functions for creating 2D/3D, bitmap/vector, still/animated graphics on various supports.
+
+It can be use as a monolithic library, or as an interface with another graphical library (Cairo/GTK). The choice can be made through a single compilation option.
+
+GenBrush is based on the following model: the scene to be represented graphically is composed of Objects viewed by an Eye, interpreted by a Hand and recreated with a Tool applying an Ink on a Surface made of Layers.
+
+The currently available implementations for these entities are:
+* Object: Point (VecFloat), SCurve, Shapoid
+* Eye: Orthographic, Isometric
+* Hand: Default
+* Tool: PixelPlotter
+* Ink: Solid
+* Surface: Image (TGA), GBApp, GBWidget
+* Layer: divided into background, inside and foreground layers; blending modes: Default (overwritting), Normal, Over
+For details refer to the following sections.
+
+The library can easily be extended to match the user needs. Foreseen extensions of the entities are for example:
+* Object: BBody, ...
+* Eye: Perspective, ...
+* Hand: Human (approximation of the viewed object), ...
+* Tool: Pen, Brush, ...
+* Ink: Generic (BBody), UVMapping
+* Surface: Full support of TGA, other image formats, innterface with Cairo only, ...
+* Layer: other blending modes, ...
+
+A graphic can then be created with the GenBrush library by describing the scene as a set of Pods, which are combinations of an Object, an Eye, a Hand, a Tool, an Ink and a Layer. The rendering of each Pod processes sequentially the original Object through the other entities to generates pixels into the Layer. Once all the Pods have been processed, the Layers are blended to generate RGBA final pixels in the Surface. The scene description can be modified after creation. Pods use references to entities, meaning that if a parameter of, for example, an Ink is modified all the Pods attached to this Ink will be recalculated at the next rendering.
+
+Several rendering of the same scene are optimized to recalculate only the final pixels affected by the entities which has been modified since the previous rendering. It is the reponsibility of the user to notify GenBrush when an entity has been modified.
+
+The user can apply post processing to the surface at the end of each rendering. Currently implemented post processing are:
+* Normalization by hue
+
+Finally, the user can create scaled or cropped copies of a Genbrush.
+
+The GenBrush library uses the ```PBErr```, ```PBMath```, ```GSet```, ```Shapoid```, ```BCurve``` libraries, and GTK if compiled as an interface for this library.
 
 ## How to install this repository
 1) Create a directory which will contains this repository and all the repositories it is depending on. Lets call it "Repos"

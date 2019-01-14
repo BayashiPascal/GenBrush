@@ -33,10 +33,12 @@ A graphic can then be created with the GenBrush library by describing the scene 
 
 Several rendering of the same scene are optimized to recalculate only the final pixels affected by the entities which has been modified since the previous rendering. It is the reponsibility of the user to notify GenBrush when an entity has been modified.\\
 
-Finally, the user can apply post processing to the surface at the end of each rendering. Currently implemented post processing are:\\
+The user can apply post processing to the surface at the end of each rendering. Currently implemented post processing are:\\
 \begin{itemize}
 \item Normalization by hue
 \end{itemize}
+
+Finally, the user can create scaled or cropped copies of a Genbrush.\\
 
 The GenBrush library uses the \begin{ttfamily}PBErr\end{ttfamily}, \begin{ttfamily}PBMath\end{ttfamily}, \begin{ttfamily}GSet\end{ttfamily}, \begin{ttfamily}Shapoid\end{ttfamily}, \begin{ttfamily}BCurve\end{ttfamily} libraries, and GTK if compiled as an interface for this library.\\
 
@@ -475,5 +477,33 @@ GBSurfaceNormalizeHueRef.tga:\\
 \begin{center}
 \begin{figure}[H]
 \centering\includegraphics[width=6cm]{./GBSurfaceNormalizeHueRef.png}\\
+\end{figure}
+\end{center}
+
+GBScaleCropTest.tga:\\
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=6cm]{./GBScaleCropTest.png}\\
+\end{figure}
+\end{center}
+
+GBScaleTestAvgNeighbourRef.tga:\\
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=6cm]{./GBScaleTestAvgNeighbourRef.png}\\
+\end{figure}
+\end{center}
+
+GBCropTestRef01.tga:\\
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=6cm]{./GBCropTestRef01.png}\\
+\end{figure}
+\end{center}
+
+GBCropTestRef02.tga:\\
+\begin{center}
+\begin{figure}[H]
+\centering\includegraphics[width=6cm]{./GBCropTestRef02.png}\\
 \end{figure}
 \end{center}

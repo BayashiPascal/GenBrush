@@ -290,6 +290,11 @@ typedef struct GBObjPod {
   GBLayer* _layer;
 } GBObjPod;
 
+typedef enum GBScaleMethod {
+  GBScaleMethod_AvgNeighbour
+} GBScaleMethod;
+#define GBScaleMethod_Default GBScaleMethod_AvgNeighbour
+
 typedef struct GenBrush {
   // Surface of the GenBrush
   GBSurface* _surf;
@@ -1620,6 +1625,21 @@ int GBGetNbPostProcs(const GenBrush* const that);
 inline
 #endif 
 void GBRemoveAllPod(GenBrush* const that);
+
+// Return a clone of the GenBrush 'that' with its final surface scaled
+// to the dimensions 'dim' according to the scaling method 'scaleMethod'
+GenBrush* GBScale(const GenBrush* const that, 
+  const VecShort2D* const dim, const GBScaleMethod scaleMethod);
+
+// Return a clone of the GenBrush 'that' with its final surface cropped
+// to the dimensions 'dim' from the lower right position 'posLR'
+// If the cropping area is partially or totally outside of the 
+// original image, pixels outside of the image are filled with 
+// 'fillPix' or left to their default value (cf GBSurfaceCreate) if
+// 'fillPix is NULL
+GenBrush* GBCrop(const GenBrush* const that, 
+  const VecShort2D* const posLR, const VecShort2D* const dim,
+  const GBPixel* const fillPix);
 
 #if BUILDWITHGRAPHICLIB == 1
 #include "genbrush-GTK.h"

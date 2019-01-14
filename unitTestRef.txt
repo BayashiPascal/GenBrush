@@ -86,5 +86,6 @@ UnitTestGenBrushTouchLayers OK
 UnitTestGenBrushCreateFromFile OK
 UnitTestGenBrushIsSameAs OK
 UnitTestGenBrushAddRemovePostProcessing
+UnitTestGenBrushScaleCrop OK
 UnitTestGenBrush OK
 UnitTestAll OK

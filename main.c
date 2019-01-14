@@ -3716,6 +3716,48 @@ void UnitTestGenBrushAddRemovePostProcessing() {
   GBSurfaceImageFree(&ref);
   printf("UnitTestGenBrushAddRemovePostProcessing\n");
 }
+
+void UnitTestGenBrushScaleCrop() {
+  GenBrush* gb = GBCreateFromFile("./GBScaleCropTest.tga");
+  VecShort2D dim = VecShortCreateStatic2D();
+  VecSet(&dim, 0, 100); VecSet(&dim, 1, 50); 
+  GenBrush* gbScaled = GBScale(gb, &dim, GBScaleMethod_AvgNeighbour);
+  GenBrush* gbRef = GBCreateFromFile("./GBScaleTestAvgNeighbourRef.tga");
+  if (!GBSurfaceIsSameAs(GBSurf(gbScaled), GBSurf(gbRef))) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBScaleAvgNeighbour failed");
+    PBErrCatch(ShapoidErr);
+  }
+  GBFree(&gbScaled);
+  GBFree(&gbRef);
+  VecShort2D pos = VecShortCreateStatic2D();
+  VecSet(&pos, 0, -5); VecSet(&pos, 1, -5); 
+  VecSet(&dim, 0, 50); VecSet(&dim, 1, 50); 
+  GenBrush* gbCropped = GBCrop(gb, &pos, &dim, NULL);
+  gbRef = GBCreateFromFile("./GBCropTestRef01.tga");
+  if (!GBSurfaceIsSameAs(GBSurf(gbCropped), GBSurf(gbRef))) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBCrop failed (1)");
+    PBErrCatch(ShapoidErr);
+  }
+  GBFree(&gbRef);
+  GBFree(&gbCropped);
+  VecSet(&pos, 0, 30); VecSet(&pos, 1, 30); 
+  VecSet(&dim, 0, 50); VecSet(&dim, 1, 50); 
+  GBPixel fillPix = GBColorBlue;
+  gbCropped = GBCrop(gb, &pos, &dim, &fillPix);
+  gbRef = GBCreateFromFile("./GBCropTestRef02.tga");
+  if (!GBSurfaceIsSameAs(GBSurf(gbCropped), GBSurf(gbRef))) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBCrop failed (2)");
+    PBErrCatch(ShapoidErr);
+  }
+  GBFree(&gbRef);
+  GBFree(&gbCropped);
+  GBFree(&gb);
+  printf("UnitTestGenBrushScaleCrop OK\n");
+}
+
 void UnitTestGenBrush() {
   UnitTestGenBrushCreateFree();
   UnitTestGenBrushGetSet();
@@ -3733,6 +3775,7 @@ void UnitTestGenBrush() {
   UnitTestGenBrushCreateFromFile();
   UnitTestGenBrushIsSameAs();
   UnitTestGenBrushAddRemovePostProcessing();
+  UnitTestGenBrushScaleCrop();
   
   printf("UnitTestGenBrush OK\n");
 }
