@@ -1,5 +1,6 @@
 UnitTestGBPixelBlendNormal OK
 UnitTestGBPixelBlendOver OK
+UnitTestGBPixelIsSame OK
 UnitTestGBPixel OK
 UnitTestGBLayerCreateFree OK
 UnitTestGBLayerArea OK

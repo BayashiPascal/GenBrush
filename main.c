@@ -86,9 +86,23 @@ void UnitTestGBPixelBlendOver() {
   printf("UnitTestGBPixelBlendOver OK\n");
 }
 
+void UnitTestGBPixelIsSame() {
+  GBPixel blue = GBColorBlue;
+  GBPixel red = GBColorRed;
+  GBPixel rouge = GBColorRed;
+  if (GBPixelIsSame(&blue, &red) ||
+    !GBPixelIsSame(&rouge, &red)) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBPixelIsSame failed");
+    PBErrCatch(GenBrushErr);
+  }
+  printf("UnitTestGBPixelIsSame OK\n");
+}
+
 void UnitTestGBPixel() {
   UnitTestGBPixelBlendNormal();
   UnitTestGBPixelBlendOver();
+  UnitTestGBPixelIsSame();
   printf("UnitTestGBPixel OK\n");
 }
 

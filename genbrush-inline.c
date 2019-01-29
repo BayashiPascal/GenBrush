@@ -2,6 +2,28 @@
 
 // ================ Functions implementation ====================
 
+// ---------------- GBPixel --------------------------
+
+// Return true if the GBPixel 'that' and 'tho' are the same, else false.
+#if BUILDMODE != 0
+inline
+#endif 
+bool GBPixelIsSame(const GBPixel* const that, const GBPixel* const tho) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (tho == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'tho' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  return (memcmp(that, tho, sizeof(GBPixel)) == 0);
+}
+
 // ---------------- GBLayer --------------------------
 
 // Get the area of the layer (width * height)

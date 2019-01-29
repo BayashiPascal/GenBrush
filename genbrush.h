@@ -324,6 +324,12 @@ void GBPixelBlendOver(GBPixel* const that, const GBPixel* const pix);
 // If the stack is empty, return a transparent pixel
 GBPixel GBPixelStackBlend(const GSet* const stack, 
   const GBPixel* const bgColor);
+  
+// Return true if the GBPixel 'that' and 'tho' are the same, else false.
+#if BUILDMODE != 0
+inline
+#endif 
+bool GBPixelIsSame(const GBPixel* const that, const GBPixel* const tho);
 
 // ---------------- GBLayer --------------------------
 
