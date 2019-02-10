@@ -2379,6 +2379,7 @@ GenBrush* GBCreateFromFile(const char* const fileName) {
     ret->_surf = (GBSurface*)img;
     ret->_pods = GSetCreateStatic();
     ret->_postProcs = GSetCreateStatic();
+    GBSetFileName(ret, fileName);
   }
   // Return the new GenBrush
   return ret;

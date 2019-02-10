@@ -3736,7 +3736,13 @@ void UnitTestGenBrushScaleCrop() {
   VecShort2D dim = VecShortCreateStatic2D();
   VecSet(&dim, 0, 100); VecSet(&dim, 1, 50); 
   GenBrush* gbScaled = GBScale(gb, &dim, GBScaleMethod_AvgNeighbour);
-  GenBrush* gbRef = GBCreateFromFile("./GBScaleTestAvgNeighbourRef.tga");
+#if BUILDMODE == 0
+  GenBrush* gbRef = GBCreateFromFile(
+    "./GBScaleTestAvgNeighbourRef01.tga");
+#else
+  GenBrush* gbRef = GBCreateFromFile(
+    "./GBScaleTestAvgNeighbourRef02.tga");
+#endif
   if (!GBSurfaceIsSameAs(GBSurf(gbScaled), GBSurf(gbRef))) {
     ShapoidErr->_type = PBErrTypeUnitTestFailed;
     sprintf(ShapoidErr->_msg, "GBScaleAvgNeighbour failed");
