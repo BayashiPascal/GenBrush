@@ -2409,6 +2409,18 @@ void GBFree(GenBrush** that) {
   *that = NULL;
 }
 
+// Get the dimensions of the GenBrush 'that'
+VecShort2D* GBDim(const GenBrush* const that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  return GBSurfaceDim(that->_surf);
+}
+
 // Update the GBSurface of the GenBrush 'that'
 void GBUpdate(GenBrush* const that) {
 #if BUILDMODE == 0

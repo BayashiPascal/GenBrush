@@ -1233,9 +1233,6 @@ inline
 GSet* GBPods(const GenBrush* const that);
 
 // Get the dimensions of the GenBrush 'that'
-#if BUILDMODE != 0
-inline
-#endif 
 VecShort2D* GBDim(const GenBrush* const that);
 
 // Get a copy of the dimensions of the GenBrush 'that'
