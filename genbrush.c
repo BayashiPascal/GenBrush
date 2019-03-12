@@ -454,6 +454,108 @@ GBPixel GBPixelStackBlend(const GSet* const stack,
   return res;
 }
 
+// Convert the GBPixel 'that' from RGB to HSV. Alpha channel is unchanged
+GBPixel GBPixelRGB2HSV(const GBPixel* const that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  // Declare the result pixel
+  GBPixel res = *that;
+  // Calculate the hsv values
+  float rgb[3] = {0.0, 0.0, 0.0};
+  rgb[GBPixelRed] = (float)(that->_rgba[GBPixelRed]) / 255.0;
+  rgb[GBPixelGreen] = (float)(that->_rgba[GBPixelGreen]) / 255.0;
+  rgb[GBPixelBlue] = (float)(that->_rgba[GBPixelBlue]) / 255.0;
+  float max = MAX(rgb[0], MAX(rgb[1], rgb[2]));
+  float min = MIN(rgb[0], MIN(rgb[1], rgb[2]));
+  float delta = max - min;
+  float hsv[3] = {0.0, 0.0, 0.0};
+  if (ISEQUALF(delta, 0.0))
+    hsv[GBPixelHue] = 0.0;
+  else if (ISEQUALF(max, rgb[GBPixelRed]))
+    hsv[GBPixelHue] = 60.0 * (float)(((int)round(
+      (rgb[GBPixelGreen] - rgb[GBPixelBlue]) / delta)) % 6);
+  else if (ISEQUALF(max, rgb[GBPixelGreen]))
+    hsv[GBPixelHue] = 
+      60.0 * ((rgb[GBPixelBlue] - rgb[GBPixelRed]) / delta + 2.0);
+  else if (ISEQUALF(max, rgb[GBPixelBlue]))
+    hsv[GBPixelHue] = 
+      60.0 * ((rgb[GBPixelRed] - rgb[GBPixelGreen]) / delta + 4.0);
+  res._hsva[GBPixelHue] = 
+    (unsigned char)round(hsv[GBPixelHue] / 360.0 * 255.0);
+  if (ISEQUALF(max, 0.0))
+    hsv[GBPixelSaturation] = 0.0;
+  else 
+    hsv[GBPixelSaturation] = delta / max;
+  res._hsva[GBPixelSaturation] = 
+    (unsigned char)round(hsv[GBPixelSaturation] * 255.0);
+  hsv[GBPixelValue] = max;
+  res._hsva[GBPixelValue] = 
+    (unsigned char)round(hsv[GBPixelValue] * 255.0);
+  // Return the result
+  return res;
+}
+
+// Convert the GBPixel 'that' from HSV to RGB. Alpha channel is unchanged
+GBPixel GBPixelHSV2RGB(const GBPixel* const that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  // Declare the result pixel
+  GBPixel res = *that;
+  // Calculate the rgb values
+  float hsv[3] = {0.0, 0.0, 0.0};
+  hsv[GBPixelHue] = (float)(that->_hsva[GBPixelHue]) / 255.0 * 360.0;
+  hsv[GBPixelSaturation] = 
+    (float)(that->_hsva[GBPixelSaturation]) / 255.0;
+  hsv[GBPixelValue] = (float)(that->_hsva[GBPixelValue]) / 255.0;
+  float c = hsv[GBPixelValue] * hsv[GBPixelSaturation];
+  float x = c * (1.0 - fabs((int)round(hsv[GBPixelHue] / 60.0) % 2 - 1));
+  float m = hsv[GBPixelValue] - c;
+  float rgb[3] = {0.0, 0.0, 0.0};
+  if (hsv[GBPixelHue] < 60.0) {
+    rgb[GBPixelRed] = c;
+    rgb[GBPixelGreen] = x;
+    rgb[GBPixelBlue] = 0.0;
+  } else if (hsv[GBPixelHue] < 120.0) {
+    rgb[GBPixelRed] = x;
+    rgb[GBPixelGreen] = c;
+    rgb[GBPixelBlue] = 0.0;
+  } else if (hsv[GBPixelHue] < 180.0) {
+    rgb[GBPixelRed] = 0.0;
+    rgb[GBPixelGreen] = c;
+    rgb[GBPixelBlue] = x;
+  } else if (hsv[GBPixelHue] < 240.0) {
+    rgb[GBPixelRed] = 0.0;
+    rgb[GBPixelGreen] = x;
+    rgb[GBPixelBlue] = c;
+  } else if (hsv[GBPixelHue] < 300.0) {
+    rgb[GBPixelRed] = x;
+    rgb[GBPixelGreen] = 0.0;
+    rgb[GBPixelBlue] = c;
+  } else {
+    rgb[GBPixelRed] = c;
+    rgb[GBPixelGreen] = 0.0;
+    rgb[GBPixelBlue] = x;
+  }
+  res._rgba[GBPixelRed] = 
+    (unsigned char)round(255.0 * (rgb[GBPixelRed] + m));
+  res._rgba[GBPixelGreen] = 
+    (unsigned char)round(255.0 * (rgb[GBPixelGreen] + m));
+  res._rgba[GBPixelBlue] = 
+    (unsigned char)round(255.0 * (rgb[GBPixelBlue] + m));
+  // Return the result
+  return res;
+}
+
 // ---------------- GBLayer --------------------------
 
 // Create a new GBLayer with dimensions 'dim'

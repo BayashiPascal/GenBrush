@@ -25,9 +25,9 @@
 \contentsline {subsection}{\numberline {2.2}genbrush-GTK.h}{43}
 \contentsline {section}{\numberline {3}Code}{45}
 \contentsline {subsection}{\numberline {3.1}genbrush.c}{45}
-\contentsline {subsection}{\numberline {3.2}genbrush-inline.c}{96}
-\contentsline {subsection}{\numberline {3.3}genbrush-GTK.c}{140}
-\contentsline {subsection}{\numberline {3.4}genbrush-inline-GTK.c}{145}
-\contentsline {section}{\numberline {4}Makefile}{147}
-\contentsline {section}{\numberline {5}Unit tests}{147}
-\contentsline {section}{\numberline {6}Unit tests output}{211}
+\contentsline {subsection}{\numberline {3.2}genbrush-inline.c}{98}
+\contentsline {subsection}{\numberline {3.3}genbrush-GTK.c}{141}
+\contentsline {subsection}{\numberline {3.4}genbrush-inline-GTK.c}{147}
+\contentsline {section}{\numberline {4}Makefile}{148}
+\contentsline {section}{\numberline {5}Unit tests}{149}
+\contentsline {section}{\numberline {6}Unit tests output}{215}

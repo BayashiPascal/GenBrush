@@ -52,6 +52,9 @@
 #define GBPixelRed 2
 #define GBPixelGreen 1
 #define GBPixelBlue 0
+#define GBPixelValue 2
+#define GBPixelSaturation 1
+#define GBPixelHue 0
 #define GBPixelAlpha 3
 
 #define GBColorWhite (GBPixel){ \
@@ -77,7 +80,10 @@
 
 typedef struct GBPixel {
   // Pixel values
-  unsigned char _rgba[4];
+  union {
+    unsigned char _rgba[4];
+    unsigned char _hsva[4];
+  };
 } GBPixel;
 
 typedef enum GBLayerBlendMode {
@@ -330,6 +336,12 @@ GBPixel GBPixelStackBlend(const GSet* const stack,
 inline
 #endif 
 bool GBPixelIsSame(const GBPixel* const that, const GBPixel* const tho);
+
+// Convert the GBPixel 'that' from RGB to HSV. Alpha channel is unchanged
+GBPixel GBPixelRGB2HSV(const GBPixel* const that);
+
+// Convert the GBPixel 'that' from HSV to RGB. Alpha channel is unchanged
+GBPixel GBPixelHSV2RGB(const GBPixel* const that);
 
 // ---------------- GBLayer --------------------------
 

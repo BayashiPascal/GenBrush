@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.18)  10 FEB 2019 15:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.10.18)  12 MAR 2019 23:58
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -776,19 +776,19 @@ File: /home/bayashi/GitHub/GenBrush/genbrush.c  (verbatim)
  [45] [46] [47] [48] [49] [50] [51] [52] [53] [54] [55]
 [56] [57] [58] [59] [60] [61] [62] [63] [64] [65] [66] [67] [68] [69] [70]
 [71] [72] [73] [74] [75] [76] [77] [78] [79] [80] [81] [82] [83] [84] [85]
-[86] [87] [88] [89] [90] [91] [92] [93] [94] [95]
+[86] [87] [88] [89] [90] [91] [92] [93] [94] [95] [96] [97]
 File: /home/bayashi/GitHub/GenBrush/genbrush-inline.c  (verbatim)
- [96] [97] [98] [99] [100]
+ [98] [99] [100]
 [101] [102] [103] [104] [105] [106] [107] [108] [109] [110] [111] [112]
 [113] [114] [115] [116] [117] [118] [119] [120] [121] [122] [123] [124]
 [125] [126] [127] [128] [129] [130] [131] [132] [133] [134] [135] [136]
-[137] [138]
+[137] [138] [139] [140]
 File: /home/bayashi/GitHub/GenBrush/genbrush-GTK.c  (verbatim)
- [139] [140] [141] [142] [143] [144]
+ [141] [142] [143] [144] [145] [146]
 File: /home/bayashi/GitHub/GenBrush/genbrush-inline-GTK.c  (verbatim)
- [145]
+ [147]
 File: /home/bayashi/GitHub/GenBrush/Makefile  (verbatim)
- [146]
+ [148]
 Overfull \hbox (787.2669pt too wide) in paragraph at lines 379--379
 []\OT1/cmtt/m/n/8 if [ ! -d ../PBMake ]; then wget https://github.com/BayashiPa
 scal/PBMake/archive/master.zip; unzip master.zip; rm -f master.zip; sed -i '' '
@@ -810,30 +810,30 @@ Overfull \hbox (188.0083pt too wide) in paragraph at lines 379--379
  []
 
 File: /home/bayashi/GitHub/GenBrush/main.c  (verbatim)
-[147] [148] [149] [150] [151] [152] [153] [154] [155] [156] [157] [158]
-[159] [160] [161] [162] [163] [164] [165] [166] [167] [168] [169] [170]
-[171] [172] [173] [174] [175] [176] [177] [178] [179] [180] [181] [182]
-[183] [184] [185] [186] [187] [188] [189] [190] [191] [192] [193] [194]
-[195] [196] [197] [198] [199] [200] [201] [202] [203] [204] [205] [206]
-[207] [208] [209] [210]
+[149] [150] [151] [152] [153] [154] [155] [156] [157] [158] [159] [160]
+[161] [162] [163] [164] [165] [166] [167] [168] [169] [170] [171] [172]
+[173] [174] [175] [176] [177] [178] [179] [180] [181] [182] [183] [184]
+[185] [186] [187] [188] [189] [190] [191] [192] [193] [194] [195] [196]
+[197] [198] [199] [200] [201] [202] [203] [204] [205] [206] [207] [208]
+[209] [210] [211] [212] [213] [214]
 File: /home/bayashi/GitHub/GenBrush/unitTestRef.txt  (verbatim)
- [211] [212]
+ [215]
 Underfull \hbox (badness 10000) in paragraph at lines 399--400
 
  []
 
-<./GBSurfaceImageSave.png, id=687, 10.0375pt x 10.0375pt>
+<./GBSurfaceImageSave.png, id=696, 10.0375pt x 10.0375pt>
 File: ./GBSurfaceImageSave.png Graphic file (type png)
 
 <use ./GBSurfaceImageSave.png>
 Package pdftex.def Info: ./GBSurfaceImageSave.png used on input line 402.
 (pdftex.def)             Requested size: 85.35826pt x 85.41107pt.
-
+ [216]
 Underfull \hbox (badness 10000) in paragraph at lines 406--407
 
  []
 
-<./GBToolPlotterDrawSCurve.png, id=689, 10.0375pt x 10.0375pt>
+<./GBToolPlotterDrawSCurve.png, id=701, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawSCurve.png Graphic file (type png)
 
 <use ./GBToolPlotterDrawSCurve.png>
@@ -844,19 +844,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 413--414
 
  []
 
-<./GBToolPlotterDrawFacoid3D.png, id=690, 10.0375pt x 10.0375pt>
+<./GBToolPlotterDrawFacoid3D.png, id=702, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawFacoid3D.png Graphic file (type png)
 
 <use ./GBToolPlotterDrawFacoid3D.png>
 Package pdftex.def Info: ./GBToolPlotterDrawFacoid3D.png used on input line 416
 .
 (pdftex.def)             Requested size: 85.35826pt x 85.41107pt.
- [213 <./GBSurfaceImageSave.png> <./GBToolPlotterDrawSCurve.png>]
+
 Underfull \hbox (badness 10000) in paragraph at lines 420--421
 
  []
 
-<./GBToolPlotterDrawSpheroid.png, id=696, 10.0375pt x 10.0375pt>
+<./GBToolPlotterDrawSpheroid.png, id=703, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawSpheroid.png Graphic file (type png)
 
 <use ./GBToolPlotterDrawSpheroid.png>
@@ -868,7 +868,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 427--428
 
  []
 
-<./GBToolPlotterDrawFacoid.png, id=697, 10.0375pt x 10.0375pt>
+[217 <./GBSurfaceImageSave.png> <./GBToolPlotterDrawSCurve.png> <./GBToolPlotte
+rDrawFacoid3D.png> <./GBToolPlotterDrawSpheroid.png>]
+<./GBToolPlotterDrawFacoid.png, id=712, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawFacoid.png Graphic file (type png)
 
 <use ./GBToolPlotterDrawFacoid.png>
@@ -879,18 +881,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 434--435
 
  []
 
-<./ImageRef.png, id=698, 10.0375pt x 10.0375pt>
+<./ImageRef.png, id=713, 10.0375pt x 10.0375pt>
 File: ./ImageRef.png Graphic file (type png)
  <use ./ImageRef.png>
 Package pdftex.def Info: ./ImageRef.png used on input line 437.
 (pdftex.def)             Requested size: 85.35826pt x 85.41107pt.
- [214 <./GBToolPlotterDrawFacoid3D.png> <./GBToolPlotterDrawSpheroid.png> <./GB
-ToolPlotterDrawFacoid.png>]
+
 Underfull \hbox (badness 10000) in paragraph at lines 441--442
 
  []
 
-<./GBToolPlotterDrawPoint.png, id=705, 10.0375pt x 10.0375pt>
+<./GBToolPlotterDrawPoint.png, id=714, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawPoint.png Graphic file (type png)
 
 <use ./GBToolPlotterDrawPoint.png>
@@ -901,31 +902,30 @@ Underfull \hbox (badness 10000) in paragraph at lines 448--449
 
  []
 
-<./GBToolPlotterDrawPyramidoid.png, id=706, 10.0375pt x 10.0375pt>
+<./GBToolPlotterDrawPyramidoid.png, id=715, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawPyramidoid.png Graphic file (type png)
 
 <use ./GBToolPlotterDrawPyramidoid.png>
 Package pdftex.def Info: ./GBToolPlotterDrawPyramidoid.png used on input line 4
 51.
 (pdftex.def)             Requested size: 85.35826pt x 85.41107pt.
-
+ [218 <./GBToolPlotterDrawFacoid.png> <./ImageRef.png> <./GBToolPlotterDrawPoin
+t.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 455--456
 
  []
 
-<./testBottomLeft.png, id=707, 3.01125pt x 4.015pt>
+<./testBottomLeft.png, id=722, 3.01125pt x 4.015pt>
 File: ./testBottomLeft.png Graphic file (type png)
  <use ./testBottomLeft.png>
 Package pdftex.def Info: ./testBottomLeft.png used on input line 458.
 (pdftex.def)             Requested size: 85.35826pt x 113.94061pt.
 
-[215 <./ImageRef.png> <./GBToolPlotterDrawPoint.png> <./GBToolPlotterDrawPyrami
-doid.png> <./testBottomLeft.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 462--463
 
  []
 
-<./testTopLeft.png, id=715, 3.01125pt x 4.015pt>
+<./testTopLeft.png, id=723, 3.01125pt x 4.015pt>
 File: ./testTopLeft.png Graphic file (type png)
  <use ./testTopLeft.png>
 Package pdftex.def Info: ./testTopLeft.png used on input line 465.
@@ -935,19 +935,20 @@ Underfull \hbox (badness 10000) in paragraph at lines 469--470
 
  []
 
-<./GBSurfaceNormalizeHueTest.png, id=716, 501.875pt x 326.21875pt>
+<./GBSurfaceNormalizeHueTest.png, id=724, 501.875pt x 326.21875pt>
 File: ./GBSurfaceNormalizeHueTest.png Graphic file (type png)
 
 <use ./GBSurfaceNormalizeHueTest.png>
 Package pdftex.def Info: ./GBSurfaceNormalizeHueTest.png used on input line 472
 .
 (pdftex.def)             Requested size: 170.71652pt x 110.96765pt.
-
+ [219 <./GBToolPlotterDrawPyramidoid.png> <./testBottomLeft.png> <./testTopLeft
+.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 476--477
 
  []
 
-<./GBSurfaceNormalizeHueRef.png, id=717, 501.875pt x 326.21875pt>
+<./GBSurfaceNormalizeHueRef.png, id=731, 501.875pt x 326.21875pt>
 File: ./GBSurfaceNormalizeHueRef.png Graphic file (type png)
 
 <use ./GBSurfaceNormalizeHueRef.png>
@@ -959,9 +960,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 483--484
 
  []
 
-[216 <./testTopLeft.png> <./GBSurfaceNormalizeHueTest.png (PNG copy)> <./GBSurf
-aceNormalizeHueRef.png>]
-<./GBScaleCropTest.png, id=723, 75.28125pt x 75.28125pt>
+<./GBScaleCropTest.png, id=732, 75.28125pt x 75.28125pt>
 File: ./GBScaleCropTest.png Graphic file (type png)
 
 <use ./GBScaleCropTest.png>
@@ -972,7 +971,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 490--491
 
  []
 
-<./GBScaleTestAvgNeighbourRef01.png, id=724, 100.375pt x 50.1875pt>
+[220 <./GBSurfaceNormalizeHueTest.png (PNG copy)> <./GBSurfaceNormalizeHueRef.p
+ng> <./GBScaleCropTest.png>]
+<./GBScaleTestAvgNeighbourRef01.png, id=738, 100.375pt x 50.1875pt>
 File: ./GBScaleTestAvgNeighbourRef01.png Graphic file (type png)
 
 <use ./GBScaleTestAvgNeighbourRef01.png>
@@ -984,24 +985,25 @@ Underfull \hbox (badness 10000) in paragraph at lines 497--498
 
  []
 
-<./GBCropTestRef01.png, id=725, 50.1875pt x 50.1875pt>
+<./GBCropTestRef01.png, id=739, 50.1875pt x 50.1875pt>
 File: ./GBCropTestRef01.png Graphic file (type png)
 
 <use ./GBCropTestRef01.png>
 Package pdftex.def Info: ./GBCropTestRef01.png used on input line 500.
 (pdftex.def)             Requested size: 170.71652pt x 170.7692pt.
- [217 <./GBScaleCropTest.png> <./GBScaleTestAvgNeighbourRef01.png>]
+
 Underfull \hbox (badness 10000) in paragraph at lines 504--505
 
  []
 
-<./GBCropTestRef02.png, id=732, 50.1875pt x 50.1875pt>
+<./GBCropTestRef02.png, id=740, 50.1875pt x 50.1875pt>
 File: ./GBCropTestRef02.png Graphic file (type png)
 
 <use ./GBCropTestRef02.png>
 Package pdftex.def Info: ./GBCropTestRef02.png used on input line 507.
 (pdftex.def)             Requested size: 170.71652pt x 170.7692pt.
-) [218 <./GBCropTestRef01.png> <./GBCropTestRef02.png>] (./doc.aux) ) 
+ [221 <./GBScaleTestAvgNeighbourRef01.png> <./GBCropTestRef01.png>]) [222 <./GB
+CropTestRef02.png>] (./doc.aux) ) 
 Here is how much of TeX's memory you used:
  13376 strings out of 494314
  258229 string characters out of 6163111
@@ -1009,23 +1011,23 @@ Here is how much of TeX's memory you used:
  16445 multiletter control sequences out of 15000+600000
  12740 words of font info for 50 fonts, out of 8000000 for 9000
  372 hyphenation exceptions out of 8191
- 55i,14n,54p,845b,311s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/shar
-e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/font
-s/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1
-/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
-msy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.p
-fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
+ 55i,14n,54p,845b,310s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+mi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
+></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-d
+ist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/public/amsfonts/cm/cmtt8.pfb>
 
 pdfTeX warning: pdflatex: no GlyphToUnicode entry has been inserted yet!
-Output written on doc.pdf (218 pages, 1091951 bytes).
+Output written on doc.pdf (222 pages, 1098776 bytes).
 PDF statistics:
- 782 PDF objects out of 1000 (max. 8388607)
+ 794 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  93 words of extra memory for PDF output out of 10000 (max. 10000000)
 

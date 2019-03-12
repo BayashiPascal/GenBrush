@@ -99,10 +99,110 @@ void UnitTestGBPixelIsSame() {
   printf("UnitTestGBPixelIsSame OK\n");
 }
 
+void UnitTestGBPixelConvertRGBHSV() {
+  GBPixel blue = GBColorBlue;
+  GBPixel red = GBColorRed;
+  GBPixel green = GBColorGreen;
+  GBPixel white = GBColorWhite;
+  GBPixel black = GBColorBlack;
+  GBPixel hsv = GBPixelRGB2HSV(&blue);
+  if (hsv._hsva[GBPixelAlpha] != 255 ||
+    hsv._hsva[GBPixelHue] != 170 ||
+    hsv._hsva[GBPixelSaturation] != 255 ||
+    hsv._hsva[GBPixelValue] != 255) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBPixelRGB2HSV failed");
+    PBErrCatch(GenBrushErr);
+  }
+  GBPixel rgb = GBPixelHSV2RGB(&hsv);
+  if (rgb._rgba[GBPixelAlpha] != 255 ||
+    rgb._rgba[GBPixelRed] != 0 ||
+    rgb._rgba[GBPixelGreen] != 0 ||
+    rgb._rgba[GBPixelBlue] != 255) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBPixelHSV2RGB failed");
+    PBErrCatch(GenBrushErr);
+  }
+  hsv = GBPixelRGB2HSV(&red);
+  if (hsv._hsva[GBPixelAlpha] != 255 ||
+    hsv._hsva[GBPixelHue] != 0 ||
+    hsv._hsva[GBPixelSaturation] != 255 ||
+    hsv._hsva[GBPixelValue] != 255) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBPixelRGB2HSV failed");
+    PBErrCatch(GenBrushErr);
+  }
+  rgb = GBPixelHSV2RGB(&hsv);
+  if (rgb._rgba[GBPixelAlpha] != 255 ||
+    rgb._rgba[GBPixelRed] != 255 ||
+    rgb._rgba[GBPixelGreen] != 0 ||
+    rgb._rgba[GBPixelBlue] != 0) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBPixelHSV2RGB failed");
+    PBErrCatch(GenBrushErr);
+  }
+  hsv = GBPixelRGB2HSV(&green);
+  if (hsv._hsva[GBPixelAlpha] != 255 ||
+    hsv._hsva[GBPixelHue] != 85 ||
+    hsv._hsva[GBPixelSaturation] != 255 ||
+    hsv._hsva[GBPixelValue] != 255) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBPixelRGB2HSV failed");
+    PBErrCatch(GenBrushErr);
+  }
+  rgb = GBPixelHSV2RGB(&hsv);
+  if (rgb._rgba[GBPixelAlpha] != 255 ||
+    rgb._rgba[GBPixelRed] != 0 ||
+    rgb._rgba[GBPixelGreen] != 255 ||
+    rgb._rgba[GBPixelBlue] != 0) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBPixelHSV2RGB failed");
+    PBErrCatch(GenBrushErr);
+  }
+  hsv = GBPixelRGB2HSV(&white);
+  if (hsv._hsva[GBPixelAlpha] != 255 ||
+    hsv._hsva[GBPixelHue] != 0 ||
+    hsv._hsva[GBPixelSaturation] != 0 ||
+    hsv._hsva[GBPixelValue] != 255) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBPixelRGB2HSV failed");
+    PBErrCatch(GenBrushErr);
+  }
+  rgb = GBPixelHSV2RGB(&hsv);
+  if (rgb._rgba[GBPixelAlpha] != 255 ||
+    rgb._rgba[GBPixelRed] != 255 ||
+    rgb._rgba[GBPixelGreen] != 255 ||
+    rgb._rgba[GBPixelBlue] != 255) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBPixelHSV2RGB failed");
+    PBErrCatch(GenBrushErr);
+  }
+  hsv = GBPixelRGB2HSV(&black);
+  if (hsv._hsva[GBPixelAlpha] != 255 ||
+    hsv._hsva[GBPixelHue] != 0 ||
+    hsv._hsva[GBPixelSaturation] != 0 ||
+    hsv._hsva[GBPixelValue] != 0) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBPixelRGB2HSV failed");
+    PBErrCatch(GenBrushErr);
+  }
+  rgb = GBPixelHSV2RGB(&hsv);
+  if (rgb._rgba[GBPixelAlpha] != 255 ||
+    rgb._rgba[GBPixelRed] != 0 ||
+    rgb._rgba[GBPixelGreen] != 0 ||
+    rgb._rgba[GBPixelBlue] != 0) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBPixelHSV2RGB failed");
+    PBErrCatch(GenBrushErr);
+  }
+  printf("UnitTestGBPixelConvertRGBHSV OK\n");
+}
+  
 void UnitTestGBPixel() {
   UnitTestGBPixelBlendNormal();
   UnitTestGBPixelBlendOver();
   UnitTestGBPixelIsSame();
+  UnitTestGBPixelConvertRGBHSV();
   printf("UnitTestGBPixel OK\n");
 }
 
