@@ -137,7 +137,7 @@ GBSurfaceApp* GBSurfaceAppCreate(const VecShort2D* const dim,
 // The interface of the 'idleFun' is 
 // gint tick(gpointer data)
 // the argument of 'idleFun' is a pointer to GBSurfaceApp
-void GBSurfaceSetIdle(const GBSurfaceApp* const that, 
+void GBSurfaceSetIdle(GBSurfaceApp* const that, 
   gint (*idleFun)(gpointer), int idleMs) {
 #if BUILDMODE == 0
   if (that == NULL) {
@@ -159,7 +159,7 @@ void GBSurfaceSetIdle(const GBSurfaceApp* const that,
 // Render the GBSurfaceApp 'that'
 // This function block the execution until the app is killed
 // Return true if the status of the app when closed was 0, false else
-bool GBSurfaceAppRender(const GBSurfaceApp* const that) {
+bool GBSurfaceAppRender(GBSurfaceApp* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -211,6 +211,7 @@ GenBrush* GBCreateApp(const VecShort2D* const dim,
   // Set properties
   that->_surf = (GBSurface*)GBSurfaceAppCreate(dim, title);
   that->_pods = GSetCreateStatic();
+  that->_postProcs = GSetCreateStatic();
   // Return the new GenBrush
   return that;
 }
@@ -221,7 +222,7 @@ GenBrush* GBCreateApp(const VecShort2D* const dim,
 // gint tick(gpointer data)
 // the argument of 'idleFun' is a pointer to GBSurfaceApp
 // If the surface of the app is not a GBSurfaceTypeApp, do nothing
-void GBSetIdle(GenBrush* that const , gint (*idleFun)(gpointer), 
+void GBSetIdle(GenBrush* that, gint (*idleFun)(gpointer), 
   const int idleMs) {
 #if BUILDMODE == 0
   if (that == NULL) {
@@ -255,6 +256,7 @@ GenBrush* GBCreateWidget(const VecShort2D* const dim) {
   // Set properties
   that->_surf = (GBSurface*)GBSurfaceWidgetCreate(dim);
   that->_pods = GSetCreateStatic();
+  that->_postProcs = GSetCreateStatic();
   // Return the new GenBrush
   return that;
 }

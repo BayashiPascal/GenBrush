@@ -4,19 +4,15 @@
 # 2: fast and furious (no safety, optimisation)
 BUILD_MODE?=1
 
-all: pbmake_wget main
+all: main
 	
-# Automatic installation of the repository PBMake in the parent folder
-pbmake_wget:
-	if [ ! -d ../PBMake ]; then wget https://github.com/BayashiPascal/PBMake/archive/master.zip; unzip master.zip; rm -f master.zip; sed -i '' 's@ROOT_DIR=.*@ROOT_DIR='"`pwd | gawk -F/ 'NF{NF-=1};1' | sed -e 's@ @/@g'`"'@' PBMake-master/Makefile.inc; mv PBMake-master ../PBMake; fi
-
 # 0: monolith version, the GBSurface is rendered toward a TGA image
 # 1: GTK version, the GBSurface is rendered toward a TGA image or 
 #    a GtkWidget
 BUILDWITHGRAPHICLIB=1
 
 # Makefile definitions
-MAKEFILE_INC=../PBMake/Makefile.inc
+MAKEFILE_INC=../../../PBMake/Makefile.inc
 include $(MAKEFILE_INC)
 
 # Rules to make the executable
@@ -28,8 +24,8 @@ $($(repo)_EXENAME): \
 	$(COMPILER) `echo "$($(repo)_EXE_DEP) $($(repo)_EXENAME).o" | tr ' ' '\n' | sort -u` $(LINK_ARG) $($(repo)_LINK_ARG) -o $($(repo)_EXENAME) 
 	
 $($(repo)_EXENAME).o: \
-		$($(repo)_DIR)/$($(repo)_EXENAME).c \
+		main.c \
 		$($(repo)_INC_H_EXE) \
 		$($(repo)_EXE_DEP)
-	$(COMPILER) $(BUILD_ARG) $($(repo)_BUILD_ARG) `echo "$($(repo)_INC_DIR)" | tr ' ' '\n' | sort -u` -c $($(repo)_DIR)/$($(repo)_EXENAME).c
+	$(COMPILER) $(BUILD_ARG) $($(repo)_BUILD_ARG) `echo "$($(repo)_INC_DIR)" | tr ' ' '\n' | sort -u` -c main.c
 	

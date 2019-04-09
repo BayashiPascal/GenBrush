@@ -3925,7 +3925,7 @@ void UnitTestAll() {
 
 #elif BUILDWITHGRAPHICLIB == 1
 
-  void UnitTestPaintSurface(const GBSurface* const surf, 
+  void UnitTestPaintSurface(GBSurface* const surf, 
     VecShort2D* dim, 
     int green) {
     // Declare a vector to memorize position in the surface
