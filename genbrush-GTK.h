@@ -13,27 +13,37 @@ typedef struct GBSurfaceApp {
   // Title of the window
   char* _title;
   // Application
-  GtkApplication *_app;
+  GtkApplication* _app;
   // Window
-  GtkWidget *_window;
+  GtkWidget* _window;
   // Widget
-  GtkWidget *_drawingArea;
+  GtkWidget* _drawingArea;
   // cairo surface
-  cairo_surface_t *_cairoSurf;
+  cairo_surface_t* _cairoSurf;
   // Idle function
   gint (*_idleFun)(gpointer);
   // Idle function time out
   int _idleMs;
   // Returned status when the application is killed
   int _returnStatus;
+
+  // cf GBSurfaceAppCallbackDraw
+  // Flipped data
+  unsigned char* _flippedData;
+  
 } GBSurfaceApp;
 
 typedef struct GBSurfaceWidget {
   GBSurface _surf;
   // Widget
-  GtkWidget *_drawingArea;
+  GtkWidget* _drawingArea;
   // cairo surface
-  cairo_surface_t *_cairoSurf;
+  cairo_surface_t* _cairoSurf;
+
+  // cf GBSurfaceAppCallbackDraw
+  // Flipped data
+  unsigned char* _flippedData;
+  
 } GBSurfaceWidget;
 
 // ================ Functions declaration ====================

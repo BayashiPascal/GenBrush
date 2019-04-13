@@ -32,7 +32,12 @@ Several rendering of the same scene are optimized to recalculate only the final 
 The user can apply post processing to the surface at the end of each rendering. Currently implemented post processing are:
 * Normalization by hue
 
-Finally, the user can create scaled or cropped copies of a Genbrush.
+Other functionalities include:
+* scaling
+* cropping
+
+Example code:
+* ImageViewer: display a tga image in a window.
 
 The GenBrush library uses the ```PBErr```, ```PBMath```, ```GSet```, ```Shapoid```, ```BCurve``` libraries, and GTK if compiled as an interface for this library.
 

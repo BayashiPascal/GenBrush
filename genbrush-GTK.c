@@ -31,7 +31,29 @@ gboolean GBSurfaceAppCallbackDraw(GtkWidget *widget, cairo_t *cr,
   // Declare a variable to convert the data into the GBSurfaceApp
   GBSurfaceApp* GBApp = (GBSurfaceApp*)data;
   // Paint the final pixels of the GBSurface on the Cairo surface
+  // The data in GenBrush are flipped horizontally relatively to
+  // the Cairo coordinates system. Thus we need to flip them 
+  // horizontally.
+  
+  // Terrible patch. The code below should do the flipping but
+  // instead it splits only half of the surface (???). Can't find 
+  // the problem, then give up and create a flipped copy of the data
+  // and us it instead.
+  //cairo_scale(cr, 1.0, -1.0);
+  //cairo_translate(cr, 0, -1 * gtk_widget_get_allocated_height(GBApp->_drawingArea));
+  //cairo_set_source_surface(cr, GBApp->_cairoSurf, 0, 0);
+  
+  const VecShort2D* const dim = GBSurfaceDim(&(GBApp->_surf));
+  unsigned char* origData = 
+    (unsigned char*)GBSurfaceFinalPixels(&(GBApp->_surf));
+  for (int iLine = 0; iLine < VecGet(dim, 1); ++iLine) {
+    memcpy(GBApp->_flippedData + 
+      (VecGet(dim, 1) - iLine - 1) * VecGet(dim, 0) * 4, 
+      origData + iLine * VecGet(dim, 0) * 4, 
+      sizeof(unsigned char) * VecGet(dim, 0) * 4);
+  }
   cairo_set_source_surface(cr, GBApp->_cairoSurf, 0, 0);
+
   cairo_paint(cr);
   return FALSE;
 }
@@ -44,7 +66,11 @@ gboolean GBSurfaceAppCallbackConfigEvt(GtkWidget *widget,
   GBSurfaceApp* GBApp = (GBSurfaceApp*)data;
   // Attach the GBPixel to the cairo surface
   GBApp->_cairoSurf = cairo_image_surface_create_for_data(
-    (unsigned char*)GBSurfaceFinalPixels(&(GBApp->_surf)),
+    //(unsigned char* )GBSurfaceFinalPixels(&(GBWidget->_surf)),
+    
+    // cf GBSurfaceAppCallbackDraw
+    GBApp->_flippedData,
+    
     CAIRO_FORMAT_ARGB32,
     gtk_widget_get_allocated_width(widget),
     gtk_widget_get_allocated_height(widget),
@@ -72,6 +98,8 @@ void GBSurfaceAppCallbackActivate(GtkApplication* app,
     VecGet(GBSurfaceDim(&(GBApp->_surf)), 1));
   // Set the window as non resizable
   gtk_window_set_resizable(GTK_WINDOW(GBApp->_window), false);
+  // Center the window on the screen
+  gtk_window_set_position(GTK_WINDOW(GBApp->_window), GTK_WIN_POS_CENTER);
   // Create the drawing area
   GBApp->_drawingArea = gtk_drawing_area_new();
   // Set the size of the drawing area
@@ -128,6 +156,12 @@ GBSurfaceApp* GBSurfaceAppCreate(const VecShort2D* const dim,
   // Other properties will be set up by the activate event
   g_signal_connect (that->_app, "activate", 
     G_CALLBACK (GBSurfaceAppCallbackActivate), that);
+
+  // cf GBSurfaceAppCallbackDraw.
+  // Allocate memory for the flipped data
+  that->_flippedData = malloc(sizeof(unsigned char) * 4 *
+    VecGet(dim, 0) * VecGet(dim, 0));
+
   // Return the GBSurfaceApp
   return that;
 }
@@ -184,11 +218,19 @@ void GBSurfaceAppFree(GBSurfaceApp** that) {
   // Free memory
   g_object_unref((*that)->_app);
   free((*that)->_title);
+
+  // cf GBSurfaceAppCallbackDraw
+  free((*that)->_flippedData);
+
 }
 
 // Free the GBSurfaceWidget 'that'
 void GBSurfaceWidgetFree(GBSurfaceWidget** that) {
   (void)that;
+
+  // cf GBSurfaceAppCallbackDraw
+  free((*that)->_flippedData);
+
 }
 
 // Create a GenBrush with a blank GBSurfaceApp
@@ -286,6 +328,12 @@ GBSurfaceWidget* GBSurfaceWidgetCreate(const VecShort2D* const dim) {
   // Connect to the configure event
   g_signal_connect(that->_drawingArea,"configure-event",
     G_CALLBACK (GBSurfaceWidgetCallbackConfigEvt), that);
+
+  // cf GBSurfaceAppCallbackDraw.
+  // Allocate memory for the flipped data
+  that->_flippedData = malloc(sizeof(unsigned char) * 4 *
+    VecGet(dim, 0) * VecGet(dim, 0));
+
   // Return the GBSurfaceWidget
   return that;
 }
@@ -297,7 +345,29 @@ gboolean GBSurfaceWidgetCallbackDraw(GtkWidget *widget, cairo_t *cr,
   // Declare a variable to convert the data into the GBSurfaceApp
   GBSurfaceWidget* GBWidget = (GBSurfaceWidget*)data;
   // Paint the final pixels of the GBSurface on the Cairo surface
+  // The data in GenBrush are flipped horizontally relatively to
+  // the Cairo coordinates system. Thus we need to flip them 
+  // horizontally.
+  
+  // Terrible patch. The code below should do the flipping but
+  // instead it splits only half of the surface (???). Can't find 
+  // the problem, then give up and create a flipped copy of the data
+  // and us it instead.
+  //cairo_scale(cr, 1.0, -1.0);
+  //cairo_translate(cr, 0, -1 * gtk_widget_get_allocated_height(GBWidget->_drawingArea));
+  //cairo_set_source_surface(cr, GBWidget->_cairoSurf, 0, 0);
+  
+  const VecShort2D* const dim = GBSurfaceDim(&(GBWidget->_surf));
+  unsigned char* origData = 
+    (unsigned char*)GBSurfaceFinalPixels(&(GBWidget->_surf));
+  for (int iLine = 0; iLine < VecGet(dim, 1); ++iLine) {
+    memcpy(GBWidget->_flippedData + 
+      (VecGet(dim, 1) - iLine - 1) * VecGet(dim, 0) * 4, 
+      origData + iLine * VecGet(dim, 0) * 4, 
+      sizeof(unsigned char) * VecGet(dim, 0) * 4);
+  }
   cairo_set_source_surface(cr, GBWidget->_cairoSurf, 0, 0);
+
   cairo_paint (cr);
   return FALSE;
 }
@@ -325,7 +395,11 @@ gboolean GBSurfaceWidgetCallbackConfigEvt(GtkWidget *widget,
   GBSurfaceWidget* GBWidget = (GBSurfaceWidget*)data;
   // Attach the GBPixel to the cairo surface
   GBWidget->_cairoSurf = cairo_image_surface_create_for_data(
-    (unsigned char* )GBSurfaceFinalPixels(&(GBWidget->_surf)),
+    //(unsigned char* )GBSurfaceFinalPixels(&(GBWidget->_surf)),
+    
+    // cf GBSurfaceAppCallbackDraw
+    GBWidget->_flippedData,
+    
     CAIRO_FORMAT_ARGB32,
     gtk_widget_get_allocated_width(widget),
     gtk_widget_get_allocated_height(widget),
