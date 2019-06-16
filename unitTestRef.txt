@@ -91,3 +91,6 @@ UnitTestGenBrushAddRemovePostProcessing
 UnitTestGenBrushScaleCrop OK
 UnitTestGenBrush OK
 UnitTestAll OK
+UnitTestGBSurfaceApp OK
+UnitTestGBSurfaceWidget OK
+UnitTestAllGTK OK

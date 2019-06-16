@@ -229,86 +229,98 @@ bool GBReadTGABody(FILE *stream, GSet* pix, GBTGAHeader* header,
   // If the number of byte per pixel is not supported
   if (header->_bitsPerPixel != 16 && 
     header->_bitsPerPixel != 24 && 
-    header->_bitsPerPixel != 32)
+    header->_bitsPerPixel != 32) {
+    sprintf(GenBrushErr->_msg, "Invalid bitesPerPixel (%d)", 
+      header->_bitsPerPixel);
     return false;
+  }
   // Skip the unused information
   skipover += header->_idLength;
   skipover += header->_colorMapType * header->_colorMapLength;
   fseek(stream,skipover,SEEK_CUR);
   // Calculate the number of byte per pixel
   bytes2read = header->_bitsPerPixel / 8;
+  // Flag to manage premature end of file
+  bool flagPrematureEnd = false;
   // For each pixel
   int n = 0;
-  while (n < header->_height * header->_width) {
+  while (n < header->_height * header->_width && !flagPrematureEnd) {
     int nLayer = GBConvertToIndexLayerForTGA(n, header);
     // Read the pixel according to the data type, merge and 
     // move to the next pixel
     if (header->_dataTypeCode == 2) {
-      if (fread(p, 1, bytes2read, stream) != bytes2read)
-        return false;
-      GBPixel mergedPix;
-      GBTGAMergeBytes(&mergedPix, p, bytes2read);
-      // Create a stacked pixel
-      GBStackedPixel* stacked = PBErrMalloc(GenBrushErr, 
-        sizeof(GBStackedPixel));
-      memcpy(&(stacked->_val), &mergedPix, sizeof(GBPixel));
-      stacked->_depth = 0.0;
-      stacked->_blendMode = blendMode;
-      // Add the stacked pixel to the stack 
-      GSetAddSort(pix + nLayer, stacked, stacked->_depth);
-      // Increment the index
-      ++n;
-      nLayer = GBConvertToIndexLayerForTGA(n, header);
-    } else if (header->_dataTypeCode == 10) {
-      if (fread(p, 1, bytes2read + 1, stream) != bytes2read + 1)
-        return false;
-      j = p[0] & 0x7f;
-      GBPixel mergedPix;
-      GBTGAMergeBytes(&mergedPix, &(p[1]), bytes2read);
-      // Create a stacked pixel
-      GBStackedPixel* stacked = PBErrMalloc(GenBrushErr, 
-        sizeof(GBStackedPixel));
-      memcpy(&(stacked->_val), &mergedPix, sizeof(GBPixel));
-      stacked->_depth = 0.0;
-      stacked->_blendMode = blendMode;
-      // Add the stacked pixel to the stack 
-      GSetAddSort(pix + nLayer, stacked, stacked->_depth);
-      // Increment the index
-      ++n;
-      nLayer = GBConvertToIndexLayerForTGA(n, header);
-      if (p[0] & 0x80) {
-        for (i = 0; i < j; ++i) {
-          GBPixel mergedPix;
-          GBTGAMergeBytes(&mergedPix, &(p[1]), bytes2read);
-          // Create a stacked pixel
-          GBStackedPixel* stacked = PBErrMalloc(GenBrushErr, 
-            sizeof(GBStackedPixel));
-          memcpy(&(stacked->_val), &mergedPix, sizeof(GBPixel));
-          stacked->_depth = 0.0;
-          stacked->_blendMode = blendMode;
-          // Add the stacked pixel to the stack 
-          GSetAddSort(pix + nLayer, stacked, stacked->_depth);
-          // Increment the index
-          ++n;
-          nLayer = GBConvertToIndexLayerForTGA(n, header);
-        }
+      if (fread(p, 1, bytes2read, stream) != bytes2read) {
+        flagPrematureEnd = true;
       } else {
-        for (i = 0; i < j; ++i) {
-          if (fread(p, 1, bytes2read, stream) != bytes2read)
-            return false;
-          GBPixel mergedPix;
-          GBTGAMergeBytes(&mergedPix, p, bytes2read);
-          // Create a stacked pixel
-          GBStackedPixel* stacked = PBErrMalloc(GenBrushErr, 
-            sizeof(GBStackedPixel));
-          memcpy(&(stacked->_val), &mergedPix, sizeof(GBPixel));
-          stacked->_depth = 0.0;
-          stacked->_blendMode = blendMode;
-          // Add the stacked pixel to the stack 
-          GSetAddSort(pix + nLayer, stacked, stacked->_depth);
-          // Increment the index
-          ++n;
-          nLayer = GBConvertToIndexLayerForTGA(n, header);
+        GBPixel mergedPix;
+        GBTGAMergeBytes(&mergedPix, p, bytes2read);
+        // Create a stacked pixel
+        GBStackedPixel* stacked = PBErrMalloc(GenBrushErr, 
+          sizeof(GBStackedPixel));
+        memcpy(&(stacked->_val), &mergedPix, sizeof(GBPixel));
+        stacked->_depth = 0.0;
+        stacked->_blendMode = blendMode;
+        // Add the stacked pixel to the stack 
+        GSetAddSort(pix + nLayer, stacked, stacked->_depth);
+        // Increment the index
+        ++n;
+        nLayer = GBConvertToIndexLayerForTGA(n, header);
+      }
+    } else if (header->_dataTypeCode == 10) {
+      if (fread(p, 1, bytes2read + 1, stream) != bytes2read + 1) {
+        flagPrematureEnd = true;
+      } else {
+        j = p[0] & 0x7f;
+        GBPixel mergedPix;
+        GBTGAMergeBytes(&mergedPix, &(p[1]), bytes2read);
+        // Create a stacked pixel
+        GBStackedPixel* stacked = PBErrMalloc(GenBrushErr, 
+          sizeof(GBStackedPixel));
+        memcpy(&(stacked->_val), &mergedPix, sizeof(GBPixel));
+        stacked->_depth = 0.0;
+        stacked->_blendMode = blendMode;
+        // Add the stacked pixel to the stack 
+        GSetAddSort(pix + nLayer, stacked, stacked->_depth);
+        // Increment the index
+        ++n;
+        nLayer = GBConvertToIndexLayerForTGA(n, header);
+        if (p[0] & 0x80) {
+          for (i = 0; i < j; ++i) {
+            GBPixel mergedPix;
+            GBTGAMergeBytes(&mergedPix, &(p[1]), bytes2read);
+            // Create a stacked pixel
+            GBStackedPixel* stacked = PBErrMalloc(GenBrushErr, 
+              sizeof(GBStackedPixel));
+            memcpy(&(stacked->_val), &mergedPix, sizeof(GBPixel));
+            stacked->_depth = 0.0;
+            stacked->_blendMode = blendMode;
+            // Add the stacked pixel to the stack 
+            GSetAddSort(pix + nLayer, stacked, stacked->_depth);
+            // Increment the index
+            ++n;
+            nLayer = GBConvertToIndexLayerForTGA(n, header);
+          }
+        } else {
+          for (i = 0; i < j; ++i) {
+            if (fread(p, 1, bytes2read, stream) != bytes2read) {
+              sprintf(GenBrushErr->_msg, "fread failed (%s)", 
+                strerror(errno));
+              return false;
+            }
+            GBPixel mergedPix;
+            GBTGAMergeBytes(&mergedPix, p, bytes2read);
+            // Create a stacked pixel
+            GBStackedPixel* stacked = PBErrMalloc(GenBrushErr, 
+              sizeof(GBStackedPixel));
+            memcpy(&(stacked->_val), &mergedPix, sizeof(GBPixel));
+            stacked->_depth = 0.0;
+            stacked->_blendMode = blendMode;
+            // Add the stacked pixel to the stack 
+            GSetAddSort(pix + nLayer, stacked, stacked->_depth);
+            // Increment the index
+            ++n;
+            nLayer = GBConvertToIndexLayerForTGA(n, header);
+          }
         }
       }
     }
