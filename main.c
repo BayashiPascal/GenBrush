@@ -3831,7 +3831,7 @@ void UnitTestGenBrushAddRemovePostProcessing() {
   printf("UnitTestGenBrushAddRemovePostProcessing\n");
 }
 
-void UnitTestGenBrushScaleCrop() {
+void UnitTestGenBrushScaleCropCopyFragment() {
   GenBrush* gb = GBCreateFromFile("./GBScaleCropTest.tga");
   VecShort2D dim = VecShortCreateStatic2D();
   VecSet(&dim, 0, 100); VecSet(&dim, 1, 50); 
@@ -3872,10 +3872,25 @@ void UnitTestGenBrushScaleCrop() {
     sprintf(ShapoidErr->_msg, "GBCrop failed (2)");
     PBErrCatch(ShapoidErr);
   }
+  
+  VecSet(&pos, 0, 5); VecSet(&pos, 1, 15); 
+  VecShort2D posDest = VecShortCreateStatic2D();
+  VecSet(&posDest, 0, 40); VecSet(&posDest, 1, 30); 
+  VecSet(&dim, 0, 10); VecSet(&dim, 1, 20); 
+  GBCopyFragment(gbRef, gb, &pos, &posDest, &dim);
+  GBFree(&gbRef);
+  gbRef = GBCreateFromFile("./GBCopyFragmentTestRef.tga");
+  if (!GBSurfaceIsSameAs(GBSurf(gb), GBSurf(gbRef))) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBCopyFragment failed (2)");
+    PBErrCatch(ShapoidErr);
+  }
+  
+  
   GBFree(&gbRef);
   GBFree(&gbCropped);
   GBFree(&gb);
-  printf("UnitTestGenBrushScaleCrop OK\n");
+  printf("UnitTestGenBrushScaleCropCopyFragment OK\n");
 }
 
 void UnitTestGenBrush() {
@@ -3895,7 +3910,7 @@ void UnitTestGenBrush() {
   UnitTestGenBrushCreateFromFile();
   UnitTestGenBrushIsSameAs();
   UnitTestGenBrushAddRemovePostProcessing();
-  UnitTestGenBrushScaleCrop();
+  UnitTestGenBrushScaleCropCopyFragment();
   
   printf("UnitTestGenBrush OK\n");
 }

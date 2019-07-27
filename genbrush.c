@@ -3252,6 +3252,61 @@ GenBrush* GBCrop(const GenBrush* const that,
   // Return the cropped version of the GenBrush
   return croppedGB;
 }
+
+// Duplicate the final pixels of the GenBrush 'src' to the 
+// GenBrush 'dest' for the area starting at 'posSrc' in 'src' and
+// 'posDest' in 'dest' and having dimension 'dim'
+// The fragment must be fully included in both 'src' and 'dest'
+void GBCopyFragment(const GenBrush* const src, GenBrush* const dest,
+  const VecShort2D* const posSrc, const VecShort2D* const posDest, 
+  const VecShort2D* const dim) {
+#if BUILDMODE == 0
+  if (src == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'src' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (dest == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'dest' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (posSrc == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'posSrc' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (posDest == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'posDest' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (dim == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'dim' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  // Declare a variable to loop on pixels
+  VecShort2D pos = VecShortCreateStatic2D();
+  
+  // Loop on pixels
+  do {
+
+    // Get the position in the source
+    VecShort2D pSrc = VecGetOp(&pos, 1, posSrc, 1);
+
+    // Get the position in the destination
+    VecShort2D pDest = VecGetOp(&pos, 1, posDest, 1);
+
+    // Get the pixel from the source
+    GBPixel pix = GBGetFinalPixel(src, &pSrc);
+    
+    // Set the pixel in the destination
+    GBSetFinalPixel(dest, &pDest, &pix);
+
+  } while (VecStep(&pos, dim));
+}
     
 // ================ GTK Functions ====================
 #if BUILDWITHGRAPHICLIB == 1

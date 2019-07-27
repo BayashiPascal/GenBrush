@@ -1656,6 +1656,14 @@ GenBrush* GBCrop(const GenBrush* const that,
   const VecShort2D* const posLR, const VecShort2D* const dim,
   const GBPixel* const fillPix);
 
+// Duplicate the final pixels of the GenBrush 'src' to the 
+// GenBrush 'dest' for the area starting at 'posSrc' in 'src' and
+// 'posDest' in 'dest' and having dimension 'dim'
+// The fragment must be fully included in both 'src' and 'dest'
+void GBCopyFragment(const GenBrush* const src, GenBrush* const dest,
+  const VecShort2D* const posSrc, const VecShort2D* const posDest, 
+  const VecShort2D* const dim);
+
 #if BUILDWITHGRAPHICLIB == 1
 #include "genbrush-GTK.h"
 #endif
