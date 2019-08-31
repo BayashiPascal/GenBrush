@@ -411,3 +411,65 @@ gboolean GBSurfaceWidgetCallbackConfigEvt(GtkWidget *widget,
   cairo_destroy (cr);
   return TRUE;
 }
+
+// Take a snapshot of the GBSurfaceApp 'that' and save it to 'fileName'
+// Return true if successful, flase else
+bool GBSurfaceAppScreenshot(
+  const GBSurfaceApp* const that,
+             const char* const fileName) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (fileName == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'fileName' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+
+  // Create a temporary GBSurfaceImage from the GBSurface of the
+  // GBSurfaceApp
+  GBSurfaceImage surf;
+  memcpy(&surf, &(that->_surf), sizeof(GBSurface));
+  surf._fileName = (char*)fileName;
+
+  // Save the GBSurface as an image
+  bool flag = GBSurfaceImageSave(&surf);
+
+  // Return the success flag
+  return flag;
+}
+
+// Take a snapshot of the GBSurfaceWidget 'that' and save it to 'fileName'
+// Return true if successfull, flase else
+bool GBSurfaceWidgetScreenshot(
+  const GBSurfaceWidget* const that,
+             const char* const fileName) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (fileName == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'fileName' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+
+  // Create a temporary GBSurfaceImage from the GBSurface of the
+  // GBSurfaceWidget
+  GBSurfaceImage surf;
+  memcpy(&surf, &(that->_surf), sizeof(GBSurface));
+  surf._fileName = (char*)fileName;
+
+  // Save the GBSurface as an image
+  bool flag = GBSurfaceImageSave(&surf);
+
+  // Return the success flag
+  return flag;
+}

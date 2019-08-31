@@ -3964,6 +3964,14 @@ void UnitTestAll() {
       GBSurfaceDim((GBSurface*)GBApp), 0);
     // Refresh the displayed surface
     GBSurfaceAppRefresh(GBApp);
+    // Take a screenshot before closing
+    bool ret = GBScreenshot(
+      GBApp, "./screenshotGBSurfaceApp.tga");
+    if (ret == false) {
+      GenBrushErr->_type = PBErrTypeUnitTestFailed;
+      sprintf(GenBrushErr->_msg, "GBSurfaceAppScreenshot failed");
+      PBErrCatch(GenBrushErr);
+    }
     // Kill the app
     GBSurfaceAppClose(GBApp);
     // Return false to continue the callback chain
@@ -4005,8 +4013,9 @@ void UnitTestAll() {
     ++green;
     // Refresh the displayed surface
     GBRender(GBWidget);
-    if (green == 255)
+    if (green == 255) {
       gtk_window_close(GTK_WINDOW(UnitTestGBSurfaceWidgetWindow));
+    }
     // Return true to stop the callback chain
     return TRUE;
   }
@@ -4016,6 +4025,15 @@ void UnitTestAll() {
       (void)widget;(void)event;
     // Declare a variable to convert the data into the GenBrush
     GenBrush* GBWidget = (GenBrush*)data;
+    // Take a screenshot before closing
+    bool ret = GBScreenshot(
+      (GBSurfaceWidget*)(GBWidget->_surf), 
+      "./screenshotGBSurfaceWidget.tga");
+    if (ret == false) {
+      GenBrushErr->_type = PBErrTypeUnitTestFailed;
+      sprintf(GenBrushErr->_msg, "GBSurfaceWidgetScreenshot failed");
+      PBErrCatch(GenBrushErr);
+    }
     // Free memory
     GBFree(&GBWidget);
     // Return false to continue the callback chain

@@ -40,7 +40,7 @@ typedef struct GBSurfaceWidget {
   // cairo surface
   cairo_surface_t* _cairoSurf;
 
-  // cf GBSurfaceAppCallbackDraw
+  // cf GBSurfaceWidgetCallbackDraw
   // Flipped data
   unsigned char* _flippedData;
   
@@ -124,3 +124,15 @@ GenBrush* GBCreateWidget(const VecShort2D* const dim);
 inline
 #endif 
 GtkWidget* GBGetGtkWidget(const GenBrush* const that);
+
+// Take a snapshot of the GBSurfaceApp 'that' and save it to 'filename'
+// Return true if successfull, flase else
+bool GBSurfaceAppScreenshot(
+  const GBSurfaceApp* const that,
+             const char* const filename);
+
+// Take a snapshot of the GBSurfaceWidget 'that' and save it to 'filename'
+// Return true if successfull, flase else
+bool GBSurfaceWidgetScreenshot(
+  const GBSurfaceWidget* const that,
+             const char* const filename);

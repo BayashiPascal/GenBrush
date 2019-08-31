@@ -1949,6 +1949,13 @@ void GBCopyFragment(const GenBrush* const src, GenBrush* const dest,
 
 #elif BUILDWITHGRAPHICLIB == 1
 
+#define GBScreenshot(GB, FileName) _Generic(GB, \
+  GBSurfaceApp*: GBSurfaceAppScreenshot, \
+  const GBSurfaceApp*: GBSurfaceAppScreenshot, \
+  GBSurfaceWidget*: GBSurfaceWidgetScreenshot, \
+  const GBSurfaceWidget*: GBSurfaceWidgetScreenshot, \
+  default: PBErrInvalidPolymorphism) (GB, FileName)
+  
 
 #endif
 
