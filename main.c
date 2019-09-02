@@ -1021,7 +1021,7 @@ void UnitTestGBSurfaceUpdate() {
   GBLayer* layers[4] = {NULL};
   VecSet(&dim, 0, 5); VecSet(&dim, 1, 5); 
   for (int iLayer = 0; iLayer < 4; ++iLayer) {
-    layers[iLayer] = GBSurfaceAddLayer(surf, &dim);
+    layers[iLayer] = GBSurfaceAddLayer((GBSurface*)surf, &dim);
     GBLayerSetBlendMode(layers[iLayer], GBLayerBlendModeOver);
   }
   GBLayerSetStackPos(layers[1], GBLayerStackPosInside);
@@ -1097,6 +1097,7 @@ void UnitTestGBSurfaceUpdate() {
     }
   }
   GBSurfaceFree(&surf);
+
   printf("UnitTestGBSurfaceUpdate OK\n");
 }
 

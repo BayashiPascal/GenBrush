@@ -595,6 +595,11 @@ GBLayer* GBLayerCreate(const VecShort2D* const dim) {
   that->_dim = *dim;
   that->_pos = VecShortCreateStatic2D();
   that->_prevPos = VecShortCreateStatic2D();
+  that->_scale = VecFloatCreateStatic2D();
+  that->_prevScale = VecFloatCreateStatic2D();
+  VecSet(&(that->_scale), 0, 1.0);
+  VecSet(&(that->_scale), 1, 1.0);
+  that->_prevScale = that->_scale;
   that->_pix = PBErrMalloc(GenBrushErr,
     sizeof(GSet) * GBLayerArea(that));
   for (int iPix = GBLayerArea(that); iPix--;)
@@ -675,7 +680,7 @@ GBLayer* GBLayerCreateFromFileTGA(const char* const fileName) {
 
 // Get the boundary of the GBLayer 'that' inside the GBSurface 'surf'
 // The boundaries are given as a Facoid
-// If the flag 'prevPos' is true, gives the bounday at the previous
+// If the flag 'prevPos' is true, gives the boundary at the previous
 // position
 // Return NULL if the layer is completely out of the surface
 Facoid* GBLayerGetBoundaryInSurface(const GBLayer* const that, 
@@ -692,18 +697,20 @@ Facoid* GBLayerGetBoundaryInSurface(const GBLayer* const that,
     PBErrCatch(GenBrushErr);
   }
 #endif
-  // Declare a pointer toward the relevant position accoridng to 
+  // Declare a pointer toward the relevant position according to 
   // 'prevPos'
   VecShort2D* pos = 
     (prevPos == false ? GBLayerPos(that) : GBLayerPrevPos(that));
+  VecFloat2D* scale = 
+    (prevPos == false ? GBLayerScale(that) : GBLayerPrevScale(that));
   // Get the values of the clip area made by the intersection of the 
   // layer and the surface
   VecFloat2D min = VecFloatCreateStatic2D();
   VecFloat2D max = VecFloatCreateStatic2D();
   for (int i = 2; i--;) {
-    VecSet(&min, i, MAX(0, VecGet(pos, i)));
+    VecSet(&min, i, MAX(0, floor(((float)VecGet(pos, i)) * VecGet(scale, i))));
     VecSet(&max, i, MIN(VecGet(GBSurfaceDim(surf), i), 
-      VecGet(GBLayerDim(that), i) + VecGet(pos, i)));
+      floor((float)(VecGet(GBLayerDim(that), i) + VecGet(pos, i)) * VecGet(scale, i))));
   }
   // Declare a Facoid to memorize the result
   Facoid* bound = NULL;
@@ -967,6 +974,12 @@ void GBSurfaceUpdate(GBSurface* const that) {
           GBLayer* layer = GSetIterGet(&iter);
           // Get the position of the current pixel in layer coordinates
           VecCopy(&pLayer, &pCoord);
+          VecSet(&pLayer, 0, (int)floor(
+            ((float)VecGet(&pLayer, 0)) / 
+            VecGet(GBLayerScale(layer), 0)));
+          VecSet(&pLayer, 1, (int)floor(
+            ((float)VecGet(&pLayer, 1)) / 
+            VecGet(GBLayerScale(layer), 1)));
           VecOp(&pLayer, 1.0, GBLayerPos(layer), -1.0);
           // If the current pixel is inside the layer
           if (GBLayerIsPosInside(layer, &pLayer)) {

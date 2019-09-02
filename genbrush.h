@@ -127,6 +127,10 @@ typedef struct GBLayer {
   bool _modified;
   // Position in stack
   GBLayerStackPosition _stackPos;
+  // Scale
+  VecFloat2D _scale;
+  // Previous scale
+  VecFloat2D _prevScale;
 } GBLayer;
 
 typedef enum GBPPType {
@@ -392,6 +396,38 @@ VecShort2D* GBLayerPrevPos(const GBLayer* const that);
 inline
 #endif 
 VecShort2D GBLayerGetPrevPos(const GBLayer* const that);
+
+// Get the scale of the GBLayer 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+VecFloat2D* GBLayerScale(const GBLayer* const that);
+
+// Get a copy of the scale of the GBLayer 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+VecFloat2D GBLayerGetScale(const GBLayer* const that);
+
+// Set the scale of the GBLayer 'that' to 'scale'
+// If the flag _modified==false _prevScale is first set to _scale
+// and _modified is set to true
+#if BUILDMODE != 0
+inline
+#endif 
+void GBLayerSetScale(GBLayer* const that, const VecFloat2D* const scale);
+
+// Get the previous scale of the GBLayer 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+VecFloat2D* GBLayerPrevScale(const GBLayer* const that);
+
+// Get a copy of the previous scale of the GBLayer 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+VecFloat2D GBLayerGetPrevScale(const GBLayer* const that);
 
 // Get the dimensions of the GBLayer 'that'
 #if BUILDMODE != 0

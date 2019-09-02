@@ -128,6 +128,92 @@ VecShort2D GBLayerGetPrevPos(const GBLayer* const that) {
   return that->_prevPos;
 }
 
+// Get the scale of the GBLayer 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+VecFloat2D* GBLayerScale(const GBLayer* const that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  return (VecFloat2D*)&(that->_scale);
+}
+
+// Get a copy of the scale of the GBLayer 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+VecFloat2D GBLayerGetScale(const GBLayer* const that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  return that->_scale;
+}
+
+// Set the scale of the GBLayer 'that' to 'scale'
+// If the flag _modified==false _prevScale is first set to _scale
+// and _modified is set to true
+#if BUILDMODE != 0
+inline
+#endif 
+void GBLayerSetScale(GBLayer* const that, const VecFloat2D* const scale) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (scale == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'scale' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  if (!(that->_modified)) {
+    that->_modified = true;
+    that->_prevScale = that->_scale;
+  }
+  that->_scale = *scale;
+}
+
+// Get the previous scale of the GBLayer 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+VecFloat2D* GBLayerPrevScale(const GBLayer* const that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  return (VecFloat2D*)&(that->_prevScale);
+}
+
+// Get a copy of the previous scale of the GBLayer 'that'
+#if BUILDMODE != 0
+inline
+#endif 
+VecFloat2D GBLayerGetPrevScale(const GBLayer* const that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  return that->_prevScale;
+}
+
 // Get the dimensions of the GBLayer 'that'
 #if BUILDMODE != 0
 inline

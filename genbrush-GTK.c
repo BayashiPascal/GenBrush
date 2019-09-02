@@ -352,7 +352,7 @@ gboolean GBSurfaceWidgetCallbackDraw(GtkWidget *widget, cairo_t *cr,
   // Terrible patch. The code below should do the flipping but
   // instead it splits only half of the surface (???). Can't find 
   // the problem, then give up and create a flipped copy of the data
-  // and us it instead.
+  // and use it instead.
   //cairo_scale(cr, 1.0, -1.0);
   //cairo_translate(cr, 0, -1 * gtk_widget_get_allocated_height(GBWidget->_drawingArea));
   //cairo_set_source_surface(cr, GBWidget->_cairoSurf, 0, 0);
@@ -366,6 +366,7 @@ gboolean GBSurfaceWidgetCallbackDraw(GtkWidget *widget, cairo_t *cr,
       origData + iLine * VecGet(dim, 0) * 4, 
       sizeof(unsigned char) * VecGet(dim, 0) * 4);
   }
+
   cairo_set_source_surface(cr, GBWidget->_cairoSurf, 0, 0);
 
   cairo_paint (cr);
@@ -413,7 +414,7 @@ gboolean GBSurfaceWidgetCallbackConfigEvt(GtkWidget *widget,
 }
 
 // Take a snapshot of the GBSurfaceApp 'that' and save it to 'fileName'
-// Return true if successful, flase else
+// Return true if successful, false else
 bool GBSurfaceAppScreenshot(
   const GBSurfaceApp* const that,
              const char* const fileName) {
