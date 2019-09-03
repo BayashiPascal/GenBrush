@@ -549,11 +549,11 @@ GBLayer* GBLayerCreateFromFile(const char* const fileName);
 
 // Get the boundary of the GBLayer 'that' inside the GBSurface 'surf'
 // The boundaries are given as a Facoid
-// If the flag 'prevPos' is true, gives the bounday at the previous
+// If the flag 'prevStatus' is true, gives the bounday at the previous
 // position
 // Return NULL if the layer is completely out of the surface
 Facoid* GBLayerGetBoundaryInSurface(const GBLayer* const that, 
-  const GBSurface* const surf, const bool prevPos);
+  const GBSurface* const surf, const bool prevStatus);
 
 // ---------------- GBPostProcessing --------------------------
 

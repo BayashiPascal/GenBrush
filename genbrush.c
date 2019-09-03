@@ -680,11 +680,11 @@ GBLayer* GBLayerCreateFromFileTGA(const char* const fileName) {
 
 // Get the boundary of the GBLayer 'that' inside the GBSurface 'surf'
 // The boundaries are given as a Facoid
-// If the flag 'prevPos' is true, gives the boundary at the previous
+// If the flag 'prevStatus' is true, gives the boundary at the previous
 // position
 // Return NULL if the layer is completely out of the surface
 Facoid* GBLayerGetBoundaryInSurface(const GBLayer* const that, 
-  const GBSurface* const surf, const bool prevPos) {
+  const GBSurface* const surf, const bool prevStatus) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
@@ -700,9 +700,9 @@ Facoid* GBLayerGetBoundaryInSurface(const GBLayer* const that,
   // Declare a pointer toward the relevant position according to 
   // 'prevPos'
   VecShort2D* pos = 
-    (prevPos == false ? GBLayerPos(that) : GBLayerPrevPos(that));
+    (prevStatus == false ? GBLayerPos(that) : GBLayerPrevPos(that));
   VecFloat2D* scale = 
-    (prevPos == false ? GBLayerScale(that) : GBLayerPrevScale(that));
+    (prevStatus == false ? GBLayerScale(that) : GBLayerPrevScale(that));
   // Get the values of the clip area made by the intersection of the 
   // layer and the surface
   VecFloat2D min = VecFloatCreateStatic2D();
@@ -710,7 +710,7 @@ Facoid* GBLayerGetBoundaryInSurface(const GBLayer* const that,
   for (int i = 2; i--;) {
     VecSet(&min, i, MAX(0, floor(((float)VecGet(pos, i)) * VecGet(scale, i))));
     VecSet(&max, i, MIN(VecGet(GBSurfaceDim(surf), i), 
-      floor((float)(VecGet(GBLayerDim(that), i) + VecGet(pos, i)) * VecGet(scale, i))));
+      floor((float)(VecGet(GBLayerDim(that), i) + VecGet(pos, i)) * VecGet(scale, i)) + 1.0));
   }
   // Declare a Facoid to memorize the result
   Facoid* bound = NULL;
@@ -906,9 +906,10 @@ GSetShapoid* GBSurfaceGetModifiedArea(const GBSurface* const that) {
           // Free memory used by the boundary
           ShapoidFree(&bound);
         }
-        // If the layer has been moved we also need to repaint the 
-        // area at its previous position
-        if (!VecIsEqual(GBLayerPos(layer), GBLayerPrevPos(layer))) {
+        // If the layer has been moved or scaled we also need to  
+        // repaint the area at its previous position/scale
+        if (!VecIsEqual(GBLayerPos(layer), GBLayerPrevPos(layer)) ||
+          !VecIsEqual(GBLayerScale(layer), GBLayerPrevScale(layer))) {
           // Get the boundary in surface of this layer at previous 
           // position
           bound = GBLayerGetBoundaryInSurface(layer, that, true);
@@ -919,6 +920,12 @@ GSetShapoid* GBSurfaceGetModifiedArea(const GBSurface* const that) {
             FacoidAlignedAddClippedToSet(bound, areas);
             // Free memory used by the boundary
             ShapoidFree(&bound);
+          }
+          // Immediately update the previous scale to avoid it
+          // to be applied to next prevPos
+          if (!VecIsEqual(GBLayerScale(layer), 
+            GBLayerPrevScale(layer))) {
+            layer->_prevScale = layer->_scale;
           }
         }
       }
