@@ -63,13 +63,13 @@ bool GBSurfaceAppRender(GBSurfaceApp* const that);
 
 // Close the GBSurfaceApp 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBSurfaceAppClose(const GBSurfaceApp* const that);
 
 // Refresh the content of the GBSurfaceApp 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBSurfaceAppRefresh(const GBSurfaceApp* const that);
 
@@ -89,13 +89,13 @@ void GBSurfaceWidgetFree(GBSurfaceWidget** that);
 
 // Return the GtkWidget of the GBSurfaceWidget 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GtkWidget* GBSurfaceWidgetGtkWidget(const GBSurfaceWidget* const that);
 
 // Return the GtkWidget of the GBSurfaceApp 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GtkWidget* GBSurfaceAppGtkWidget(const GBSurfaceApp* const that);
 
@@ -121,7 +121,7 @@ GenBrush* GBCreateWidget(const VecShort2D* const dim);
 // Return the GtkWidget of the GenBrush 'that', or NULL if the surface
 // of the GenBursh is not a GBSurfaceWidget 
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GtkWidget* GBGetGtkWidget(const GenBrush* const that);
 

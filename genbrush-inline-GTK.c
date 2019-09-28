@@ -1,10 +1,10 @@
-// ============ GENBRUSH-INLINE-GTK.C ================
+// ============ GENBRUSH-static inline-GTK.C ================
 
 // ================ Functions implementation ====================
 
 // Close the GBSurfaceApp 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBSurfaceAppClose(const GBSurfaceApp* const that) {
 #if BUILDMODE == 0
@@ -20,7 +20,7 @@ void GBSurfaceAppClose(const GBSurfaceApp* const that) {
 
 // Refresh the content of the GBSurfaceApp 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBSurfaceAppRefresh(const GBSurfaceApp* const that) {
 #if BUILDMODE == 0
@@ -37,7 +37,7 @@ void GBSurfaceAppRefresh(const GBSurfaceApp* const that) {
 
 // Return the GtkWidget of the GBSurfaceWidget 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GtkWidget* GBSurfaceWidgetGtkWidget(const GBSurfaceWidget* const that) {
 #if BUILDMODE == 0
@@ -52,7 +52,7 @@ GtkWidget* GBSurfaceWidgetGtkWidget(const GBSurfaceWidget* const that) {
 
 // Return the GtkWidget of the GBSurfaceApp 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GtkWidget* GBSurfaceAppGtkWidget(const GBSurfaceApp* const that) {
 #if BUILDMODE == 0
@@ -68,7 +68,7 @@ GtkWidget* GBSurfaceAppGtkWidget(const GBSurfaceApp* const that) {
 // Return the GtkWidget of the GenBrush 'that', or NULL if the surface
 // of the GenBursh is not a GBSurfaceWidget 
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GtkWidget* GBGetGtkWidget(const GenBrush* const that) {
 #if BUILDMODE == 0

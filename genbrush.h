@@ -337,7 +337,7 @@ GBPixel GBPixelStackBlend(const GSet* const stack,
   
 // Return true if the GBPixel 'that' and 'tho' are the same, else false.
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 bool GBPixelIsSame(const GBPixel* const that, const GBPixel* const tho);
 
@@ -361,19 +361,19 @@ void GBLayerFree(GBLayer** that);
 
 // Get the area of the layer (width * height)
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 int GBLayerArea(const GBLayer* const that);
 
 // Get the position of the GBLayer 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 VecShort2D* GBLayerPos(const GBLayer* const that);
 
 // Get a copy of the position of the GBLayer 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 VecShort2D GBLayerGetPos(const GBLayer* const that);
 
@@ -381,31 +381,31 @@ VecShort2D GBLayerGetPos(const GBLayer* const that);
 // If the flag _modified==false _prevPos is first set to _pos
 // and _modified is set to true
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBLayerSetPos(GBLayer* const that, const VecShort2D* const pos);
 
 // Get the previous position of the GBLayer 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 VecShort2D* GBLayerPrevPos(const GBLayer* const that);
 
 // Get a copy of the previous position of the GBLayer 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 VecShort2D GBLayerGetPrevPos(const GBLayer* const that);
 
 // Get the scale of the GBLayer 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 VecFloat2D* GBLayerScale(const GBLayer* const that);
 
 // Get a copy of the scale of the GBLayer 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 VecFloat2D GBLayerGetScale(const GBLayer* const that);
 
@@ -413,84 +413,84 @@ VecFloat2D GBLayerGetScale(const GBLayer* const that);
 // If the flag _modified==false _prevScale is first set to _scale
 // and _modified is set to true
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBLayerSetScale(GBLayer* const that, const VecFloat2D* const scale);
 
 // Get the previous scale of the GBLayer 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 VecFloat2D* GBLayerPrevScale(const GBLayer* const that);
 
 // Get a copy of the previous scale of the GBLayer 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 VecFloat2D GBLayerGetPrevScale(const GBLayer* const that);
 
 // Get the dimensions of the GBLayer 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 VecShort2D* GBLayerDim(const GBLayer* const that);
 
 // Get a copy of the dimensions of the GBLayer 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 VecShort2D GBLayerGetDim(const GBLayer* const that);
 
 // Get a copy of the blend mode of the GBLayer 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBLayerBlendMode GBLayerGetBlendMode(const GBLayer* const that);
 
 // Set the blend mode of the GBLayer 'that' to 'blend'
 // Set the flag _modified to true
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBLayerSetBlendMode(GBLayer* const that, 
   const GBLayerBlendMode blend);
 
 // Get a copy of the modified flag of the GBLayer 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 bool GBLayerIsModified(const GBLayer* const that);
 
 // Set the modified flag of the GBLayer 'that' to 'flag'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBLayerSetModified(GBLayer* const that, const bool flag);
 
 // Get a copy of the stack position of the GBLayer 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBLayerStackPosition GBLayerGetStackPos(const GBLayer* const that);
 
 // Set the stack position of the GBLayer 'that' to 'pos'
 // Set the flag _modified to true
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBLayerSetStackPos(GBLayer* const that, 
   const GBLayerStackPosition pos);
 
 // Get the stacked pixels of the GBLayer 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GSet* GBLayerPixels(const GBLayer* const that);
 
 // Get the stacked pixels of the GBLayer 'that' at position 'pos'
 // 'pos' must be inside the layer
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GSet* GBLayerPixel(const GBLayer* const that, 
   const VecShort2D* const pos);
@@ -498,7 +498,7 @@ GSet* GBLayerPixel(const GBLayer* const that,
 // Get the stacked pixels of the GBLayer 'that' at position 'pos'
 // If 'pos' is out of the layer return NULL
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GSet* GBLayerPixelSafe(const GBLayer* const that, 
   const VecShort2D* const pos);
@@ -510,7 +510,7 @@ GSet* GBLayerPixelSafe(const GBLayer* const that,
 // If the pixel is completely transparent (_rgba[GBPixelAlpha]==0) 
 // do nothing
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBLayerAddPixel(GBLayer* const that, const VecShort2D* const pos, 
   const GBPixel* const pix, const float depth);
@@ -522,7 +522,7 @@ void GBLayerAddPixel(GBLayer* const that, const VecShort2D* const pos,
 // If the pixel is completely transparent (_rgba[GBPixelAlpha]==0) 
 // do nothing
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBLayerAddPixelSafe(GBLayer* const that, 
   const VecShort2D* const pos, const GBPixel* const pix,
@@ -531,14 +531,14 @@ void GBLayerAddPixelSafe(GBLayer* const that,
 // Return true if the position 'pos' is inside the layer 'that' 
 // boundary, false else
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 bool GBLayerIsPosInside(const GBLayer* const that, 
   const VecShort2D* const pos);
 
 // Delete all the stacked pixels in the GBLayer 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBLayerFlush(GBLayer* const that);
 
@@ -568,7 +568,7 @@ void GBPostProcessingFree(GBPostProcessing** that);
 
 // Return the type of the GBPostProcessing 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPPType GBPostProcessingGetType(const GBPostProcessing* const that);
 
@@ -599,39 +599,39 @@ GBSurface GBSurfaceClone(const GBSurface* const that);
 // values for _finalPix as GBSurface 'surf'
 // Else, return false
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 bool GBSurfaceIsSameAs(const GBSurface* const that, 
   const GBSurface* const surf);
 
 // Get the type of the GBSurface 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBSurfaceType GBSurfaceGetType(const GBSurface* const that);
 
 // Get a copy of the dimensions of the GBSurface 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 VecShort2D GBSurfaceGetDim(const GBSurface* const that);
 
 // Get the dimensions of the GBSurface 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 VecShort2D* GBSurfaceDim(const GBSurface* const that);
 
 // Get the final pixels of the GBSurface 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPixel* GBSurfaceFinalPixels(const GBSurface* const that);
 
 // Get the final pixel at position 'pos' of the GBSurface 'that'
 // 'pos' must be in the surface
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPixel* GBSurfaceFinalPixel(const GBSurface* const that, 
   const VecShort2D* const pos);
@@ -640,7 +640,7 @@ GBPixel* GBSurfaceFinalPixel(const GBSurface* const that,
 // 'that'
 // 'pos' must be in the surface
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPixel GBSurfaceGetFinalPixel(const GBSurface* const that, 
   const VecShort2D* const pos);
@@ -649,7 +649,7 @@ GBPixel GBSurfaceGetFinalPixel(const GBSurface* const that,
 // the pixel 'pix'
 // 'pos' must be in the surface
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBSurfaceSetFinalPixel(GBSurface* const that, 
   const VecShort2D* const pos, const GBPixel* const pix);
@@ -657,7 +657,7 @@ void GBSurfaceSetFinalPixel(GBSurface* const that,
 // Get the final pixel at position 'pos' of the GBSurface 'that'
 // If 'pos' is out of the surface return NULL
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPixel* GBSurfaceFinalPixelSafe(const GBSurface* const that, 
   const VecShort2D* const pos);
@@ -666,7 +666,7 @@ GBPixel* GBSurfaceFinalPixelSafe(const GBSurface* const that,
 // 'that'
 // If 'pos' is out of the surface return a transparent pixel
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPixel GBSurfaceGetFinalPixelSafe(const GBSurface* const that, 
   const VecShort2D* const pos);
@@ -675,32 +675,32 @@ GBPixel GBSurfaceGetFinalPixelSafe(const GBSurface* const that,
 // the pixel 'pix'
 // If 'pos' is out of the surface do nothing
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBSurfaceSetFinalPixelSafe(GBSurface* const that, 
   const VecShort2D* const pos, const GBPixel* const pix);
 
 // Get the area of the GBSurface 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 long GBSurfaceArea(const GBSurface* const that);
 
 // Get the background color of the GBSurface 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPixel* GBSurfaceBgColor(const GBSurface* const that);
 
 // Get a copy of the background color of the GBSurface 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPixel GBSurfaceGetBgColor(const GBSurface* const that);
 
 // Set the background color of the GBSurface 'that' to 'col'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBSurfaceSetBgColor(GBSurface* const that, 
   const GBPixel* const col);
@@ -708,14 +708,14 @@ void GBSurfaceSetBgColor(GBSurface* const that,
 // Return true if the position 'pos' is inside the GBSurface 'that' 
 // boundary, false else
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 bool GBSurfaceIsPosInside(const GBSurface* const that, 
   const VecShort2D* const pos);
 
 // Get the set of layers of the GBSurface 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GSet* GBSurfaceLayers(const GBSurface* const that);
 
@@ -723,7 +723,7 @@ GSet* GBSurfaceLayers(const GBSurface* const that);
 // of layers of the GBSurface 'that'
 // Return the new GBLayer
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBLayer* GBSurfaceAddLayer(GBSurface* const that, 
   const VecShort2D* const dim);
@@ -732,7 +732,7 @@ GBLayer* GBSurfaceAddLayer(GBSurface* const that,
 // 'fileName' to the top of the stack of layers of the GBSurface 'that'
 // Return the new GBLayer
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBLayer* GBSurfaceAddLayerFromFile(GBSurface* const that, 
   const char* const fileName);
@@ -740,20 +740,20 @@ GBLayer* GBSurfaceAddLayerFromFile(GBSurface* const that,
 // Get the 'iLayer'-th layer of the GBSurface 'that'
 // 'iLayer' must be valid
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBLayer* GBSurfaceLayer(const GBSurface* const that, const int iLayer);
 
 // Get the number of layer of the GBSurface 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 int GBSurfaceNbLayer(const GBSurface* const that);
 
 // Set the _modified flag of all layers of the GBSurface 'that' 
 // to 'flag'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBSurfaceSetLayersModified(GBSurface* const that, const bool flag);
 
@@ -762,7 +762,7 @@ void GBSurfaceSetLayersModified(GBSurface* const that, const bool flag);
 // If 'layer' can't be found in the surface do nothing
 // 'pos' must be valid (0<='pos'<nbLayers)
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBSurfaceSetLayerStackPos(GBSurface* const that, 
   GBLayer* const layer, const int pos);
@@ -771,7 +771,7 @@ void GBSurfaceSetLayerStackPos(GBSurface* const that,
 // GBSurface 'that'
 // The memory used by 'layer' is freed
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBSurfaceRemoveLayer(GBSurface* const that, GBLayer* layer);
 
@@ -807,13 +807,13 @@ GBSurfaceImage* GBSurfaceImageClone(const GBSurfaceImage* const that);
 
 // Get the filename of the GBSurfaceImage 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 char* GBSurfaceImageFileName(const GBSurfaceImage* const that);
 
 // Set the filename of the GBSurfaceImage 'that' to 'fileName'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBSurfaceImageSetFileName(GBSurfaceImage* const that, 
   const char* const fileName);
@@ -839,59 +839,59 @@ void GBEyeFreeStatic(GBEye* const that);
 
 // Return the type of the GBEye 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBEyeType _GBEyeGetType(const GBEye* const that);
 
 // Get the scale of the GBEye
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 VecFloat3D* _GBEyeScale(const GBEye* const that);
  
 // Get a copy of the scale of the GBEye
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 VecFloat3D _GBEyeGetScale(const GBEye* const that);
  
 // Get the translation of the GBEye
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 VecFloat2D* _GBEyeOrig(const GBEye* const that);
  
 // Get a copy of the translation of the GBEye
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 VecFloat2D _GBEyeGetOrig(const GBEye* const that);
  
 // Get the rotation of the GBEye (in radians)
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 float _GBEyeGetRot(const GBEye* const that);
 
 // Set the scale of the GBEye
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBEyeSetScaleVec(GBEye* const that, const VecFloat3D* const scale);
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBEyeSetScaleFloat(GBEye* const that, const float scale);
  
 // Set the origin of the GBEye
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void _GBEyeSetOrig(GBEye* const that, const VecFloat2D* const orig);
  
 // Set the rotation of the GBEye (in radians)
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void _GBEyeSetRot(GBEye* const that, const float theta);
   
@@ -901,14 +901,14 @@ void GBEyeUpdateProj(GBEye* const that);
   
 // Get the matrix projection of the eye
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 MatFloat* _GBEyeProj(const GBEye* const that);
 
 // Call the appropriate GBEye<>Process according to the type of the
 // GBEye 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void _GBEyeProcess(const GBEye* const that, GBObjPod* const pod); 
 
@@ -935,7 +935,7 @@ void GBEyeOrthoFree(GBEyeOrtho** that);
 
 // Set the orientation the GBEyeOrtho 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBEyeOrthoSetView(GBEyeOrtho* const that, 
   const GBEyeOrthoView view);
@@ -957,7 +957,7 @@ void GBEyeIsometricFree(GBEyeIsometric** that);
 
 // Set the angle around Y of the GBEyeOrtho to 'theta' (in radians)
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBEyeIsometricSetRotY(GBEyeIsometric* const that, 
   const float theta);
@@ -967,20 +967,20 @@ void GBEyeIsometricSetRotY(GBEyeIsometric* const that,
 // If 'theta' is out of range it is automatically bounded 
 // (ex: pi -> pi/2)
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBEyeIsometricSetRotRight(GBEyeIsometric* const that, 
   const float theta);
 
 // Get the angle around Y of the GBEyeOrtho 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 float GBEyeIsometricGetRotY(const GBEyeIsometric* const that);
 
 // Get the angle around Right of the GBEyeOrtho 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 float GBEyeIsometricGetRotRight(const GBEyeIsometric* const that);
 
@@ -999,14 +999,14 @@ void GBHandFreeStatic(GBHand* const that);
 
 // Return the type of the GBHand 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBHandType _GBHandGetType(const GBHand* const that);
 
 // Call the appropriate GBHand<>Process according to the type of the
 // GBHand 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void _GBHandProcess(const GBHand* const that, GBObjPod* const pod); 
 
@@ -1033,14 +1033,14 @@ void GBToolFreeStatic(GBTool* const that);
 
 // Return a copy of the type of the GBTool 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBToolType GBToolGetType(const GBTool* const that);
 
 // Function to call the appropriate GBTool<>Draw function according to 
 // type of GBTool 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void _GBToolDraw(const GBTool* const that, GBObjPod* const pod);
 
@@ -1060,7 +1060,7 @@ void GBToolPlotterDraw(const GBToolPlotter* const that,
 
 // Return the type of the GBInk 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBInkType _GBInkGetType(const GBInk* const that);
 
@@ -1086,13 +1086,13 @@ void GBInkSolidFree(GBInkSolid** that);
 
 // Get the color of the GBInkSolid 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPixel GBInkSolidGet(const GBInkSolid* const that);
 
 // Set the color of the GBInkSolid 'that' to 'col'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBInkSolidSet(GBInkSolid* const that, const GBPixel* const col);
 
@@ -1127,70 +1127,70 @@ void GBObjPodFree(GBObjPod** that);
 
 // Return the type of the object in the GBObjPod 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBObjType GBObjPodGetType(const GBObjPod* const that);
 
 // Return the object in the GBObjPod 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void* GBObjPodObj(const GBObjPod* const that);
 
 // Return the object viewed by its attached eye in the GBObjPod 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void* GBObjPodEyeObj(const GBObjPod* const that);
 
 // Return the object processed as Points by its attached hand in the 
 // GBObjPod 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GSetVecFloat* GBObjPodGetHandObjAsPoints(const GBObjPod* const that);
 
 // Return the object processed as Shapoids by its attached hand in the 
 // GBObjPod 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GSetShapoid* GBObjPodGetHandObjAsShapoids(const GBObjPod* const that);
 
 // Return the object processed as SCurves by its attached hand in the 
 // GBObjPod 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GSetSCurve* GBObjPodGetHandObjAsSCurves(const GBObjPod* const that);
 
 // Return the eye in the GBObjPod 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBEye* GBObjPodEye(const GBObjPod* const that);
 
 // Return the hand in the GBObjPod 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBHand* GBObjPodHand(const GBObjPod* const that);
 
 // Return the tool in the GBObjPod 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBTool* GBObjPodTool(const GBObjPod* const that);
 
 // Return the ink in the GBObjPod 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBInk* GBObjPodInk(const GBObjPod* const that);
 
 // Return the layer in the GBObjPod 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBLayer* GBObjPodLayer(const GBObjPod* const that);
 
@@ -1198,7 +1198,7 @@ GBLayer* GBObjPodLayer(const GBObjPod* const that);
 // to 'point'
 // If 'point' is null do nothing
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void _GBObjPodSetEyePoint(GBObjPod* const that, VecFloat* const point);
 
@@ -1206,7 +1206,7 @@ void _GBObjPodSetEyePoint(GBObjPod* const that, VecFloat* const point);
 // to 'shap'
 // If 'shap' is null do nothing
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void _GBObjPodSetEyeShapoid(GBObjPod* const that, Shapoid* const shap);
 
@@ -1214,42 +1214,42 @@ void _GBObjPodSetEyeShapoid(GBObjPod* const that, Shapoid* const shap);
 // to 'curve'
 // If 'curve' is null do nothing
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void _GBObjPodSetEyeSCurve(GBObjPod* const that, SCurve* const curve);
 
 // Set the eye in the GBObjPod 'that' to 'eye'
 // If 'eye' is null do nothing
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void _GBObjPodSetEye(GBObjPod* const that, GBEye* const eye);
 
 // Set the hand in the GBObjPod 'that' to 'hand'
 // If 'hand' is null do nothing
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void _GBObjPodSetHand(GBObjPod* const that, GBHand* const hand);
 
 // Set the tool in the GBObjPod 'that' to 'tool'
 // If 'tool' is null do nothing
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void _GBObjPodSetTool(GBObjPod* const that, GBTool* const tool);
 
 // Set the ink in the GBObjPod 'that' to 'ink'
 // If 'ink' is null do nothing
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void _GBObjPodSetInk(GBObjPod* const that, GBInk* const ink);
 
 // Set the layer in the GBObjPod 'that' to 'layer'
 // If 'layer' is null do nothing
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBObjPodSetLayer(GBObjPod* const that, GBLayer* const layer);
 
@@ -1270,13 +1270,13 @@ GenBrush* GBCreateFromFile(const char* const fileName);
 
 // Get the GBSurface of the GenBrush 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBSurface* GBSurf(const GenBrush* const that);
 
 // Get the set of pods of the GenBrush 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GSet* GBPods(const GenBrush* const that);
 
@@ -1285,13 +1285,13 @@ VecShort2D* GBDim(const GenBrush* const that);
 
 // Get a copy of the dimensions of the GenBrush 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 VecShort2D GBGetDim(const GenBrush* const that);
 
 // Get the final pixels of the GenBrush 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPixel* GBFinalPixels(const GenBrush* const that);
 
@@ -1299,7 +1299,7 @@ GBPixel* GBFinalPixels(const GenBrush* const that);
 // 'that'
 // 'pos' must be in the surface
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPixel* GBFinalPixel(const GenBrush* const that, 
   const VecShort2D* const pos);
@@ -1308,7 +1308,7 @@ GBPixel* GBFinalPixel(const GenBrush* const that,
 // of the GB 'that'
 // 'pos' must be in the surface
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPixel GBGetFinalPixel(const GenBrush* const that, 
   const VecShort2D* const pos);
@@ -1317,7 +1317,7 @@ GBPixel GBGetFinalPixel(const GenBrush* const that,
 // 'that' to the pixel 'pix'
 // 'pos' must be in the surface
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBSetFinalPixel(GenBrush* const that, const VecShort2D* const pos, 
   const GBPixel* const pix);
@@ -1326,7 +1326,7 @@ void GBSetFinalPixel(GenBrush* const that, const VecShort2D* const pos,
 // 'that'
 // If 'pos' is out of the surface return NULL
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPixel* GBFinalPixelSafe(const GenBrush* const that, 
   const VecShort2D* const pos);
@@ -1335,7 +1335,7 @@ GBPixel* GBFinalPixelSafe(const GenBrush* const that,
 // of the GB 'that'
 // If 'pos' is out of the surface return a transparent pixel
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPixel GBGetFinalPixelSafe(const GenBrush* const that, 
   const VecShort2D* const pos);
@@ -1344,41 +1344,41 @@ GBPixel GBGetFinalPixelSafe(const GenBrush* const that,
 // 'that' to the pixel 'pix'
 // If 'pos' is out of the surface do nothing
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBSetFinalPixelSafe(GenBrush* const that, 
   const VecShort2D* const pos, const GBPixel* const pix);
 
 // Get the type of the GBSurface of the GenBrush 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBSurfaceType GBGetType(const GenBrush* const that);
 
 // Get the background color of the GBSurface of the GenBrush 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPixel* GBBgColor(const GenBrush* const that);
 
 // Get a copy of the background color of the GBSurface of the 
 // GenBrush 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPixel GBGetBgColor(const GenBrush* const that);
 
 // Set the background color of the GBSurface of the GenBrush
 //  'that' to 'col'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBSetBgColor(GenBrush* const that, const GBPixel* const col);
 
 // Get the filename of the GBSurfaceImage of the GenBrush 'that'
 // Return NULL if the surface is not a GBSurfaceImage
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 char* GBFileName(const GenBrush* const that);
 
@@ -1386,7 +1386,7 @@ char* GBFileName(const GenBrush* const that);
 // to 'fileName'
 // Do nothing if the surface is not a GBSurfaceImage
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBSetFileName(GenBrush* const that, const char* const fileName);
 
@@ -1399,7 +1399,7 @@ bool GBRender(GenBrush* const that);
 
 // Get the area of the GBSurface of the Genbrush 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 int GBArea(const GenBrush* const that);
 
@@ -1407,14 +1407,14 @@ int GBArea(const GenBrush* const that);
 // GenBrush 'that' 
 // boundary, false else
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 bool GBIsPosInside(const GenBrush* const that, 
   const VecShort2D* const pos);
 
 // Return the layers of the surface of the GenBrush 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GSet* GBLayers(const GenBrush* const that);
 
@@ -1422,7 +1422,7 @@ GSet* GBLayers(const GenBrush* const that);
 // of layers of the GBSurface of the GenBrush 'that'
 // Return the new GBLayer
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBLayer* GBAddLayer(GenBrush* const that, const VecShort2D* const dim);
 
@@ -1431,7 +1431,7 @@ GBLayer* GBAddLayer(GenBrush* const that, const VecShort2D* const dim);
 // of layers of the GBSurface of the GenBrush' that'
 // Return the new GBLayer
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBLayer* GBAddLayerFromFile(GenBrush* const that, 
   const char* const fileName);
@@ -1439,13 +1439,13 @@ GBLayer* GBAddLayerFromFile(GenBrush* const that,
 // Get the 'iLayer'-th layer of the GBSurface of the GenBrush 'that'
 // 'iLayer' must be valid
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBLayer* GBLay(const GenBrush* const that, const int iLayer);
 
 // Get the number of layer of the GBSurface of the GenBrush 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 int GBGetNbLayer(const GenBrush* const that);
 
@@ -1454,7 +1454,7 @@ int GBGetNbLayer(const GenBrush* const that);
 // If 'layer' can't be found in the surface do nothing
 // 'pos' must be valid (0<='pos'<nbLayers)
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBSetLayerStackPos(GenBrush* const that, 
   GBLayer* const layer, const int pos);
@@ -1463,13 +1463,13 @@ void GBSetLayerStackPos(GenBrush* const that,
 // GBSurface of the GenBrush 'that'
 // The memory used by 'layer' is freed
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBRemoveLayer(GenBrush* const that, GBLayer* layer);
 
 // Get the number of objects in the GenBrush 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 int GBGetNbPod(const GenBrush* const that);
 
@@ -1477,7 +1477,7 @@ int GBGetNbPod(const GenBrush* const that);
 // drawn with 'eye', 'hand' and 'tool' in layer 'layer'
 // 'pos' must be a vector of 2 or more dimensions
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void _GBAddPoint(GenBrush* const that, VecFloat* const pos, 
   GBEye* const eye, GBHand* const hand, GBTool* const tool, 
@@ -1487,7 +1487,7 @@ void _GBAddPoint(GenBrush* const that, VecFloat* const pos,
 // drawn with 'eye', 'hand' and 'tool' in layer 'layer'
 // 'shap' 's dimension must be 2 or more
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void _GBAddShapoid(GenBrush* const that, Shapoid* const shap, 
   GBEye* const eye, GBHand* const hand, GBTool* const tool, 
@@ -1497,7 +1497,7 @@ void _GBAddShapoid(GenBrush* const that, Shapoid* const shap,
 // drawn with 'eye', 'hand' and 'tool' in layer 'layer'
 // 'curve' 's dimension must be 2 or more
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void _GBAddSCurve(GenBrush* const that, SCurve* const curve, 
   GBEye* const eye, GBHand* const hand, GBTool* const tool, 
@@ -1595,7 +1595,7 @@ void _GBSetPodLayer(GenBrush* const that, GBLayer* const toLayer,
 // Reset all the final pix of the surface of the GenBrush 'that' to its 
 // background color, and reset all the modified flag of layers to true
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBFlush(GenBrush* const that);
 
@@ -1627,53 +1627,53 @@ void _GBNotifyChangeFromTool(GenBrush* const that,
 // surface of the GenBrush 'gb'
 // Else, return false
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 bool GBIsSameAs(const GenBrush* const that, const GenBrush* const gb);
 
 // Add a GBPostProcessing of type 'type' to the GenBrush 'that'
 // Return the GBPostProcessing
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPostProcessing* GBAddPostProcess(GenBrush* const that, 
   const GBPPType type);
 
 // Remove the GBPostProcessing 'post' from the GenBrush 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBRemovePostProcess(GenBrush* const that, 
   const GBPostProcessing* const post);
 
 // Remove all the GBPostProcessing from the GenBrush 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBRemoveAllPostProcess(GenBrush* const that);
 
 // Get the 'iPost'-th post process of the GenBrush 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GBPostProcessing* GBPostProcess(const GenBrush* const that, 
   const int iPost);
 
 // Get the GSet of GBPostProcessing of the GenBrush 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 GSet* GBPostProcs(const GenBrush* const that);
 
 // Get the number of GBPostProcessing of the GenBrush 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 int GBGetNbPostProcs(const GenBrush* const that);
 
 // Remove all the GBObjPods from the GenBrush 'that'
 #if BUILDMODE != 0
-inline
+static inline
 #endif 
 void GBRemoveAllPod(GenBrush* const that);
 
@@ -1995,7 +1995,7 @@ void GBCopyFragment(const GenBrush* const src, GenBrush* const dest,
 
 #endif
 
-// ================ Inliner ====================
+// ================ static inliner ====================
 
 #if BUILDMODE != 0
 #include "genbrush-inline.c"
