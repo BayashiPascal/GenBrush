@@ -92,7 +92,7 @@ void GBLayerSetPos(GBLayer* const that, const VecShort2D* const pos) {
   }
 #endif
   if (!(that->_modified)) {
-    that->_modified = true;
+    GBLayerSetModified(that, true);
     that->_prevPos = that->_pos;
   }
   that->_pos = *pos;
@@ -178,7 +178,7 @@ void GBLayerSetScale(GBLayer* const that, const VecFloat2D* const scale) {
   }
 #endif
   if (!(that->_modified)) {
-    that->_modified = true;
+    GBLayerSetModified(that, true);
     that->_prevScale = that->_scale;
   }
   that->_scale = *scale;
@@ -273,7 +273,7 @@ void GBLayerSetBlendMode(GBLayer* const that,
     PBErrCatch(GenBrushErr);
   }
 #endif
-  that->_modified = true;
+  GBLayerSetModified(that, true);
   that->_blendMode = blend;
 }
 
@@ -307,6 +307,36 @@ void GBLayerSetModified(GBLayer* const that, const bool flag) {
   that->_modified = flag;
 }
 
+// Get a copy of the isFlushed flag of the GBLayer 'that'
+#if BUILDMODE != 0
+static inline
+#endif 
+bool GBLayerIsFlushed(const GBLayer* const that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  return that->_isFlushed;
+}
+
+// Set the isFlushed flag of the GBLayer 'that' to 'flag'
+#if BUILDMODE != 0
+static inline
+#endif 
+void GBLayerSetFlushed(GBLayer* const that, const bool flag) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  that->_isFlushed = flag;
+}
+
 // Get a copy of the stack position of the GBLayer 'that'
 #if BUILDMODE != 0
 static inline
@@ -336,7 +366,7 @@ void GBLayerSetStackPos(GBLayer* const that,
     PBErrCatch(GenBrushErr);
   }
 #endif
-  that->_modified = true;
+  GBLayerSetModified(that, true);
   that->_stackPos = pos;
 }
 
@@ -529,11 +559,13 @@ void GBLayerFlush(GBLayer* const that) {
     PBErrCatch(GenBrushErr);
   }
 #endif
-  for (int iPix = GBLayerArea(that); iPix--;) {
-    GSet *stack = that->_pix + iPix;
-    while (GSetNbElem(stack) > 0) {
-      GBStackedPixel *pix = GSetPop(stack);
-      free(pix);
+  if (GBLayerIsFlushed(that)) {
+    for (int iPix = GBLayerArea(that); iPix--;) {
+      GSet *stack = that->_pix + iPix;
+      while (GSetNbElem(stack) > 0) {
+        GBStackedPixel *pix = GSetPop(stack);
+        free(pix);
+      }
     }
   }
 }

@@ -607,6 +607,7 @@ GBLayer* GBLayerCreate(const VecShort2D* const dim) {
   that->_blendMode = GBLayerBlendModeDefault;
   that->_modified = true;
   that->_stackPos = GBLayerStackPosBg;
+  that-> _isFlushed = TRUE;
   // Return the new layer
   return that;
 }
@@ -627,17 +628,24 @@ void GBLayerFree(GBLayer** that) {
 
 // Create a new GBLayer with dimensions and content given by the 
 // image on disk at location 'fileName'
+// By default layers created from images are not flushed
 // Return NULL if we couldn't create the layer
 GBLayer* GBLayerCreateFromFile(const char* const fileName) {
   // If the fileName is NULL
   if (fileName == NULL)
     // Nothing to do
     return NULL;
+  // Declare the result layer
+  GBLayer* layer = NULL;
   // Call the appropriate function depending on file extension
   if (strcmp(fileName + strlen(fileName) - 4, ".tga") == 0 || 
     strcmp(fileName + strlen(fileName) - 4, ".TGA") == 0)
-    return GBLayerCreateFromFileTGA(fileName);
-  return NULL;
+    layer = GBLayerCreateFromFileTGA(fileName);
+  // Set the flag isFlushed to false to avoid stacked pixels
+  // to be flushed away between rendering
+  GBLayerSetFlushed(layer, FALSE);
+  // Return the result layer
+  return layer;
 }
 
 // Create a new GBLayer with dimensions and content given by the 

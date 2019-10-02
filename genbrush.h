@@ -131,6 +131,9 @@ typedef struct GBLayer {
   VecFloat2D _scale;
   // Previous scale
   VecFloat2D _prevScale;
+  // Flag to memorize if the stacked pixels in the layer
+  // are flushed after an update
+  bool _isFlushed;
 } GBLayer;
 
 typedef enum GBPPType {
@@ -466,6 +469,18 @@ bool GBLayerIsModified(const GBLayer* const that);
 static inline
 #endif 
 void GBLayerSetModified(GBLayer* const that, const bool flag);
+
+// Get a copy of the isFlushed flag of the GBLayer 'that'
+#if BUILDMODE != 0
+static inline
+#endif 
+bool GBLayerIsFlushed(const GBLayer* const that);
+
+// Set the isFlushed flag of the GBLayer 'that' to 'flag'
+#if BUILDMODE != 0
+static inline
+#endif 
+void GBLayerSetFlushed(GBLayer* const that, const bool flag);
 
 // Get a copy of the stack position of the GBLayer 'that'
 #if BUILDMODE != 0

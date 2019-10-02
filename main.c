@@ -241,6 +241,11 @@ void UnitTestGBLayerCreateFree() {
     sprintf(GenBrushErr->_msg, "GBLayerCreate failed");
     PBErrCatch(GenBrushErr);
   }
+  if (layer->_isFlushed == false) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBLayerCreate failed");
+    PBErrCatch(GenBrushErr);
+  }
   if (layer->_stackPos != GBLayerStackPosBg) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
     sprintf(GenBrushErr->_msg, "GBLayerCreate failed");
@@ -347,6 +352,18 @@ void UnitTestGBLayerGetSet() {
     sprintf(GenBrushErr->_msg, "GBLayerSetModified failed");
     PBErrCatch(GenBrushErr);
   }
+  if (GBLayerIsFlushed(layer) != true) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBLayerIsFlushed failed");
+    PBErrCatch(GenBrushErr);
+  }
+  GBLayerSetFlushed(layer, false);
+  if (GBLayerIsFlushed(layer) != false) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBLayerSetFlushed failed");
+    PBErrCatch(GenBrushErr);
+  }
+  GBLayerSetFlushed(layer, true);
   if (GBLayerGetStackPos(layer) != GBLayerStackPosBg) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
     sprintf(GenBrushErr->_msg, "GBLayerGetStackPos failed");
@@ -433,6 +450,11 @@ void UnitTestGBLayerCreateFromFile() {
     sprintf(GenBrushErr->_msg, "GBLayerCreateFromFile failed");
     PBErrCatch(GenBrushErr);
   }
+  if (layer->_isFlushed == true) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBLayerCreate failed");
+    PBErrCatch(GenBrushErr);
+  }
   VecShort2D dim = VecShortCreateStatic2D();
   VecSet(&dim, 0, 3); VecSet(&dim, 1, 4); 
   if (VecIsEqual(&dim, GBLayerDim(layer)) == false) {
@@ -506,7 +528,7 @@ void UnitTestGBLayerGetBoundaryInSurface() {
     VecIsEqual(ShapoidAxis(bound, 0), &u) == false ||
     VecIsEqual(ShapoidAxis(bound, 1), &v) == false) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
-    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed");
+    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed (1)");
     PBErrCatch(GenBrushErr);
   }
   ShapoidFree(&bound);
@@ -520,7 +542,7 @@ void UnitTestGBLayerGetBoundaryInSurface() {
     VecIsEqual(ShapoidAxis(bound, 0), &u) == false ||
     VecIsEqual(ShapoidAxis(bound, 1), &v) == false) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
-    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed");
+    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed (2)");
     PBErrCatch(GenBrushErr);
   }
   ShapoidFree(&bound);
@@ -534,7 +556,7 @@ void UnitTestGBLayerGetBoundaryInSurface() {
     VecIsEqual(ShapoidAxis(bound, 0), &u) == false ||
     VecIsEqual(ShapoidAxis(bound, 1), &v) == false) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
-    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed");
+    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed (3)");
     PBErrCatch(GenBrushErr);
   }
   ShapoidFree(&bound);
@@ -548,7 +570,7 @@ void UnitTestGBLayerGetBoundaryInSurface() {
     VecIsEqual(ShapoidAxis(bound, 0), &u) == false ||
     VecIsEqual(ShapoidAxis(bound, 1), &v) == false) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
-    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed");
+    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed (4)");
     PBErrCatch(GenBrushErr);
   }
   ShapoidFree(&bound);
@@ -562,7 +584,7 @@ void UnitTestGBLayerGetBoundaryInSurface() {
     VecIsEqual(ShapoidAxis(bound, 0), &u) == false ||
     VecIsEqual(ShapoidAxis(bound, 1), &v) == false) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
-    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed");
+    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed (5)");
     PBErrCatch(GenBrushErr);
   }
   ShapoidFree(&bound);
@@ -571,7 +593,7 @@ void UnitTestGBLayerGetBoundaryInSurface() {
   bound = GBLayerGetBoundaryInSurface(layer, surf, false);
   if (bound != NULL) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
-    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed");
+    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed (6)");
     PBErrCatch(GenBrushErr);
   }
   VecSet(&pos, 0, 1000); VecSet(&pos, 1, 1000); 
@@ -579,7 +601,7 @@ void UnitTestGBLayerGetBoundaryInSurface() {
   bound = GBLayerGetBoundaryInSurface(layer, surf, false);
   if (bound != NULL) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
-    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed");
+    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed (7)");
     PBErrCatch(GenBrushErr);
   }
   VecSet(&pos, 0, 0); VecSet(&pos, 1, 1000); 
@@ -587,7 +609,7 @@ void UnitTestGBLayerGetBoundaryInSurface() {
   bound = GBLayerGetBoundaryInSurface(layer, surf, false);
   if (bound != NULL) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
-    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed");
+    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed (8)");
     PBErrCatch(GenBrushErr);
   }
   VecSet(&pos, 0, 1000); VecSet(&pos, 1, 0); 
@@ -595,7 +617,7 @@ void UnitTestGBLayerGetBoundaryInSurface() {
   bound = GBLayerGetBoundaryInSurface(layer, surf, false);
   if (bound != NULL) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
-    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed");
+    sprintf(GenBrushErr->_msg, "GBLayerGetBoundaryInSurface failed (9)");
     PBErrCatch(GenBrushErr);
   }
   GBLayerFree(&layer);
