@@ -1140,6 +1140,13 @@ GBObjPod* _GBObjPodCreateSCurve(SCurve* const curve, GBEye* const eye,
 // Free the memory used by the GBObjPod 'that'
 void GBObjPodFree(GBObjPod** that);
 
+// Process the object in the GBObjPod 'that' to update the resulting
+// object when some components of the pod have changed
+#if BUILDMODE != 0
+static inline
+#endif 
+void GBObjPodProcess(GBObjPod* const that);
+
 // Return the type of the object in the GBObjPod 'that'
 #if BUILDMODE != 0
 static inline
@@ -1491,30 +1498,33 @@ int GBGetNbPod(const GenBrush* const that);
 // Add a GBObjPod for the Point at position 'pos' to the GenBrush 'that'
 // drawn with 'eye', 'hand' and 'tool' in layer 'layer'
 // 'pos' must be a vector of 2 or more dimensions
+// Return the GBObjPod
 #if BUILDMODE != 0
 static inline
 #endif 
-void _GBAddPoint(GenBrush* const that, VecFloat* const pos, 
+GBObjPod* _GBAddPoint(GenBrush* const that, VecFloat* const pos, 
   GBEye* const eye, GBHand* const hand, GBTool* const tool, 
   GBInk* const ink, GBLayer* const layer);
 
 // Add a GBObjPod for the Shapoid 'shap' to the GenBrush 'that'
 // drawn with 'eye', 'hand' and 'tool' in layer 'layer'
 // 'shap' 's dimension must be 2 or more
+// Return the GBObjPod
 #if BUILDMODE != 0
 static inline
 #endif 
-void _GBAddShapoid(GenBrush* const that, Shapoid* const shap, 
+GBObjPod* _GBAddShapoid(GenBrush* const that, Shapoid* const shap, 
   GBEye* const eye, GBHand* const hand, GBTool* const tool, 
   GBInk* const ink, GBLayer* const layer);
 
 // Add a GBObjPod for the SCurve 'curve' to the GenBrush 'that'
 // drawn with 'eye', 'hand' and 'tool' in layer 'layer'
 // 'curve' 's dimension must be 2 or more
+// Return the GBObjPod
 #if BUILDMODE != 0
 static inline
 #endif 
-void _GBAddSCurve(GenBrush* const that, SCurve* const curve, 
+GBObjPod* _GBAddSCurve(GenBrush* const that, SCurve* const curve, 
   GBEye* const eye, GBHand* const hand, GBTool* const tool, 
   GBInk* const ink, GBLayer* const layer);
 

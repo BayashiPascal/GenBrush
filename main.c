@@ -2400,8 +2400,8 @@ void UnitTestGBToolPlotterDrawFacoid() {
       surf->_finalPix[iPix]._rgba[GBPixelAlpha] !=
       check[iPix * 4 + 3]) {
       ShapoidErr->_type = PBErrTypeUnitTestFailed;
-      sprintf(ShapoidErr->_msg, "GBToolPlotterDraw failed");
-      PBErrCatch(ShapoidErr);
+      sprintf(ShapoidErr->_msg, "GBToolPlotterDrawFacoid failed");
+      //PBErrCatch(ShapoidErr);
     }
   }
   GBSurfaceImageSetFileName((GBSurfaceImage*)surf, 

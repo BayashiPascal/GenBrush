@@ -1916,7 +1916,7 @@ void GBHandDefaultProcess(const GBHandDefault* const that,
     ShapoidFree(&shap);
   }
   GSetSCurve* setSCurves = GBObjPodGetHandObjAsSCurves(pod);
-  while (GSetNbElem(setPoints) > 0) {
+  while (GSetNbElem(setSCurves) > 0) {
     SCurve* curve = GSetPop(setSCurves);
     SCurveFree(&curve);
   }
@@ -2120,9 +2120,10 @@ void GBToolPlotterDrawShapoid(const GBToolPlotter* const that,
   VecShort* posLayer = VecClone(from);
   VecFloat* posLayerFloat = VecFloatCreate(VecGetDim(posLayer));
   do {
-    for (long iAxis = VecGetDim(posLayer); iAxis--;)
+    for (long iAxis = VecGetDim(posLayer); iAxis--;) {
       VecSet(posLayerFloat, iAxis, 
         (float)VecGet(posLayer, iAxis) + 0.5);
+    }
     // If this pixel is inside the Shapoid
     if (ShapoidIsPosInside(shap, posLayerFloat)) {
       // Get the current internal coordinates
@@ -2178,6 +2179,8 @@ void GBToolPlotterDrawSCurve(const GBToolPlotter* const that,
   float length = SCurveGetApproxLen(curve);
   // Calculate the delta step based on teh apporximate length
   float delta = 0.5 / length;
+printf("GBToolPlotterDrawSCurve %f %f %p %p\n",length,delta,curve,pod->_srcSCurve);
+SCurvePrint(curve, stdout);printf("\n");
   // Create an iterator on the curve
   SCurveIter iter = SCurveIterCreateStatic(curve, delta);
   // Declare a vector to store the internal position as a vector
@@ -2343,8 +2346,7 @@ GBObjPod* _GBObjPodCreatePoint(VecFloat* const pos, GBEye* const eye,
   pod->_ink = ink;
   pod->_layer = layer;
   // Process the Point through eye and hand
-  GBEyeProcess(eye, pod);
-  GBHandProcess(hand, pod);
+  GBObjPodProcess(pod);
   // Return the new pod
   return pod;
 }
@@ -2389,8 +2391,7 @@ GBObjPod* _GBObjPodCreateShapoid(Shapoid* const shap, GBEye* const eye,
   pod->_ink = ink;
   pod->_layer = layer;
   // Process the Shapoid through eye and hand
-  GBEyeProcess(eye, pod);
-  GBHandProcess(hand, pod);
+  GBObjPodProcess(pod);
  // Return the new pod
   return pod;
 }
@@ -2435,8 +2436,7 @@ GBObjPod* _GBObjPodCreateSCurve(SCurve* const curve, GBEye* const eye,
   pod->_ink = ink;
   pod->_layer = layer;
   // Process the SCurve through eye and hand
-  GBEyeProcess(eye, pod);
-  GBHandProcess(hand, pod);
+  GBObjPodProcess(pod);
   // Return the new pod
   return pod;
 }
@@ -2619,6 +2619,7 @@ void GBUpdateLayer(GenBrush* const that, GBLayer* const layer) {
   // Flush the content of the layer
   GBLayerFlush(layer);
   // If there is no pods
+printf("GBUpdateLayer %d\n",GBGetNbPod(that));
   if (GBGetNbPod(that) == 0)
     // Nothing to do
     return;
@@ -2629,6 +2630,7 @@ void GBUpdateLayer(GenBrush* const that, GBLayer* const layer) {
     // Get the current pod
     GBObjPod* pod = GSetIterGet(&iter);
     // If the pod is attahced ot the requested layer
+printf("GBUpdateLayer %p %p\n",pod->_layer,layer);
     if (pod->_layer == layer)
       // Redraw the pod
       GBToolDraw(GBObjPodTool(pod), pod);
@@ -2955,8 +2957,7 @@ void _GBNotifyChangeFromObj(GenBrush* const that,
     // If the pod matches the filter
     if (GBObjPodObj(pod) == obj) {
       // Reprocess the object
-      GBEyeProcess(GBObjPodEye(pod), pod);
-      GBHandProcess(GBObjPodHand(pod), pod);
+      GBObjPodProcess(pod);
       // Set the layer flag
       GBLayerSetModified(pod->_layer, true);
     }
@@ -2992,8 +2993,7 @@ void _GBNotifyChangeFromEye(GenBrush* const that,
     // If the pod matches the filter
     if (GBObjPodEye(pod) == eye) {
       // Reprocess the object
-      GBEyeProcess(GBObjPodEye(pod), pod);
-      GBHandProcess(GBObjPodHand(pod), pod);
+      GBObjPodProcess(pod);
       // Set the layer flag
       GBLayerSetModified(pod->_layer, true);
     }

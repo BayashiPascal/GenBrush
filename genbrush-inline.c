@@ -1688,6 +1688,23 @@ void _GBToolDraw(const GBTool* const that, GBObjPod* const pod) {
 
 // ---------------- GBObjPod --------------------------
 
+// Process the object in the GBObjPod 'that' to update the resulting
+// object when some components of the pod have changed
+#if BUILDMODE != 0
+static inline
+#endif 
+void GBObjPodProcess(GBObjPod* const that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  GBEyeProcess(GBObjPodEye(that), that);
+  GBHandProcess(GBObjPodHand(that), that);
+}
+
 // Return the type of the object in the GBObjPod 'that'
 #if BUILDMODE != 0
 static inline
@@ -2559,10 +2576,11 @@ int GBGetNbPod(const GenBrush* const that) {
 // Add a GBObjPod for the Point at position 'pos' to the GenBrush 'that'
 // drawn with 'eye', 'hand' and 'tool' in layer 'layer'
 // 'pos' must be a vector of 2 or more dimensions
+// Return the GBObjPod
 #if BUILDMODE != 0
 static inline
 #endif 
-void _GBAddPoint(GenBrush* const that, VecFloat* const pos, 
+GBObjPod* _GBAddPoint(GenBrush* const that, VecFloat* const pos, 
   GBEye* const eye, GBHand* const hand, GBTool* const tool, 
   GBInk* const ink, GBLayer* const layer) {
 #if BUILDMODE == 0
@@ -2577,17 +2595,19 @@ void _GBAddPoint(GenBrush* const that, VecFloat* const pos,
     PBErrCatch(GenBrushErr);
   }
 #endif
-  GSetAppend(GBPods(that), 
-    GBObjPodCreatePoint(pos, eye, hand, tool, ink, layer));
+  GBObjPod* pod = GBObjPodCreatePoint(pos, eye, hand, tool, ink, layer);
+  GSetAppend(GBPods(that), pod);
+  return pod;
 }
 
 // Add a GBObjPod for the Shapoid 'shap' to the GenBrush 'that'
 // drawn with 'eye', 'hand' and 'tool' in layer 'layer'
 // 'shap' 's dimension must be 2 or more
+// Return the GBObjPod
 #if BUILDMODE != 0
 static inline
 #endif 
-void _GBAddShapoid(GenBrush* const that, Shapoid* const shap, 
+GBObjPod* _GBAddShapoid(GenBrush* const that, Shapoid* const shap, 
   GBEye* const eye, GBHand* const hand, GBTool* const tool, 
   GBInk* const ink, GBLayer* const layer) {
 #if BUILDMODE == 0
@@ -2602,17 +2622,19 @@ void _GBAddShapoid(GenBrush* const that, Shapoid* const shap,
     PBErrCatch(GenBrushErr);
   }
 #endif
-  GSetAppend(&(that->_pods), 
-    GBObjPodCreateShapoid(shap, eye, hand, tool, ink, layer));
+  GBObjPod* pod = GBObjPodCreateShapoid(shap, eye, hand, tool, ink, layer);
+  GSetAppend(&(that->_pods), pod);
+  return pod;
 }
 
 // Add a GBObjPod for the SCurve 'curve' to the GenBrush 'that'
 // drawn with 'eye', 'hand' and 'tool' in layer 'layer'
 // 'curve' 's dimension must be 2 or more
+// Return the GBObjPod
 #if BUILDMODE != 0
 static inline
 #endif 
-void _GBAddSCurve(GenBrush* const that, SCurve* const curve, 
+GBObjPod* _GBAddSCurve(GenBrush* const that, SCurve* const curve, 
   GBEye* const eye, GBHand* const hand, GBTool* const tool, 
   GBInk* const ink, GBLayer* const layer) {
 #if BUILDMODE == 0
@@ -2627,8 +2649,9 @@ void _GBAddSCurve(GenBrush* const that, SCurve* const curve,
     PBErrCatch(GenBrushErr);
   }
 #endif
-  GSetAppend(&(that->_pods), 
-    GBObjPodCreateSCurve(curve, eye, hand, tool, ink, layer));
+  GBObjPod* pod = GBObjPodCreateSCurve(curve, eye, hand, tool, ink, layer);
+  GSetAppend(&(that->_pods), pod);
+  return pod;
 }
 
 // Reset all the final pix of the surface of the GenBrush 'that' to its 
