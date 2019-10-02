@@ -88,9 +88,7 @@ UnitTestGenBrushTouchLayers OK
 UnitTestGenBrushCreateFromFile OK
 UnitTestGenBrushIsSameAs OK
 UnitTestGenBrushAddRemovePostProcessing
-UnitTestGenBrushScaleCrop OK
+UnitTestGenBrushScaleCropCopyFragment OK
 UnitTestGenBrush OK
 UnitTestAll OK
 UnitTestGBSurfaceApp OK
-UnitTestGBSurfaceWidget OK
-UnitTestAllGTK OK

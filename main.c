@@ -522,8 +522,8 @@ void UnitTestGBLayerGetBoundaryInSurface() {
   VecFloat2D u = VecFloatCreateStatic2D();
   VecFloat2D v = VecFloatCreateStatic2D();
   VecSet(&p, 0, 10); VecSet(&p, 1, 10); 
-  VecSet(&u, 0, 200); VecSet(&u, 1, 0); 
-  VecSet(&v, 0, 0); VecSet(&v, 1, 100); 
+  VecSet(&u, 0, 201); VecSet(&u, 1, 0); 
+  VecSet(&v, 0, 0); VecSet(&v, 1, 101); 
   if (VecIsEqual(ShapoidPos(bound), &p) == false ||
     VecIsEqual(ShapoidAxis(bound, 0), &u) == false ||
     VecIsEqual(ShapoidAxis(bound, 1), &v) == false) {
@@ -537,7 +537,7 @@ void UnitTestGBLayerGetBoundaryInSurface() {
   bound = GBLayerGetBoundaryInSurface(layer, surf, false);
   VecSet(&p, 0, 700); VecSet(&p, 1, 10); 
   VecSet(&u, 0, 100); VecSet(&u, 1, 0); 
-  VecSet(&v, 0, 0); VecSet(&v, 1, 100); 
+  VecSet(&v, 0, 0); VecSet(&v, 1, 101); 
   if (VecIsEqual(ShapoidPos(bound), &p) == false ||
     VecIsEqual(ShapoidAxis(bound, 0), &u) == false ||
     VecIsEqual(ShapoidAxis(bound, 1), &v) == false) {
@@ -550,8 +550,8 @@ void UnitTestGBLayerGetBoundaryInSurface() {
   GBLayerSetPos(layer, &pos);
   bound = GBLayerGetBoundaryInSurface(layer, surf, false);
   VecSet(&p, 0, 0); VecSet(&p, 1, 10); 
-  VecSet(&u, 0, 100); VecSet(&u, 1, 0); 
-  VecSet(&v, 0, 0); VecSet(&v, 1, 100); 
+  VecSet(&u, 0, 101); VecSet(&u, 1, 0); 
+  VecSet(&v, 0, 0); VecSet(&v, 1, 101); 
   if (VecIsEqual(ShapoidPos(bound), &p) == false ||
     VecIsEqual(ShapoidAxis(bound, 0), &u) == false ||
     VecIsEqual(ShapoidAxis(bound, 1), &v) == false) {
@@ -564,7 +564,7 @@ void UnitTestGBLayerGetBoundaryInSurface() {
   GBLayerSetPos(layer, &pos);
   bound = GBLayerGetBoundaryInSurface(layer, surf, false);
   VecSet(&p, 0, 10); VecSet(&p, 1, 550); 
-  VecSet(&u, 0, 200); VecSet(&u, 1, 0); 
+  VecSet(&u, 0, 201); VecSet(&u, 1, 0); 
   VecSet(&v, 0, 0); VecSet(&v, 1, 50); 
   if (VecIsEqual(ShapoidPos(bound), &p) == false ||
     VecIsEqual(ShapoidAxis(bound, 0), &u) == false ||
@@ -578,8 +578,8 @@ void UnitTestGBLayerGetBoundaryInSurface() {
   GBLayerSetPos(layer, &pos);
   bound = GBLayerGetBoundaryInSurface(layer, surf, false);
   VecSet(&p, 0, 10); VecSet(&p, 1, 0); 
-  VecSet(&u, 0, 200); VecSet(&u, 1, 0); 
-  VecSet(&v, 0, 0); VecSet(&v, 1, 50); 
+  VecSet(&u, 0, 201); VecSet(&u, 1, 0); 
+  VecSet(&v, 0, 0); VecSet(&v, 1, 51); 
   if (VecIsEqual(ShapoidPos(bound), &p) == false ||
     VecIsEqual(ShapoidAxis(bound, 0), &u) == false ||
     VecIsEqual(ShapoidAxis(bound, 1), &v) == false) {
@@ -1009,9 +1009,9 @@ void UnitTestGBSurfaceGetModifiedArea() {
   }
   int iCheck = 0;
   float checkp[10] = {
-      0.0, 5.0, 0.0, 0.0, 8.0, 5.0, 10.0, 15.0, 15.0, 8.0};
-  float checku[5] = {8.0, 10.0, 7.0, 10.0, 5.0};
-  float checkv[5] = {10.0, 5.0, 10.0, 3.0, 7.0};
+      0.0, 5.0, 0.0, 0.0, 9.0, 5.0, 10.0, 16.0, 16.0, 8.0};
+  float checku[5] = {9.0, 11.0, 7.0, 11.0, 5.0};
+  float checkv[5] = {11.0, 5.0, 11.0, 3.0, 8.0};
   VecFloat2D p = VecFloatCreateStatic2D();
   VecFloat2D u = VecFloatCreateStatic2D();
   VecFloat2D v = VecFloatCreateStatic2D();
