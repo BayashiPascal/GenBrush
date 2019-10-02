@@ -2179,8 +2179,6 @@ void GBToolPlotterDrawSCurve(const GBToolPlotter* const that,
   float length = SCurveGetApproxLen(curve);
   // Calculate the delta step based on teh apporximate length
   float delta = 0.5 / length;
-printf("GBToolPlotterDrawSCurve %f %f %p %p\n",length,delta,curve,pod->_srcSCurve);
-SCurvePrint(curve, stdout);printf("\n");
   // Create an iterator on the curve
   SCurveIter iter = SCurveIterCreateStatic(curve, delta);
   // Declare a vector to store the internal position as a vector
@@ -2619,7 +2617,6 @@ void GBUpdateLayer(GenBrush* const that, GBLayer* const layer) {
   // Flush the content of the layer
   GBLayerFlush(layer);
   // If there is no pods
-printf("GBUpdateLayer %d\n",GBGetNbPod(that));
   if (GBGetNbPod(that) == 0)
     // Nothing to do
     return;
@@ -2630,7 +2627,6 @@ printf("GBUpdateLayer %d\n",GBGetNbPod(that));
     // Get the current pod
     GBObjPod* pod = GSetIterGet(&iter);
     // If the pod is attahced ot the requested layer
-printf("GBUpdateLayer %p %p\n",pod->_layer,layer);
     if (pod->_layer == layer)
       // Redraw the pod
       GBToolDraw(GBObjPodTool(pod), pod);
