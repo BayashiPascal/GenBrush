@@ -125,6 +125,12 @@ static inline
 #endif 
 GtkWidget* GBGetGtkWidget(const GenBrush* const that);
 
+// Take a snapshot of the GenBrush 'that' and save it to 'fileName'
+// Return true if successful, false else
+bool _GBScreenshot(
+  const GenBrush* const that,
+      const char* const fileName);
+
 // Take a snapshot of the GBSurfaceApp 'that' and save it to 'filename'
 // Return true if successfull, flase else
 bool GBSurfaceAppScreenshot(

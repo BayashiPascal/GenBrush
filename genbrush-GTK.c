@@ -413,11 +413,52 @@ gboolean GBSurfaceWidgetCallbackConfigEvt(GtkWidget *widget,
   return TRUE;
 }
 
+// Take a snapshot of the GenBrush 'that' and save it to 'fileName'
+// Return true if successful, false else
+bool _GBScreenshot(
+  const GenBrush* const that,
+      const char* const fileName) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (fileName == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'fileName' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+
+  // Get the Surface of the GenBrush
+  const GBSurface* surf = GBSurf(that);
+  
+  // Call the appropriate function according to the type of the surface
+  if (GBSurfaceGetType(surf) == GBSurfaceTypeApp) {
+
+    GBSurfaceAppScreenshot((const GBSurfaceApp*)surf, fileName);
+
+  } else if (GBSurfaceGetType(surf) == GBSurfaceTypeWidget) {
+
+    GBSurfaceWidgetScreenshot((const GBSurfaceWidget*)surf, fileName);
+
+  } else {
+
+    // The surface type is not supported, return the failure code
+    return FALSE;
+
+  }
+
+  // Return the success flag
+  return TRUE;
+}
+
 // Take a snapshot of the GBSurfaceApp 'that' and save it to 'fileName'
 // Return true if successful, false else
 bool GBSurfaceAppScreenshot(
   const GBSurfaceApp* const that,
-             const char* const fileName) {
+          const char* const fileName) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;
