@@ -607,7 +607,7 @@ GBLayer* GBLayerCreate(const VecShort2D* const dim) {
   that->_blendMode = GBLayerBlendModeDefault;
   that->_modified = true;
   that->_stackPos = GBLayerStackPosBg;
-  that-> _isFlushed = TRUE;
+  that-> _isFlushed = true;
   // Return the new layer
   return that;
 }
@@ -643,7 +643,7 @@ GBLayer* GBLayerCreateFromFile(const char* const fileName) {
     layer = GBLayerCreateFromFileTGA(fileName);
   // Set the flag isFlushed to false to avoid stacked pixels
   // to be flushed away between rendering
-  GBLayerSetFlushed(layer, FALSE);
+  GBLayerSetFlushed(layer, false);
   // Return the result layer
   return layer;
 }
