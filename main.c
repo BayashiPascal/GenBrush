@@ -2303,7 +2303,7 @@ void UnitTestGBToolPlotterDrawPoint() {
       surf->_finalPix[iPix]._rgba[GBPixelAlpha] !=
       check[iPix * 4 + 3]) {
       ShapoidErr->_type = PBErrTypeUnitTestFailed;
-      sprintf(ShapoidErr->_msg, "GBToolPlotterDraw failed");
+      sprintf(ShapoidErr->_msg, "GBToolPlotterDraw failed (1)");
       PBErrCatch(ShapoidErr);
     }
   }
@@ -2472,7 +2472,7 @@ void UnitTestGBToolPlotterDrawPyramidoid() {
       surf->_finalPix[iPix]._rgba[GBPixelAlpha] !=
       checka[iPix * 4 + 3]) {
       ShapoidErr->_type = PBErrTypeUnitTestFailed;
-      sprintf(ShapoidErr->_msg, "GBToolPlotterDraw failed");
+      sprintf(ShapoidErr->_msg, "GBToolPlotterDraw failed (2)");
       PBErrCatch(ShapoidErr);
     }
   }
@@ -2543,7 +2543,7 @@ void UnitTestGBToolPlotterDrawSpheroid() {
       surf->_finalPix[iPix]._rgba[GBPixelAlpha] !=
       checka[iPix * 4 + 3]) {
       ShapoidErr->_type = PBErrTypeUnitTestFailed;
-      sprintf(ShapoidErr->_msg, "GBToolPlotterDraw failed");
+      sprintf(ShapoidErr->_msg, "GBToolPlotterDraw failed (3)");
       PBErrCatch(ShapoidErr);
     }
   }
@@ -2618,14 +2618,14 @@ void UnitTestGBToolPlotterDrawFacoid3D() {
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,0,235,20, 0,0,235,20, 0,0,195,60, 
-    0,0,195,60, 0,0,205,50, 0,0,215,40, 0,0,235,20, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,0,235,20, 0,0,235,20, 0,0,195,60, 
-    0,0,195,60, 0,0,205,50, 0,0,215,40, 0,0,235,20, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,0,235,20, 0,0,235,20, 0,0,195,60, 
-    0,0,195,60, 0,0,205,50, 0,0,215,40, 0,0,235,20, 0,0,0,0, 
-    0,0,0,0, 0,0,0,0, 0,0,235,20, 0,0,235,20, 0,0,195,60, 
-    0,0,195,60, 0,0,205,50, 0,0,215,40, 0,0,235,20, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,235,20, 0,0,215,40, 0,0,195,60, 
+    0,0,195,60, 0,0,195,60, 0,0,215,40, 0,0,235,20, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,235,20, 0,0,215,40, 0,0,195,60, 
+    0,0,195,60, 0,0,195,60, 0,0,215,40, 0,0,235,20, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,235,20, 0,0,215,40, 0,0,195,60, 
+    0,0,195,60, 0,0,195,60, 0,0,215,40, 0,0,235,20, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,235,20, 0,0,215,40, 0,0,195,60, 
+    0,0,195,60, 0,0,195,60, 0,0,215,40, 0,0,235,20, 0,0,0,0, 
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
     0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
@@ -2642,7 +2642,7 @@ void UnitTestGBToolPlotterDrawFacoid3D() {
       surf->_finalPix[iPix]._rgba[GBPixelAlpha] !=
       checka[iPix * 4 + 3]) {
       ShapoidErr->_type = PBErrTypeUnitTestFailed;
-      sprintf(ShapoidErr->_msg, "GBToolPlotterDraw failed");
+      sprintf(ShapoidErr->_msg, "GBToolPlotterDraw failed (4)");
       PBErrCatch(ShapoidErr);
     }
   }
@@ -2718,7 +2718,7 @@ void UnitTestGBToolPlotterDrawSCurve() {
       surf->_finalPix[iPix]._rgba[GBPixelAlpha] !=
       checka[iPix * 4 + 3]) {
       ShapoidErr->_type = PBErrTypeUnitTestFailed;
-      sprintf(ShapoidErr->_msg, "GBToolPlotterDraw failed");
+      sprintf(ShapoidErr->_msg, "GBToolPlotterDraw failed (5)");
       PBErrCatch(ShapoidErr);
     }
   }
