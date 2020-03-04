@@ -31,6 +31,8 @@ Several rendering of the same scene are optimized to recalculate only the final 
 
 The user can apply post processing to the surface at the end of each rendering. Currently implemented post processing are:
 * Normalization by hue
+* Ordered dithering
+* Floyd-Steinberg dithering
 
 Other functionalities include:
 * scaling
