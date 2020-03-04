@@ -137,7 +137,9 @@ typedef struct GBLayer {
 } GBLayer;
 
 typedef enum GBPPType {
-  GBPPTypeNormalizeHue
+  GBPPTypeNormalizeHue,
+  GBPPTypeOrderedDithering,
+  GBPPTypeFloydSteinbergDithering
 } GBPPType;
 
 typedef struct GBPostProcessing {

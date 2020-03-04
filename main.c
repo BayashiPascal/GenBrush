@@ -1278,6 +1278,144 @@ void UnitTestGBSurfaceNormalizeHue() {
   printf("UnitTestGBSurfaceNormalizeHue OK\n");
 }
 
+void UnitTestGBSurfaceOrderedDithering() {
+  VecShort2D dim = VecShortCreateStatic2D();
+  VecSet(&dim, 0, 3); VecSet(&dim, 1, 3); 
+  GBSurface* surf = GBSurfaceCreate(GBSurfaceTypeImage, &dim);
+  unsigned char in[27] = {
+    128,128,128, 128,128,128, 128,128,128,
+    128,128,128, 128,128,128, 128,128,128,
+    128,128,128, 128,128,128, 128,128,128
+    };
+  VecShort2D p = VecShortCreateStatic2D();
+  int iPix = 0;
+  do {
+    GBPixel* pix = GBSurfaceFinalPixel(surf, &p);
+    pix->_rgba[GBPixelRed] = in[iPix * 3];
+    pix->_rgba[GBPixelGreen] = in[iPix * 3 + 1];
+    pix->_rgba[GBPixelBlue] = in[iPix * 3 + 2];
+    ++iPix;
+  } while (VecStep(&p, GBSurfaceDim(surf)));
+  GBPostProcessing post = 
+    GBPostProcessingCreateStatic(GBPPTypeOrderedDithering);
+  GBSurfacePostProcess(surf, &post);
+  VecSetNull(&p);
+  iPix = 0;
+  unsigned char out[27] = {
+    255,255,255, 0,0,0, 255,255,255, 
+    0,0,0, 255,255,255, 0,0,0, 
+    255,255,255, 0,0,0, 255,255,255
+    };
+  do {
+    GBPixel* pix = GBSurfaceFinalPixel(surf, &p);
+    if (pix->_rgba[GBPixelRed] != out[iPix * 3] ||
+      pix->_rgba[GBPixelGreen] != out[iPix * 3 + 1] ||
+      pix->_rgba[GBPixelBlue] != out[iPix * 3 + 2]) {
+      ShapoidErr->_type = PBErrTypeUnitTestFailed;
+      sprintf(ShapoidErr->_msg, "UnitTestGBSurfaceOrderedDithering failed");
+      PBErrCatch(ShapoidErr);
+    }
+    ++iPix;
+  } while (VecStep(&p, GBSurfaceDim(surf)));
+  GBSurfaceFree(&surf);
+  GBSurfaceImage* img = GBSurfaceImageCreateFromFile(
+    "./GBSurfaceOrderedDitheringTest.tga");
+  GBSurfacePostProcess((GBSurface*)img, &post);
+  GBSurfaceImage* ref = GBSurfaceImageCreateFromFile(
+    "./GBSurfaceOrderedDitheringRef.tga");
+  if (GBSurfaceIsSameAs((GBSurface*)img, (GBSurface*)ref) == false) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "UnitTestGBSurfaceOrderedDithering failed");
+    PBErrCatch(ShapoidErr);
+  }
+  GBSurfaceFree(&surf);
+  GBSurfaceImageFree(&img);
+  GBSurfaceImageFree(&ref);
+  img = GBSurfaceImageCreateFromFile(
+    "./GBSurfaceOrderedDitheringTestRGB.tga");
+  GBSurfacePostProcess((GBSurface*)img, &post);
+  ref = GBSurfaceImageCreateFromFile(
+    "./GBSurfaceOrderedDitheringRefRGB.tga");
+  if (GBSurfaceIsSameAs((GBSurface*)img, (GBSurface*)ref) == false) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "UnitTestGBSurfaceOrderedDithering failed");
+    PBErrCatch(ShapoidErr);
+  }
+  GBSurfaceFree(&surf);
+  GBSurfaceImageFree(&img);
+  GBSurfaceImageFree(&ref);
+  printf("UnitTestGBSurfaceOrderedDithering OK\n");
+}
+
+void UnitTestGBSurfaceFloydSteinbergDithering() {
+  VecShort2D dim = VecShortCreateStatic2D();
+  VecSet(&dim, 0, 3); VecSet(&dim, 1, 3); 
+  GBSurface* surf = GBSurfaceCreate(GBSurfaceTypeImage, &dim);
+  unsigned char in[27] = {
+    128,128,128, 128,128,128, 128,128,128,
+    128,128,128, 128,128,128, 128,128,128,
+    128,128,128, 128,128,128, 128,128,128
+    };
+  VecShort2D p = VecShortCreateStatic2D();
+  int iPix = 0;
+  do {
+    GBPixel* pix = GBSurfaceFinalPixel(surf, &p);
+    pix->_rgba[GBPixelRed] = in[iPix * 3];
+    pix->_rgba[GBPixelGreen] = in[iPix * 3 + 1];
+    pix->_rgba[GBPixelBlue] = in[iPix * 3 + 2];
+    ++iPix;
+  } while (VecStep(&p, GBSurfaceDim(surf)));
+  GBPostProcessing post = 
+    GBPostProcessingCreateStatic(GBPPTypeFloydSteinbergDithering);
+  GBSurfacePostProcess(surf, &post);
+  VecSetNull(&p);
+  iPix = 0;
+  unsigned char out[27] = {
+    255,255,255, 0,0,0, 255,255,255,
+    0,0,0, 255,255,255, 0,0,0, 
+    255,255,255, 0,0,0, 255,255,255
+    };
+  do {
+    GBPixel* pix = GBSurfaceFinalPixel(surf, &p);
+    if (pix->_rgba[GBPixelRed] != out[iPix * 3] ||
+      pix->_rgba[GBPixelGreen] != out[iPix * 3 + 1] ||
+      pix->_rgba[GBPixelBlue] != out[iPix * 3 + 2]) {
+      ShapoidErr->_type = PBErrTypeUnitTestFailed;
+      sprintf(ShapoidErr->_msg, "UnitTestGBSurfaceFloydSteinbergDithering failed");
+      PBErrCatch(ShapoidErr);
+    }
+    ++iPix;
+  } while (VecStep(&p, GBSurfaceDim(surf)));
+  GBSurfaceFree(&surf);
+  GBSurfaceImage* img = GBSurfaceImageCreateFromFile(
+    "./GBSurfaceFloydSteinbergDitheringTest.tga");
+  GBSurfacePostProcess((GBSurface*)img, &post);
+  GBSurfaceImage* ref = GBSurfaceImageCreateFromFile(
+    "./GBSurfaceFloydSteinbergDitheringRef.tga");
+  if (GBSurfaceIsSameAs((GBSurface*)img, (GBSurface*)ref) == false) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "UnitTestGBSurfaceFloydSteinbergDithering failed");
+    PBErrCatch(ShapoidErr);
+  }
+  GBSurfaceFree(&surf);
+  GBSurfaceImageFree(&img);
+  GBSurfaceImageFree(&ref);
+  img = GBSurfaceImageCreateFromFile(
+    "./GBSurfaceFloydSteinbergDitheringTestRGB.tga");
+  GBSurfacePostProcess((GBSurface*)img, &post);
+  ref = GBSurfaceImageCreateFromFile(
+    "./GBSurfaceFloydSteinbergDitheringRefRGB.tga");
+  if (GBSurfaceIsSameAs((GBSurface*)img, (GBSurface*)ref) == false) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "UnitTestGBSurfaceFloydSteinbergDithering failed");
+    PBErrCatch(ShapoidErr);
+  }
+  GBSurfaceFree(&surf);
+  GBSurfaceImageFree(&img);
+  GBSurfaceImageFree(&ref);
+  printf("UnitTestGBSurfaceFloydSteinbergDithering OK\n");
+}
+
 void UnitTestGBSurface() {
   UnitTestGBSurfaceCreateFree();
   UnitTestGBSurfaceGetSet();
@@ -1293,6 +1431,8 @@ void UnitTestGBSurface() {
   UnitTestGBSurfaceFlush();
   UnitTestGBSurfaceIsSameAs();
   UnitTestGBSurfaceNormalizeHue();
+  UnitTestGBSurfaceOrderedDithering();
+  UnitTestGBSurfaceFloydSteinbergDithering();
   printf("UnitTestGBSurface OK\n");
 }
 

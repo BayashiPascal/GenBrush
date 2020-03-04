@@ -26,6 +26,8 @@ UnitTestGBSurfaceAddLayerFromFile OK
 UnitTestGBSurfaceFlush OK
 UnitTestGBSurfaceIsSameAs OK
 UnitTestGBSurfaceNormalizeHue OK
+UnitTestGBSurfaceOrderedDithering OK
+UnitTestGBSurfaceFloydSteinbergDithering OK
 UnitTestGBSurface OK
 UnitTestGBSurfaceImageCreateFree OK
 UnitTestGBSurfaceImageGetSet OK
@@ -92,3 +94,5 @@ UnitTestGenBrushScaleCropCopyFragment OK
 UnitTestGenBrush OK
 UnitTestAll OK
 UnitTestGBSurfaceApp OK
+UnitTestGBSurfaceWidget OK
+UnitTestAllGTK OK

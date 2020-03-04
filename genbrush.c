@@ -104,6 +104,12 @@ void GBEyeIsometricGetProjVal(const GBEyeIsometric* const that,
 // Normalize in hue the final pixels of the GBSurface 'that'
 void GBSurfaceNormalizeHue(GBSurface* const that);
 
+// Apply ordered dithering to the final pixels of the GBSurface 'that'
+void GBSurfaceOrderedDithering(GBSurface* const that);
+
+// Apply Floyd-Steinberg dithering to the final pixels of the GBSurface 'that'
+void GBSurfaceFloydSteinbergDithering(GBSurface* const that);
+
 // Return a clone of the GenBrush 'that' with its final surface scaled
 // to the dimensions 'dim' according to the scaling method AvgNeighbour
 GenBrush* GBScaleAvgNeighbour(const GenBrush* const that, 
@@ -1075,6 +1081,12 @@ void GBSurfacePostProcess(GBSurface* const that,
     case GBPPTypeNormalizeHue:
       GBSurfaceNormalizeHue(that);
       break;
+    case GBPPTypeOrderedDithering:
+      GBSurfaceOrderedDithering(that);
+      break;
+    case GBPPTypeFloydSteinbergDithering:
+      GBSurfaceFloydSteinbergDithering(that);
+      break;
     default:
       return;
   }
@@ -1127,6 +1139,96 @@ void GBSurfaceNormalizeHue(GBSurface* const that) {
         (unsigned char)round(MIN(255.0, MAX(0.0, intensity)));
     } while (VecStep(&p, GBSurfaceDim(that)));
   }
+}
+
+// Apply ordered dithering to the final pixels of the GBSurface 'that'
+void GBSurfaceOrderedDithering(GBSurface* const that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  // Declare the filter matrix
+  unsigned char filter[2][2] = {{64, 128}, {192, 0}};
+  // Loop on the final pixels of the surface
+  VecShort2D p = VecShortCreateStatic2D();
+  do {
+    // Get the pixel
+    GBPixel* pix = GBSurfaceFinalPixel(that, &p);
+    // Apply the filter to each channel of the pixel
+    for (int iRgb = 4; iRgb--;) {
+      if (pix->_rgba[iRgb] > filter[VecGet(&p, 1) % 2][VecGet(&p, 0) % 2]) {
+        pix->_rgba[iRgb] = 255;
+      } else {
+        pix->_rgba[iRgb] = 0;
+      }
+    }
+  } while (VecStep(&p, GBSurfaceDim(that)));
+}
+
+// Apply Floyd-Steinberg dithering to the final pixels of the GBSurface 'that'
+void GBSurfaceFloydSteinbergDithering(GBSurface* const that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  // Declare the error propagation matrix
+  float* error = PBErrMalloc(GenBrushErr, 
+    GBSurfaceArea(that) * 4L * sizeof(float));
+  for (long i = GBSurfaceArea(that) * 4; i--;) {
+    error[i] = 0.0;
+  }
+  // Loop on the final pixels of the surface
+  VecShort2D p = VecShortCreateStatic2D();
+  do {
+    // Get the pixel
+    GBPixel* pix = GBSurfaceFinalPixel(that, &p);
+    // Get the index of the current pixel
+    long ip = GBPosIndex(&p, GBSurfaceDim(that)) * 4;
+    // For each channel of the pixel
+    for (int iRgb = 4; iRgb--;) {
+      // Get the corrected value of the pixel for this channel
+      float corrVal = (float)(pix->_rgba[iRgb]) - error[ip + iRgb];
+      // Get the new value of the pixel for this channel
+      unsigned char newVal = 0;
+      if (corrVal > 127) {
+        newVal = 255;
+      }
+      // Get the error on this pixel
+      float err = ((float)newVal - (float)(pix->_rgba[iRgb])) / 16.0;
+      // Propagate error to neighbours
+      VecShort2D q = p;
+      VecSet(&q, 1, VecGet(&p, 1) + 1);
+      if (GBSurfaceIsPosInside(that, &q)) {
+        long iq = GBPosIndex(&q, GBSurfaceDim(that)) * 4 + iRgb;
+        error[iq] += err * 7.0;
+      }
+      VecSet(&q, 0, VecGet(&q, 0) + 1);
+      if (GBSurfaceIsPosInside(that, &q)) {
+        long iq = GBPosIndex(&q, GBSurfaceDim(that)) * 4 + iRgb;
+        error[iq] += err * 1.0;
+      }
+      VecSet(&q, 1, VecGet(&q, 1) - 1);
+      if (GBSurfaceIsPosInside(that, &q)) {
+        long iq = GBPosIndex(&q, GBSurfaceDim(that)) * 4 + iRgb;
+        error[iq] += err * 5.0;
+      }
+      VecSet(&q, 1, VecGet(&q, 1) - 1);
+      if (GBSurfaceIsPosInside(that, &q)) {
+        long iq = GBPosIndex(&q, GBSurfaceDim(that)) * 4 + iRgb;
+        error[iq] += err * 3.0;
+      }
+      // Update the value of the pixel for this channel
+      pix->_rgba[iRgb] = newVal;
+    }
+  } while (VecStep(&p, GBSurfaceDim(that)));
+  // Free memory
+  free(error);
 }
 
 // ---------------- GBSurfaceImage --------------------------

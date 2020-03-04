@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.17)  9 FEB 2020 19:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.17)  4 MAR 2020 23:28
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -598,47 +598,42 @@ Underfull \hbox (badness 10000) in paragraph at lines 36--37
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 41--42
-
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 43--44
 
  []
 
 
-Overfull \hbox (5.41396pt too wide) in paragraph at lines 49--50
+Underfull \hbox (badness 10000) in paragraph at lines 45--46
+
+ []
+
+
+Overfull \hbox (5.41396pt too wide) in paragraph at lines 51--52
 \OT1/cmr/m/n/12 The scene to be rep-re-sented graph-i-cally can be de-scribed u
 s-ing Points, SCurves
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 49--50
+Underfull \hbox (badness 10000) in paragraph at lines 51--52
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 53--54
+Underfull \hbox (badness 10000) in paragraph at lines 55--56
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 57--58
+Underfull \hbox (badness 10000) in paragraph at lines 59--60
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 61--62
+Underfull \hbox (badness 10000) in paragraph at lines 63--64
 
  []
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 65--66
-
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 67--68
 
  []
@@ -649,52 +644,52 @@ Underfull \hbox (badness 10000) in paragraph at lines 69--70
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 87--88
+Underfull \hbox (badness 10000) in paragraph at lines 71--72
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 90--91
+Underfull \hbox (badness 10000) in paragraph at lines 89--90
 
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 104--105
+Underfull \hbox (badness 10000) in paragraph at lines 92--93
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 118--119
+Underfull \hbox (badness 10000) in paragraph at lines 106--107
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 132--133
+Underfull \hbox (badness 10000) in paragraph at lines 120--121
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 146--147
+Underfull \hbox (badness 10000) in paragraph at lines 134--135
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 160--161
+Underfull \hbox (badness 10000) in paragraph at lines 148--149
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 178--179
+Underfull \hbox (badness 10000) in paragraph at lines 162--163
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 180--181
 
  []
 
 [6]
-Underfull \hbox (badness 10000) in paragraph at lines 191--193
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 209--210
+Underfull \hbox (badness 10000) in paragraph at lines 193--195
 
  []
 
@@ -709,12 +704,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 213--214
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 217--218
+Underfull \hbox (badness 10000) in paragraph at lines 215--216
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 221--222
+Underfull \hbox (badness 10000) in paragraph at lines 219--220
 
  []
 
@@ -729,7 +724,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 225--226
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 229--230
+Underfull \hbox (badness 10000) in paragraph at lines 227--228
 
  []
 
@@ -744,7 +739,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 233--234
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 237--238
+Underfull \hbox (badness 10000) in paragraph at lines 235--236
 
  []
 
@@ -754,7 +749,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 239--240
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 247--248
+Underfull \hbox (badness 10000) in paragraph at lines 241--242
 
  []
 
@@ -764,22 +759,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 249--250
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 255--256
+Underfull \hbox (badness 10000) in paragraph at lines 251--252
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 260--261
+Underfull \hbox (badness 10000) in paragraph at lines 257--258
 
  []
 
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 268--269
+Underfull \hbox (badness 10000) in paragraph at lines 262--263
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 272--273
+Underfull \hbox (badness 10000) in paragraph at lines 270--271
 
  []
 
@@ -788,12 +783,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 274--275
 
  []
 
-[10]
-Underfull \hbox (badness 10000) in paragraph at lines 281--282
+
+Underfull \hbox (badness 10000) in paragraph at lines 276--277
 
  []
 
-
+[10]
 Underfull \hbox (badness 10000) in paragraph at lines 283--284
 
  []
@@ -804,12 +799,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 285--286
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 293--294
+Underfull \hbox (badness 10000) in paragraph at lines 287--288
 
  []
 
 [11]
-Underfull \hbox (badness 10000) in paragraph at lines 309--310
+Underfull \hbox (badness 10000) in paragraph at lines 295--296
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 311--312
 
  []
 
@@ -822,28 +822,28 @@ File: /home/bayashi/GitHub/GenBrush/genbrush-GTK.h  (verbatim)
 File: /home/bayashi/GitHub/GenBrush/genbrush.c  (verbatim)
  [47] [48] [49] [50] [51] [52] [53] [54] [55] [56]
 [57] [58]
-Overfull \hbox (9.50574pt too wide) in paragraph at lines 347--347
+Overfull \hbox (9.50574pt too wide) in paragraph at lines 349--349
 []      \OT1/cmtt/m/n/8 floor((float)(VecGet(GBLayerDim(that), i) + VecGet(pos,
  i)) * VecGet(scale, i)) + 1.0));[] 
  []
 
 [59] [60] [61] [62] [63] [64] [65] [66] [67] [68] [69] [70] [71] [72] [73]
 [74] [75] [76] [77] [78] [79] [80] [81] [82] [83] [84] [85] [86] [87] [88]
-[89] [90] [91] [92] [93] [94] [95] [96] [97] [98] [99] [100]
+[89] [90] [91] [92] [93] [94] [95] [96] [97] [98] [99] [100] [101] [102]
 File: /home/bayashi/GitHub/GenBrush/genbrush-inline.c  (verbatim)
- [101] [102]
+
 [103] [104] [105] [106] [107] [108] [109] [110] [111] [112] [113] [114]
 [115] [116] [117] [118] [119] [120] [121] [122] [123] [124] [125] [126]
 [127] [128] [129] [130] [131] [132] [133] [134] [135] [136] [137] [138]
-[139] [140] [141] [142] [143] [144] [145] [146]
+[139] [140] [141] [142] [143] [144] [145] [146] [147] [148]
 File: /home/bayashi/GitHub/GenBrush/genbrush-GTK.c  (verbatim)
- [147] [148] [149] [150]
-[151] [152] [153] [154]
+ [149] [150]
+[151] [152] [153] [154] [155] [156]
 File: /home/bayashi/GitHub/GenBrush/genbrush-inline-GTK.c  (verbatim)
- [155] [156]
+ [157] [158]
 File: /home/bayashi/GitHub/GenBrush/Makefile  (verbatim)
 
-Overfull \hbox (787.2669pt too wide) in paragraph at lines 379--379
+Overfull \hbox (787.2669pt too wide) in paragraph at lines 381--381
 []\OT1/cmtt/m/n/8 if [ ! -d ../PBMake ]; then wget https://github.com/BayashiPa
 scal/PBMake/archive/master.zip; unzip master.zip; rm -f master.zip; sed -i '' '
 s@ROOT_DIR=.*@ROOT_DIR='"`pwd | gawk -F/ 'NF{NF-=1};1' | sed -e 's@ @/@g'`"'@' 
@@ -851,257 +851,352 @@ PBMake-master/Makefile.inc; mv PBMake-master ../PBMake; fi[]
  []
 
 
-Overfull \hbox (196.50842pt too wide) in paragraph at lines 379--379
+Overfull \hbox (196.50842pt too wide) in paragraph at lines 381--381
 []\OT1/cmtt/m/n/8 $(COMPILER) `echo "$($(repo)_EXE_DEP) $($(repo)_EXENAME).o" |
  tr ' ' '\n' | sort -u` $(LINK_ARG) $($(repo)_LINK_ARG) -o $($(repo)_EXENAME)[]
  
  []
 
-[157]
-Overfull \hbox (188.0083pt too wide) in paragraph at lines 379--379
+
+Overfull \hbox (188.0083pt too wide) in paragraph at lines 381--381
 []\OT1/cmtt/m/n/8 $(COMPILER) $(BUILD_ARG) $($(repo)_BUILD_ARG) `echo "$($(repo
 )_INC_DIR)" | tr ' ' '\n' | sort -u` -c $($(repo)_DIR)/$($(repo)_EXENAME).c[] 
  []
 
 File: /home/bayashi/GitHub/GenBrush/main.c  (verbatim)
-[158] [159] [160] [161] [162] [163] [164] [165] [166] [167] [168] [169]
-[170] [171] [172] [173] [174] [175] [176] [177] [178] [179] [180] [181]
-[182] [183] [184] [185] [186] [187] [188] [189] [190] [191] [192] [193]
-[194] [195] [196] [197] [198] [199] [200] [201] [202] [203] [204] [205]
-[206] [207] [208] [209] [210] [211] [212] [213] [214] [215] [216] [217]
-[218] [219] [220] [221] [222] [223]
+[159] [160] [161] [162] [163] [164] [165] [166] [167] [168] [169] [170]
+[171] [172] [173] [174] [175] [176] [177] [178] [179] [180] [181] [182]
+[183] [184] [185] [186] [187] [188] [189] [190] [191] [192] [193] [194]
+[195] [196] [197] [198] [199] [200] [201] [202] [203] [204] [205] [206]
+[207] [208] [209] [210] [211] [212] [213] [214] [215] [216] [217] [218]
+[219] [220] [221] [222] [223] [224] [225] [226] [227]
 File: /home/bayashi/GitHub/GenBrush/unitTestRef.txt  (verbatim)
- [224] [225]
-Underfull \hbox (badness 10000) in paragraph at lines 399--400
+ [228] [229]
+Underfull \hbox (badness 10000) in paragraph at lines 401--402
 
  []
 
-<./GBSurfaceImageSave.png, id=733, 10.0375pt x 10.0375pt>
+<./GBSurfaceImageSave.png, id=746, 10.0375pt x 10.0375pt>
 File: ./GBSurfaceImageSave.png Graphic file (type png)
 <use ./GBSurfaceImageSave.png>
-Package pdftex.def Info: ./GBSurfaceImageSave.png  used on input line 402.
+Package pdftex.def Info: ./GBSurfaceImageSave.png  used on input line 404.
 (pdftex.def)             Requested size: 85.35826pt x 85.41107pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 406--407
+Underfull \hbox (badness 10000) in paragraph at lines 408--409
 
  []
 
-<./GBToolPlotterDrawSCurve.png, id=735, 10.0375pt x 10.0375pt>
+<./GBToolPlotterDrawSCurve.png, id=748, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawSCurve.png Graphic file (type png)
 <use ./GBToolPlotterDrawSCurve.png>
-Package pdftex.def Info: ./GBToolPlotterDrawSCurve.png  used on input line 409.
+Package pdftex.def Info: ./GBToolPlotterDrawSCurve.png  used on input line 411.
 
 (pdftex.def)             Requested size: 85.35826pt x 85.41107pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 413--414
+Underfull \hbox (badness 10000) in paragraph at lines 415--416
 
  []
 
-<./GBToolPlotterDrawFacoid3D.png, id=736, 10.0375pt x 10.0375pt>
+[230 <./GBSurfaceImageSave.png> <./GBToolPlotterDrawSCurve.png>]
+<./GBToolPlotterDrawFacoid3D.png, id=754, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawFacoid3D.png Graphic file (type png)
 <use ./GBToolPlotterDrawFacoid3D.png>
 Package pdftex.def Info: ./GBToolPlotterDrawFacoid3D.png  used on input line 41
-6.
+8.
 (pdftex.def)             Requested size: 85.35826pt x 85.41107pt.
-[226 <./GBSurfaceImageSave.png> <./GBToolPlotterDrawSCurve.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 420--421
+
+Underfull \hbox (badness 10000) in paragraph at lines 422--423
 
  []
 
-<./GBToolPlotterDrawSpheroid.png, id=742, 10.0375pt x 10.0375pt>
+<./GBToolPlotterDrawSpheroid.png, id=755, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawSpheroid.png Graphic file (type png)
 <use ./GBToolPlotterDrawSpheroid.png>
 Package pdftex.def Info: ./GBToolPlotterDrawSpheroid.png  used on input line 42
-3.
+5.
 (pdftex.def)             Requested size: 85.35826pt x 85.41107pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 427--428
+Underfull \hbox (badness 10000) in paragraph at lines 429--430
 
  []
 
-<./GBToolPlotterDrawFacoid.png, id=743, 10.0375pt x 10.0375pt>
+<./GBToolPlotterDrawFacoid.png, id=756, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawFacoid.png Graphic file (type png)
 <use ./GBToolPlotterDrawFacoid.png>
-Package pdftex.def Info: ./GBToolPlotterDrawFacoid.png  used on input line 430.
+Package pdftex.def Info: ./GBToolPlotterDrawFacoid.png  used on input line 432.
 
 (pdftex.def)             Requested size: 85.35826pt x 85.41107pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 434--435
+Underfull \hbox (badness 10000) in paragraph at lines 436--437
 
  []
 
-<./ImageRef.png, id=744, 10.0375pt x 10.0375pt>
+<./ImageRef.png, id=757, 10.0375pt x 10.0375pt>
 File: ./ImageRef.png Graphic file (type png)
 <use ./ImageRef.png>
-Package pdftex.def Info: ./ImageRef.png  used on input line 437.
+Package pdftex.def Info: ./ImageRef.png  used on input line 439.
 (pdftex.def)             Requested size: 85.35826pt x 85.41107pt.
-[227 <./GBToolPlotterDrawFacoid3D.png> <./GBToolPlotterDrawSpheroid.png> <./GBT
+[231 <./GBToolPlotterDrawFacoid3D.png> <./GBToolPlotterDrawSpheroid.png> <./GBT
 oolPlotterDrawFacoid.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 441--442
+Underfull \hbox (badness 10000) in paragraph at lines 443--444
 
  []
 
-<./GBToolPlotterDrawPoint.png, id=751, 10.0375pt x 10.0375pt>
+<./GBToolPlotterDrawPoint.png, id=764, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawPoint.png Graphic file (type png)
 <use ./GBToolPlotterDrawPoint.png>
-Package pdftex.def Info: ./GBToolPlotterDrawPoint.png  used on input line 444.
+Package pdftex.def Info: ./GBToolPlotterDrawPoint.png  used on input line 446.
 (pdftex.def)             Requested size: 85.35826pt x 85.41107pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 448--449
+Underfull \hbox (badness 10000) in paragraph at lines 450--451
 
  []
 
-<./GBToolPlotterDrawPyramidoid.png, id=752, 10.0375pt x 10.0375pt>
+<./GBToolPlotterDrawPyramidoid.png, id=765, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawPyramidoid.png Graphic file (type png)
 <use ./GBToolPlotterDrawPyramidoid.png>
 Package pdftex.def Info: ./GBToolPlotterDrawPyramidoid.png  used on input line 
-451.
+453.
 (pdftex.def)             Requested size: 85.35826pt x 85.41107pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 455--456
+Underfull \hbox (badness 10000) in paragraph at lines 457--458
 
  []
 
-<./testBottomLeft.png, id=753, 3.01125pt x 4.015pt>
+<./testBottomLeft.png, id=766, 3.01125pt x 4.015pt>
 File: ./testBottomLeft.png Graphic file (type png)
 <use ./testBottomLeft.png>
-Package pdftex.def Info: ./testBottomLeft.png  used on input line 458.
+Package pdftex.def Info: ./testBottomLeft.png  used on input line 460.
 (pdftex.def)             Requested size: 85.35826pt x 113.94061pt.
-[228 <./ImageRef.png> <./GBToolPlotterDrawPoint.png> <./GBToolPlotterDrawPyrami
+[232 <./ImageRef.png> <./GBToolPlotterDrawPoint.png> <./GBToolPlotterDrawPyrami
 doid.png> <./testBottomLeft.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 462--463
+Underfull \hbox (badness 10000) in paragraph at lines 464--465
 
  []
 
-<./testTopLeft.png, id=761, 3.01125pt x 4.015pt>
+<./testTopLeft.png, id=774, 3.01125pt x 4.015pt>
 File: ./testTopLeft.png Graphic file (type png)
 <use ./testTopLeft.png>
-Package pdftex.def Info: ./testTopLeft.png  used on input line 465.
+Package pdftex.def Info: ./testTopLeft.png  used on input line 467.
 (pdftex.def)             Requested size: 85.35826pt x 113.94061pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 469--470
+Underfull \hbox (badness 10000) in paragraph at lines 471--472
 
  []
 
-<./GBSurfaceNormalizeHueTest.png, id=762, 501.875pt x 326.21875pt>
+<./GBSurfaceNormalizeHueTest.png, id=775, 501.875pt x 326.21875pt>
 File: ./GBSurfaceNormalizeHueTest.png Graphic file (type png)
 <use ./GBSurfaceNormalizeHueTest.png>
 Package pdftex.def Info: ./GBSurfaceNormalizeHueTest.png  used on input line 47
-2.
+4.
 (pdftex.def)             Requested size: 170.71652pt x 110.96765pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 476--477
+Underfull \hbox (badness 10000) in paragraph at lines 478--479
 
  []
 
-<./GBSurfaceNormalizeHueRef.png, id=763, 501.875pt x 326.21875pt>
+<./GBSurfaceNormalizeHueRef.png, id=776, 501.875pt x 326.21875pt>
 File: ./GBSurfaceNormalizeHueRef.png Graphic file (type png)
 <use ./GBSurfaceNormalizeHueRef.png>
-Package pdftex.def Info: ./GBSurfaceNormalizeHueRef.png  used on input line 479
+Package pdftex.def Info: ./GBSurfaceNormalizeHueRef.png  used on input line 481
 .
 (pdftex.def)             Requested size: 170.71652pt x 110.96765pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 483--484
+Underfull \hbox (badness 10000) in paragraph at lines 485--486
 
  []
 
-[229 <./testTopLeft.png> <./GBSurfaceNormalizeHueTest.png (PNG copy)> <./GBSurf
+[233 <./testTopLeft.png> <./GBSurfaceNormalizeHueTest.png (PNG copy)> <./GBSurf
 aceNormalizeHueRef.png>]
-<./GBScaleCropTest.png, id=770, 75.28125pt x 75.28125pt>
+<./GBSurfaceOrderedDitheringTest.png, id=782, 501.875pt x 326.21875pt>
+File: ./GBSurfaceOrderedDitheringTest.png Graphic file (type png)
+<use ./GBSurfaceOrderedDitheringTest.png>
+Package pdftex.def Info: ./GBSurfaceOrderedDitheringTest.png  used on input lin
+e 488.
+(pdftex.def)             Requested size: 170.71652pt x 110.96765pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 492--493
+
+ []
+
+<./GBSurfaceOrderedDitheringRef.png, id=783, 501.875pt x 326.21875pt>
+File: ./GBSurfaceOrderedDitheringRef.png Graphic file (type png)
+<use ./GBSurfaceOrderedDitheringRef.png>
+Package pdftex.def Info: ./GBSurfaceOrderedDitheringRef.png  used on input line
+ 495.
+(pdftex.def)             Requested size: 170.71652pt x 110.96765pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 499--500
+
+ []
+
+<./GBSurfaceOrderedDitheringTestRGB.png, id=784, 501.875pt x 326.21875pt>
+File: ./GBSurfaceOrderedDitheringTestRGB.png Graphic file (type png)
+<use ./GBSurfaceOrderedDitheringTestRGB.png>
+Package pdftex.def Info: ./GBSurfaceOrderedDitheringTestRGB.png  used on input 
+line 502.
+(pdftex.def)             Requested size: 170.71652pt x 110.96765pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 506--507
+
+ []
+
+<./GBSurfaceOrderedDitheringRefRGB.png, id=785, 501.875pt x 326.21875pt>
+File: ./GBSurfaceOrderedDitheringRefRGB.png Graphic file (type png)
+<use ./GBSurfaceOrderedDitheringRefRGB.png>
+Package pdftex.def Info: ./GBSurfaceOrderedDitheringRefRGB.png  used on input l
+ine 509.
+(pdftex.def)             Requested size: 170.71652pt x 110.96765pt.
+[234 <./GBSurfaceOrderedDitheringTest.png> <./GBSurfaceOrderedDitheringRef.png>
+ <./GBSurfaceOrderedDitheringTestRGB.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 513--514
+
+ []
+
+<./GBSurfaceFloydSteinbergDitheringTest.png, id=791, 501.875pt x 326.21875pt>
+File: ./GBSurfaceFloydSteinbergDitheringTest.png Graphic file (type png)
+<use ./GBSurfaceFloydSteinbergDitheringTest.png>
+Package pdftex.def Info: ./GBSurfaceFloydSteinbergDitheringTest.png  used on in
+put line 516.
+(pdftex.def)             Requested size: 170.71652pt x 110.96765pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 520--521
+
+ []
+
+<./GBSurfaceFloydSteinbergDitheringRef.png, id=792, 501.875pt x 326.21875pt>
+File: ./GBSurfaceFloydSteinbergDitheringRef.png Graphic file (type png)
+<use ./GBSurfaceFloydSteinbergDitheringRef.png>
+Package pdftex.def Info: ./GBSurfaceFloydSteinbergDitheringRef.png  used on inp
+ut line 523.
+(pdftex.def)             Requested size: 170.71652pt x 110.96765pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 527--528
+
+ []
+
+<./GBSurfaceFloydSteinbergDitheringTestRGB.png, id=793, 501.875pt x 326.21875pt
+>
+File: ./GBSurfaceFloydSteinbergDitheringTestRGB.png Graphic file (type png)
+<use ./GBSurfaceFloydSteinbergDitheringTestRGB.png>
+Package pdftex.def Info: ./GBSurfaceFloydSteinbergDitheringTestRGB.png  used on
+ input line 530.
+(pdftex.def)             Requested size: 170.71652pt x 110.96765pt.
+[235 <./GBSurfaceOrderedDitheringRefRGB.png> <./GBSurfaceFloydSteinbergDitherin
+gTest.png> <./GBSurfaceFloydSteinbergDitheringRef.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 534--535
+
+ []
+
+<./GBSurfaceFloydSteinbergDitheringRefRGB.png, id=801, 501.875pt x 326.21875pt>
+
+File: ./GBSurfaceFloydSteinbergDitheringRefRGB.png Graphic file (type png)
+<use ./GBSurfaceFloydSteinbergDitheringRefRGB.png>
+Package pdftex.def Info: ./GBSurfaceFloydSteinbergDitheringRefRGB.png  used on 
+input line 537.
+(pdftex.def)             Requested size: 170.71652pt x 110.96765pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 541--542
+
+ []
+
+<./GBScaleCropTest.png, id=802, 75.28125pt x 75.28125pt>
 File: ./GBScaleCropTest.png Graphic file (type png)
 <use ./GBScaleCropTest.png>
-Package pdftex.def Info: ./GBScaleCropTest.png  used on input line 486.
+Package pdftex.def Info: ./GBScaleCropTest.png  used on input line 544.
 (pdftex.def)             Requested size: 170.71652pt x 170.75046pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 490--491
+[236 <./GBSurfaceFloydSteinbergDitheringTestRGB.png (PNG copy)> <./GBSurfaceFlo
+ydSteinbergDitheringRefRGB.png> <./GBScaleCropTest.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 548--549
 
  []
 
-<./GBScaleTestAvgNeighbourRef01.png, id=771, 100.375pt x 50.1875pt>
+<./GBScaleTestAvgNeighbourRef01.png, id=808, 100.375pt x 50.1875pt>
 File: ./GBScaleTestAvgNeighbourRef01.png Graphic file (type png)
 <use ./GBScaleTestAvgNeighbourRef01.png>
 Package pdftex.def Info: ./GBScaleTestAvgNeighbourRef01.png  used on input line
- 493.
+ 551.
 (pdftex.def)             Requested size: 170.71652pt x 85.3712pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 497--498
+Underfull \hbox (badness 10000) in paragraph at lines 555--556
 
  []
 
-<./GBCropTestRef01.png, id=772, 50.1875pt x 50.1875pt>
+<./GBCropTestRef01.png, id=809, 50.1875pt x 50.1875pt>
 File: ./GBCropTestRef01.png Graphic file (type png)
 <use ./GBCropTestRef01.png>
-Package pdftex.def Info: ./GBCropTestRef01.png  used on input line 500.
+Package pdftex.def Info: ./GBCropTestRef01.png  used on input line 558.
 (pdftex.def)             Requested size: 170.71652pt x 170.7692pt.
-[230 <./GBScaleCropTest.png> <./GBScaleTestAvgNeighbourRef01.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 504--505
+
+Underfull \hbox (badness 10000) in paragraph at lines 562--563
 
  []
 
-<./GBCropTestRef02.png, id=778, 50.1875pt x 50.1875pt>
+<./GBCropTestRef02.png, id=810, 50.1875pt x 50.1875pt>
 File: ./GBCropTestRef02.png Graphic file (type png)
 <use ./GBCropTestRef02.png>
-Package pdftex.def Info: ./GBCropTestRef02.png  used on input line 507.
+Package pdftex.def Info: ./GBCropTestRef02.png  used on input line 565.
 (pdftex.def)             Requested size: 170.71652pt x 170.7692pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 511--512
+[237 <./GBScaleTestAvgNeighbourRef01.png> <./GBCropTestRef01.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 569--570
 
  []
 
-<./screenshotGBSurfaceApp.png, id=779, 301.125pt x 200.75pt>
+<./screenshotGBSurfaceApp.png, id=816, 301.125pt x 200.75pt>
 File: ./screenshotGBSurfaceApp.png Graphic file (type png)
 <use ./screenshotGBSurfaceApp.png>
-Package pdftex.def Info: ./screenshotGBSurfaceApp.png  used on input line 514.
+Package pdftex.def Info: ./screenshotGBSurfaceApp.png  used on input line 572.
 (pdftex.def)             Requested size: 170.71652pt x 113.81604pt.
-[231 <./GBCropTestRef01.png> <./GBCropTestRef02.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 518--519
+
+Underfull \hbox (badness 10000) in paragraph at lines 576--577
 
  []
 
-<./screenshotGBSurfaceWidget.png, id=785, 301.125pt x 200.75pt>
+<./screenshotGBSurfaceWidget.png, id=817, 301.125pt x 200.75pt>
 File: ./screenshotGBSurfaceWidget.png Graphic file (type png)
 <use ./screenshotGBSurfaceWidget.png>
-Package pdftex.def Info: ./screenshotGBSurfaceWidget.png  used on input line 52
-1.
+Package pdftex.def Info: ./screenshotGBSurfaceWidget.png  used on input line 57
+9.
 (pdftex.def)             Requested size: 170.71652pt x 113.81604pt.
 File: /home/bayashi/GitHub/GenBrush/Demo/ImageViewer/main.c  (verbatim)
-[232 <./screenshotGBSurfaceApp.png> <./screenshotGBSurfaceWidget.png>]
+[238 <./GBCropTestRef02.png> <./screenshotGBSurfaceApp.png> <./screenshotGBSurf
+aceWidget.png>]
 File: /home/bayashi/GitHub/GenBrush/Demo/ImageViewer/Makefile  (verbatim)
-
-Overfull \hbox (196.50842pt too wide) in paragraph at lines 541--541
+ [239]
+Overfull \hbox (196.50842pt too wide) in paragraph at lines 599--599
 []\OT1/cmtt/m/n/8 $(COMPILER) `echo "$($(repo)_EXE_DEP) $($(repo)_EXENAME).o" |
  tr ' ' '\n' | sort -u` $(LINK_ARG) $($(repo)_LINK_ARG) -o $($(repo)_EXENAME)[]
  
  []
 
-[233]
-Overfull \hbox (64.75653pt too wide) in paragraph at lines 541--541
+
+Overfull \hbox (64.75653pt too wide) in paragraph at lines 599--599
 []\OT1/cmtt/m/n/8 $(COMPILER) $(BUILD_ARG) $($(repo)_BUILD_ARG) `echo "$($(repo
 )_INC_DIR)" | tr ' ' '\n' | sort -u` -c main.c[] 
  []
 
 File: /home/bayashi/GitHub/GenBrush/Demo/Glade/main.c  (verbatim)
-[234] [235] [236] [237]
+[240] [241] [242] [243] [244]
 File: /home/bayashi/GitHub/GenBrush/Demo/Glade/Makefile  (verbatim)
- [238]
-Overfull \hbox (137.00757pt too wide) in paragraph at lines 561--561
+
+Overfull \hbox (137.00757pt too wide) in paragraph at lines 619--619
 []\OT1/cmtt/m/n/8 $(COMPILER) `echo "$(main_DEP) $(genbrush_EXE_DEP) main.o" | 
 tr ' ' '\n' | sort -u` $(LINK_ARG) $(genbrush_LINK_ARG) -o main[] 
  []
 
 
-Overfull \hbox (73.25665pt too wide) in paragraph at lines 561--561
+Overfull \hbox (73.25665pt too wide) in paragraph at lines 619--619
 []\OT1/cmtt/m/n/8 $(COMPILER) $(BUILD_ARG) $(genbrush_BUILD_ARG) `echo "$(genbr
 ush_INC_DIR)" | tr ' ' '\n' | sort -u` -c main.c[] 
  []
 
 File: /home/bayashi/GitHub/GenBrush/Demo/Glade/test.glade  (verbatim)
-[239]) [240] (./doc.aux) ) 
+[245]) [246] (./doc.aux) ) 
 Here is how much of TeX's memory you used:
- 13709 strings out of 493765
- 264977 string characters out of 6151500
+ 13749 strings out of 493765
+ 266693 string characters out of 6151500
  302781 words of memory out of 5000000
- 16921 multiletter control sequences out of 15000+600000
+ 16953 multiletter control sequences out of 15000+600000
  12740 words of font info for 50 fonts, out of 8000000 for 9000
  622 hyphenation exceptions out of 8191
  55i,14n,54p,845b,311s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1118,10 +1213,10 @@ ts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/public/amsfonts/cm/cmtt8.pfb>
 
 pdfTeX warning: pdflatex: no GlyphToUnicode entry has been inserted yet!
-Output written on doc.pdf (240 pages, 1249426 bytes).
+Output written on doc.pdf (246 pages, 2244623 bytes).
 PDF statistics:
- 862 PDF objects out of 1000 (max. 8388607)
- 568 compressed objects within 6 object streams
+ 895 PDF objects out of 1000 (max. 8388607)
+ 581 compressed objects within 6 object streams
  0 named destinations out of 1000 (max. 500000)
- 103 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 143 words of extra memory for PDF output out of 10000 (max. 10000000)
 
