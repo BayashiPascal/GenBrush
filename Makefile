@@ -13,7 +13,7 @@ pbmake_wget:
 # 0: monolith version, the GBSurface is rendered toward a TGA image
 # 1: GTK version, the GBSurface is rendered toward a TGA image or 
 #    a GtkWidget
-BUILDWITHGRAPHICLIB=1
+BUILDWITHGRAPHICLIB?=1
 
 # Makefile definitions
 MAKEFILE_INC=../PBMake/Makefile.inc
