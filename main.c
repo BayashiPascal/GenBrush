@@ -3994,8 +3994,18 @@ void UnitTestGenBrushAddRemovePostProcessing() {
   printf("UnitTestGenBrushAddRemovePostProcessing\n");
 }
 
-void UnitTestGenBrushScaleCropCopyFragment() {
+void UnitTestGenBrushScaleCropCopyFragmentFlip() {
   GenBrush* gb = GBCreateFromFile("./GBScaleCropTest.tga");
+  GenBrush* gbFlipX = GBFlip(gb, 0);
+  GenBrush* gbFlipY = GBFlip(gb, 1);
+  GenBrush* gbFlipXRef = GBCreateFromFile("./GBFlipXRef.tga");
+  GenBrush* gbFlipYRef = GBCreateFromFile("./GBFlipYRef.tga");
+  if (!GBSurfaceIsSameAs(GBSurf(gbFlipX), GBSurf(gbFlipXRef)) ||
+    !GBSurfaceIsSameAs(GBSurf(gbFlipY), GBSurf(gbFlipYRef))) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBFlip failed");
+    PBErrCatch(ShapoidErr);
+  }
   VecShort2D dim = VecShortCreateStatic2D();
   VecSet(&dim, 0, 100); VecSet(&dim, 1, 50); 
   GenBrush* gbScaled = GBScale(gb, &dim, GBScaleMethod_AvgNeighbour);
@@ -4049,11 +4059,12 @@ void UnitTestGenBrushScaleCropCopyFragment() {
     PBErrCatch(ShapoidErr);
   }
   
-  
   GBFree(&gbRef);
   GBFree(&gbCropped);
   GBFree(&gb);
-  printf("UnitTestGenBrushScaleCropCopyFragment OK\n");
+  GBFree(&gbFlipX);
+  GBFree(&gbFlipY);
+  printf("UnitTestGenBrushScaleCropCopyFragmentFlip OK\n");
 }
 
 void UnitTestGenBrush() {
@@ -4073,7 +4084,7 @@ void UnitTestGenBrush() {
   UnitTestGenBrushCreateFromFile();
   UnitTestGenBrushIsSameAs();
   UnitTestGenBrushAddRemovePostProcessing();
-  UnitTestGenBrushScaleCropCopyFragment();
+  UnitTestGenBrushScaleCropCopyFragmentFlip();
   
   printf("UnitTestGenBrush OK\n");
 }

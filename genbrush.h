@@ -1709,6 +1709,11 @@ void GBRemoveAllPod(GenBrush* const that);
 GenBrush* GBScale(const GenBrush* const that, 
   const VecShort2D* const dim, const GBScaleMethod scaleMethod);
 
+// Return a clone of the GenBrush 'that' with its final surface flipped
+// relatively to the 'iAxis'-th axis
+GenBrush* GBFlip(const GenBrush* const that, 
+  const long dim);
+
 // Return a clone of the GenBrush 'that' with its final surface cropped
 // to the dimensions 'dim' from the lower right position 'posLR'
 // If the cropping area is partially or totally outside of the 

@@ -3235,6 +3235,47 @@ GenBrush* GBScale(const GenBrush* const that,
   return scaledGB;
 }
 
+// Return a clone of the GenBrush 'that' with its final surface flipped
+// relatively to the 'iAxis'-th axis
+GenBrush* GBFlip(const GenBrush* const that, 
+  const long iAxis) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (iAxis < 0 || iAxis > 1) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'iAxis' is invalid (0<=%ld<=1)",
+      iAxis);
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  // Declare the flipped version of the GenBrush
+  GenBrush* flippedGB = GBCreateImage(GBDim(that));
+  // Loop on the pixels of the final surface
+  VecShort2D pos = VecShortCreateStatic2D();
+  do {
+    // Get the pixel in the original image
+    GBPixel* pix = 
+      GBSurfaceFinalPixel(GBSurf(that), &pos);
+    // Get the position in the flipped GenBrush
+    VecShort2D posFlipped = pos;
+    VecSet(&posFlipped, iAxis,
+      VecGet(GBDim(that), iAxis) - VecGet(&pos, iAxis) - 1);
+    // Get the pixel in the flipped image
+    GBPixel* pixFlipped = 
+      GBSurfaceFinalPixel(GBSurf(flippedGB), &posFlipped);
+    // Set the pixel in the flipped version of the GenBrush
+    *pixFlipped = *pix;
+  } while (VecStep(&pos, GBDim(that)));
+
+  // Return the flipped version of the GenBrush
+  return flippedGB;
+}
+
+
 // Return a clone of the GenBrush 'that' with its final surface scaled
 // to the dimensions 'dim' according to the scaling method AvgNeighbour
 GenBrush* GBScaleAvgNeighbour(const GenBrush* const that, 

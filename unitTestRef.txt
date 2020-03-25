@@ -90,7 +90,7 @@ UnitTestGenBrushTouchLayers OK
 UnitTestGenBrushCreateFromFile OK
 UnitTestGenBrushIsSameAs OK
 UnitTestGenBrushAddRemovePostProcessing
-UnitTestGenBrushScaleCropCopyFragment OK
+UnitTestGenBrushScaleCropCopyFragmentFlip OK
 UnitTestGenBrush OK
 UnitTestAll OK
 UnitTestGBSurfaceApp OK
