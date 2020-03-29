@@ -1425,7 +1425,7 @@ bool GBRender(GenBrush* const that);
 #if BUILDMODE != 0
 static inline
 #endif 
-int GBArea(const GenBrush* const that);
+long GBArea(const GenBrush* const that);
 
 // Return true if the position 'pos' is inside the GBSurface of the 
 // GenBrush 'that' 
@@ -1731,6 +1731,13 @@ GenBrush* GBCrop(const GenBrush* const that,
 void GBCopyFragment(const GenBrush* const src, GenBrush* const dest,
   const VecShort2D* const posSrc, const VecShort2D* const posDest, 
   const VecShort2D* const dim);
+
+// Return a value between 0.0 and 1.0, such as 1.0 means 'gbA' and 'gbB'
+// are identical, 0.0 means they are completely different
+// The value is calculated as the average of the difference between
+// rgba of final pixels of 'gbA' and final pixels of 'gbB'
+// 'gbA' and 'gbB' must be of same dimensions
+float GBGetSimilarity(const GenBrush* const gbA, GenBrush* const gbB);
 
 #if BUILDWITHGRAPHICLIB == 1
 #include "genbrush-GTK.h"

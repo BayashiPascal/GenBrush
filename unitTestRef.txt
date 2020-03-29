@@ -89,6 +89,7 @@ UnitTestGenBrushFlush OK
 UnitTestGenBrushTouchLayers OK
 UnitTestGenBrushCreateFromFile OK
 UnitTestGenBrushIsSameAs OK
+UnitTestGenBrushGetSimilarity OK
 UnitTestGenBrushAddRemovePostProcessing
 UnitTestGenBrushScaleCropCopyFragmentFlip OK
 UnitTestGenBrush OK

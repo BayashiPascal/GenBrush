@@ -2364,7 +2364,7 @@ void GBSetFileName(GenBrush* const that, const char* const fileName) {
 #if BUILDMODE != 0
 static inline
 #endif 
-int GBArea(const GenBrush* const that) {
+long GBArea(const GenBrush* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
     GenBrushErr->_type = PBErrTypeNullPointer;

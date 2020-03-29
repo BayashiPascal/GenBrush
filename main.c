@@ -3943,6 +3943,26 @@ void UnitTestGenBrushIsSameAs() {
   printf("UnitTestGenBrushIsSameAs OK\n");
 }
 
+void UnitTestGenBrushGetSimilarity() {
+  char* fileName = "./ImageRef.tga";
+  GenBrush* gbA = GBCreateFromFile(fileName);
+  GenBrush* gbB = GBCreateFromFile(fileName);
+  if (ISEQUALF(GBGetSimilarity(gbA, gbB), 1.0) == false) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBGetSimilarity failed");
+    PBErrCatch(ShapoidErr);
+  }
+  GBSurfaceFinalPixels(GBSurf(gbA))->_rgba[GBPixelAlpha] = 255;
+  if (ISEQUALF(GBGetSimilarity(gbA, gbB), 0.9975) == false) {
+    ShapoidErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(ShapoidErr->_msg, "GBGetSimilarity failed");
+    PBErrCatch(ShapoidErr);
+  }
+  GBFree(&gbA);
+  GBFree(&gbB);
+  printf("UnitTestGenBrushGetSimilarity OK\n");
+}
+
 void UnitTestGenBrushAddRemovePostProcessing() {
   GenBrush* gb = GBCreateFromFile("./GBSurfaceNormalizeHueTest.tga");
   if (GBPostProcs(gb) != &(gb->_postProcs)) {
@@ -4083,6 +4103,7 @@ void UnitTestGenBrush() {
   UnitTestGenBrushTouchLayers();
   UnitTestGenBrushCreateFromFile();
   UnitTestGenBrushIsSameAs();
+  UnitTestGenBrushGetSimilarity();
   UnitTestGenBrushAddRemovePostProcessing();
   UnitTestGenBrushScaleCropCopyFragmentFlip();
   
