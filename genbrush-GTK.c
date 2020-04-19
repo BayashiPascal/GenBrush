@@ -160,7 +160,7 @@ GBSurfaceApp* GBSurfaceAppCreate(const VecShort2D* const dim,
   // cf GBSurfaceAppCallbackDraw.
   // Allocate memory for the flipped data
   that->_flippedData = malloc(sizeof(unsigned char) * 4 *
-    VecGet(dim, 0) * VecGet(dim, 0));
+    VecGet(dim, 0) * VecGet(dim, 1));
 
   // Return the GBSurfaceApp
   return that;
@@ -332,7 +332,7 @@ GBSurfaceWidget* GBSurfaceWidgetCreate(const VecShort2D* const dim) {
   // cf GBSurfaceAppCallbackDraw.
   // Allocate memory for the flipped data
   that->_flippedData = malloc(sizeof(unsigned char) * 4 *
-    VecGet(dim, 0) * VecGet(dim, 0));
+    VecGet(dim, 0) * VecGet(dim, 1));
 
   // Return the GBSurfaceWidget
   return that;
