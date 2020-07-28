@@ -2908,10 +2908,124 @@ void UnitTestGBToolGetSet() {
   printf("UnitTestGBToolGetSet OK\n");
 }
 
+void UnitTestGBToolPenCreateFreeSetGet() {
+  Spheroid* penShape = SpheroidCreate(2);
+  GBToolPen* tool = GBToolPenCreate((Shapoid*)penShape);
+  if (tool->_tool._type != GBToolTypePen ||
+    tool->_shape == NULL) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBToolPenCreate failed");
+    PBErrCatch(GenBrushErr);
+  }
+  if (GBToolPenShape(tool) != tool->_shape) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBToolShape failed");
+    PBErrCatch(GenBrushErr);
+  }
+  
+  GBToolPenFree(&tool);
+  if (tool != NULL) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBToolPenFree failed");
+    PBErrCatch(GenBrushErr);
+  }
+  printf("UnitTestGBToolPenCreateFreeSetGet OK\n");
+}
+
+void UnitTestGBToolPenDrawPoint() {
+  Spheroid* penShape = SpheroidCreate(3);
+  VecFloat3D scale = VecFloatCreateStatic3D();
+  VecSet(&scale, 0, 3.0);
+  VecSet(&scale, 1, 3.0);
+  VecSet(&scale, 2, 3.0);
+  ShapoidScale(penShape, (VecFloat*)&scale);
+  GBToolPen* tool = GBToolPenCreate((Shapoid*)penShape);
+  ShapoidFree(&penShape);
+  VecShort2D dim = VecShortCreateStatic2D();
+  VecSet(&dim, 0, 10); VecSet(&dim, 1, 10); 
+  GBSurface* surf = (GBSurface*)GBSurfaceImageCreate(&dim);
+  GBPixel transparent = GBColorTransparent;
+  GBSurfaceSetBgColor(surf, &transparent);
+  GBLayer* layer = GBSurfaceAddLayer(surf, &dim);
+  GBPixel red = GBColorRed;
+  GBInkSolid* ink = GBInkSolidCreate(&red);
+  VecFloat* pos = VecFloatCreate(3);
+  VecSet(pos, 0, 4.0); VecSet(pos, 1, 4.0); VecSet(pos, 2, 0.0);
+  GBEyeOrtho* eye = GBEyeOrthoCreate(GBEyeOrthoViewFront);
+  GBHand hand = GBHandCreateStatic(GBHandTypeDefault);
+  GBObjPod* pod = 
+    GBObjPodCreatePoint(pos, &eye, &hand, tool, ink, layer);
+  GSetAppend(&(pod->_handPoints), VecClone(pos));
+  GBToolPenDraw(tool, pod);
+  GBSurfaceUpdate(surf);
+  unsigned char check[400] = {
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 255,0,0,255, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 
+    0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0
+    };
+  for (int iPix = 0; iPix < GBSurfaceArea(surf); ++iPix) {
+
+printf("%d,%d,%d,%d, ",surf->_finalPix[iPix]._rgba[0],surf->_finalPix[iPix]._rgba[1],surf->_finalPix[iPix]._rgba[2],surf->_finalPix[iPix]._rgba[3]);
+
+    if (surf->_finalPix[iPix]._rgba[GBPixelRed] != 
+      check[iPix * 4] ||
+      surf->_finalPix[iPix]._rgba[GBPixelGreen] !=
+      check[iPix * 4 + 1] ||
+      surf->_finalPix[iPix]._rgba[GBPixelBlue] !=
+      check[iPix * 4 + 2] ||
+      surf->_finalPix[iPix]._rgba[GBPixelAlpha] !=
+      check[iPix * 4 + 3]) {
+      ShapoidErr->_type = PBErrTypeUnitTestFailed;
+      sprintf(ShapoidErr->_msg, "GBToolPenDraw failed (1)");
+      //PBErrCatch(ShapoidErr);
+    }
+  }
+  GBSurfaceImageSetFileName((GBSurfaceImage*)surf, 
+    "./GBToolPenDrawPoint.tga");
+  GBSurfaceImageSave((GBSurfaceImage*)surf);
+  GBObjPodFree(&pod);
+  GBToolPenFree(&tool);
+  GBSurfaceImageFree((GBSurfaceImage**)&surf);
+  GBInkSolidFree(&ink);
+  GBEyeOrthoFree(&eye);
+  VecFree(&pos);
+  printf("UnitTestGBToolPenDrawPoint OK\n");
+}
+
+void UnitTestGBToolPen() {
+  UnitTestGBToolPenCreateFreeSetGet();
+  UnitTestGBToolPenDrawPoint();
+  //UnitTestGBToolPenDrawFacoid();
+  //UnitTestGBToolPenDrawPyramidoid();
+  //UnitTestGBToolPenDrawSpheroid();
+  //UnitTestGBToolPenDrawFacoid3D();
+  //UnitTestGBToolPenDrawSCurve();
+
+  printf("UnitTestGBToolPen OK\n");
+}
+
 void UnitTestGBTool() {
   UnitTestGBToolCreateFree();
   UnitTestGBToolGetSet();
   UnitTestGBToolPlotter();
+  UnitTestGBToolPen();
   printf("UnitTestGBTool OK\n");
 }
 
@@ -4128,7 +4242,8 @@ void UnitTestAll() {
 #if BUILDWITHGRAPHICLIB == 0
 
   int main() {
-    UnitTestAll();
+    //UnitTestAll();
+    UnitTestGBToolPen();
     // Return success code
     return 0;
   }

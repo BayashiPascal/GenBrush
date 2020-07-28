@@ -1681,9 +1681,45 @@ void _GBToolDraw(const GBTool* const that, GBObjPod* const pod) {
     case GBToolTypePlotter:
       GBToolPlotterDraw((GBToolPlotter*)that, pod);
       break;
+    case GBToolTypePen:
+      GBToolPenDraw((GBToolPen*)that, pod);
+      break;
     default:
       break;
   }
+}
+
+// ---------------- GBToolPen --------------------------
+
+// Function to get the shape of GBToolPen 'that'
+#if BUILDMODE != 0
+static inline
+#endif 
+Shapoid* GBToolPenShape(const GBToolPen* that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  return that->_shape;
+}
+
+// Function to set the shape of GBToolPen 'that' to a clone of 'shape'
+#if BUILDMODE != 0
+static inline
+#endif 
+void GBToolPenSetShape(GBToolPen* that, const Shapoid* shape) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  ShapoidFree(&(that->_shape));
+  that->_shape = ShapoidClone(shape);
 }
 
 // ---------------- GBObjPod --------------------------
