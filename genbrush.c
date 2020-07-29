@@ -1303,6 +1303,8 @@ GBSurfaceImage* GBSurfaceImageClone(const GBSurfaceImage* const that) {
 // Save a GBSurfaceImage 'that'
 // If the filename is not set do nothing and return false
 // Return true if it could save the surface, false else
+// For any other format than tga the surface is first saved in a temporary
+// file /tmp/genbrush.tga and then converted using the 'convert' command
 bool GBSurfaceImageSave(const GBSurfaceImage* const that) {
 #if BUILDMODE == 0
   if (that == NULL) {
@@ -1325,6 +1327,38 @@ bool GBSurfaceImageSave(const GBSurfaceImage* const that) {
     strcmp(that->_fileName + strlen(that->_fileName) - 4, 
     ".TGA") == 0)
     return GBSurfaceImageSaveAsTGA(that);
+  else {
+    // Dirty trick to be able to export in any format until proper
+    // implementation is added
+    char cmd[1000];
+    char* origPath = strdup(that->_fileName);
+    sprintf(
+      that->_fileName,
+      "/tmp/genbrush.tga");
+    if (GBSurfaceImageSaveAsTGA(that) == false)
+      return false;
+    sprintf(
+      cmd,
+      "convert %s %s",
+      that->_fileName,
+      origPath);
+    int retcmd = system(cmd);
+    sprintf(
+      cmd,
+      "rm %s",
+      that->_fileName);
+    sprintf(
+      that->_fileName,
+      "%s",
+      origPath);
+    free(origPath);
+    if (retcmd != 0)
+      return false;
+    retcmd = system(cmd);
+    if (retcmd != 0)
+      return false;
+    return true;
+  }
   return false;
 }
 

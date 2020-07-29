@@ -1562,7 +1562,25 @@ GBSurfaceFlush(surf);
   GBSurfaceImageSetFileName(surfImage, "./GBSurfaceImageSave.tga");
   if (GBSurfaceImageSave(surfImage) == false) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
-    sprintf(GenBrushErr->_msg, "GBSurfaceImageSave failed");
+    sprintf(GenBrushErr->_msg, "GBSurfaceImageSave failed (tga)");
+    PBErrCatch(GenBrushErr);
+  }
+  GBSurfaceImageSetFileName(surfImage, "./GBSurfaceImageSave.gif");
+  if (GBSurfaceImageSave(surfImage) == false) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBSurfaceImageSave failed (gif)");
+    PBErrCatch(GenBrushErr);
+  }
+  GBSurfaceImageSetFileName(surfImage, "./GBSurfaceImageSave.jpg");
+  if (GBSurfaceImageSave(surfImage) == false) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBSurfaceImageSave failed (jpg)");
+    PBErrCatch(GenBrushErr);
+  }
+  GBSurfaceImageSetFileName(surfImage, "./GBSurfaceImageSave.png");
+  if (GBSurfaceImageSave(surfImage) == false) {
+    GenBrushErr->_type = PBErrTypeUnitTestFailed;
+    sprintf(GenBrushErr->_msg, "GBSurfaceImageSave failed (png)");
     PBErrCatch(GenBrushErr);
   }
   GBSurfaceImageFree(&surfImage);

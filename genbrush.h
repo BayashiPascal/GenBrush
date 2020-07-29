@@ -838,6 +838,8 @@ void GBSurfaceImageSetFileName(GBSurfaceImage* const that,
 // Save a GBSurfaceImage 'that'
 // If the filename is not set do nothing and return false
 // Return true if it could save the surface, false else
+// For any other format than tga the surface is first saved in a temporary
+// file /tmp/genbrush.tga and then converted using the 'convert' command
 bool GBSurfaceImageSave(const GBSurfaceImage* const that);
 
 // Create a new GBSurfaceImage with one layer containing the content 
