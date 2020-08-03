@@ -35,7 +35,7 @@
 \contentsline {subsection}{\numberline {7.1}ImageViewer}{242}
 \contentsline {subsubsection}{\numberline {7.1.1}main.c}{242}
 \contentsline {subsubsection}{\numberline {7.1.2}Makefile}{243}
-\contentsline {subsection}{\numberline {7.2}Glade}{243}
-\contentsline {subsubsection}{\numberline {7.2.1}main.c}{243}
+\contentsline {subsection}{\numberline {7.2}Glade}{244}
+\contentsline {subsubsection}{\numberline {7.2.1}main.c}{244}
 \contentsline {subsubsection}{\numberline {7.2.2}Makefile}{248}
 \contentsline {subsubsection}{\numberline {7.2.3}test.glade}{249}

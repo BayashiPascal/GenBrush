@@ -317,6 +317,8 @@ GBSurfaceWidget* GBSurfaceWidgetCreate(const VecShort2D* const dim) {
     sizeof(GBSurfaceWidget));
   // Create the surface
   that->_surf = GBSurfaceCreateStatic(GBSurfaceTypeWidget, dim);
+  // Init the cairo_surface pointer
+  that->_cairoSurf = NULL;
   // Create the drawing area
   that->_drawingArea = gtk_drawing_area_new();
   // Set the size of the drawing area
@@ -395,6 +397,8 @@ gboolean GBSurfaceWidgetCallbackConfigEvt(GtkWidget *widget,
   // Declare a variable to convert the data into the GBSurfaceApp
   GBSurfaceWidget* GBWidget = (GBSurfaceWidget*)data;
   // Attach the GBPixel to the cairo surface
+  if (GBWidget->_cairoSurf != NULL)
+    free(GBWidget->_cairoSurf);
   GBWidget->_cairoSurf = cairo_image_surface_create_for_data(
     //(unsigned char* )GBSurfaceFinalPixels(&(GBWidget->_surf)),
     
