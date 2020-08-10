@@ -1656,7 +1656,6 @@ void GBInkSolidSet(GBInkSolid* const that, const GBPixel* const col) {
   that->_color = *col;
 }
 
-
 // ---------------- GBTool --------------------------
 
 // Function to call the appropriate GBTool<>Draw function according to 
@@ -1720,6 +1719,42 @@ void GBToolPenSetShape(GBToolPen* that, const Shapoid* shape) {
 #endif
   ShapoidFree(&(that->_shape));
   that->_shape = ShapoidClone(shape);
+}
+
+// Function to get the softness of GBToolPen 'that'
+#if BUILDMODE != 0
+static inline
+#endif 
+float GBToolPenGetSoftness(const GBToolPen* that) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  return that->_softness;
+}
+
+// Function to set the softness of GBToolPen 'that' to 'softness'
+// 'softness' > 0.0, the bigger the softener the pen is
+#if BUILDMODE != 0
+static inline
+#endif 
+void GBToolPenSetSoftness(GBToolPen* that, float softness) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (softness <= PBMATH_EPSILON) {
+    GenBrushErr->_type = PBErrTypeInvalidArg;
+    sprintf(GenBrushErr->_msg, "'softness' is invalid (%f>0.0)", softness);
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  that->_softness = softness;
 }
 
 // ---------------- GBObjPod --------------------------

@@ -441,25 +441,98 @@ GBPixel GBPixelStackBlend(const GSet* const stack,
     // Initalise the result pixel with the last pixel
     GSetIterBackward iter = GSetIterBackwardCreateStatic(stack);
     GBStackedPixel* pix = GSetIterGet(&iter);
-    blendMode = pix->_blendMode;
     res = pix->_val;
+    blendMode = pix->_blendMode;
+    // Declare variables for the GBLayerBlendModeAverage
+    float avg[4] = {0.0, 0.0, 0.0, 0.0};
+    unsigned int nbAvg = 0;
     // For each following pixel until we reach the bottom of the stack
     // or the opacity reaches 255
     while (res._rgba[GBPixelAlpha] < 255 && GSetIterStep(&iter)) {
       pix = GSetIterGet(&iter);
+      // If the current pixel's blending mode is not
+      // GBLayerBlendModeAverage and there is average pixels
+      // under calculation
+      if (pix->_blendMode != GBLayerBlendModeAverage &&
+        nbAvg > 0) {
+        // Flush the average pixels
+        avg[0] /= (float)nbAvg;
+        avg[1] /= (float)nbAvg;
+        avg[2] /= (float)nbAvg;
+        avg[3] /= (float)nbAvg;
+        GBPixel avgPix = GBColorTransparent;
+        avgPix._rgba[0] = (unsigned char)round(avg[0]);
+        avgPix._rgba[1] = (unsigned char)round(avg[1]);
+        avgPix._rgba[2] = (unsigned char)round(avg[2]);
+        avgPix._rgba[3] = (unsigned char)round(avg[3]);
+        nbAvg = 0;
+        avg[0] = 0.0;
+        avg[1] = 0.0;
+        avg[2] = 0.0;
+        avg[3] = 0.0;
+        switch (blendMode) {
+          case GBLayerBlendModeDefault:
+            break;
+          case GBLayerBlendModeAverage:
+          case GBLayerBlendModeNormal:
+            GBPixelBlendNormal(&res, &avgPix);
+            break;
+          case GBLayerBlendModeOver:
+            GBPixelBlendOver(&res, &avgPix);
+            break;
+          default:
+            break;
+        }
+      }
+      // Blend according to the blending mode of the previous pixel
       switch (blendMode) {
         case GBLayerBlendModeDefault:
+          blendMode = pix->_blendMode;
           break;
         case GBLayerBlendModeNormal:
           GBPixelBlendNormal(&res, &(pix->_val));
+          blendMode = pix->_blendMode;
           break;
         case GBLayerBlendModeOver:
           GBPixelBlendOver(&res, &(pix->_val));
+          blendMode = pix->_blendMode;
+          break;
+        case GBLayerBlendModeAverage:
+          ++nbAvg;
+          avg[0] += (float)(pix->_val._rgba[0]);
+          avg[1] += (float)(pix->_val._rgba[1]);
+          avg[2] += (float)(pix->_val._rgba[2]);
+          avg[3] += (float)(pix->_val._rgba[3]);
+          break;
+        default:
+          blendMode = pix->_blendMode;
+          break;
+      }
+    }
+    // Finish the computation in case of GBLayerBlendModeAverage
+    if (nbAvg > 0) {
+      avg[0] /= (float)nbAvg;
+      avg[1] /= (float)nbAvg;
+      avg[2] /= (float)nbAvg;
+      avg[3] /= (float)nbAvg;
+      GBPixel avgPix = GBColorTransparent;
+      avgPix._rgba[0] = (unsigned char)round(avg[0]);
+      avgPix._rgba[1] = (unsigned char)round(avg[1]);
+      avgPix._rgba[2] = (unsigned char)round(avg[2]);
+      avgPix._rgba[3] = (unsigned char)round(avg[3]);
+      switch (blendMode) {
+        case GBLayerBlendModeDefault:
+          break;
+        case GBLayerBlendModeAverage:
+        case GBLayerBlendModeNormal:
+          GBPixelBlendNormal(&res, &avgPix);
+          break;
+        case GBLayerBlendModeOver:
+          GBPixelBlendOver(&res, &avgPix);
           break;
         default:
           break;
       }
-      blendMode = pix->_blendMode;
     }
     // If we've reached the bottom of the stack and there is still 
     // transparency
@@ -473,6 +546,9 @@ GBPixel GBPixelStackBlend(const GSet* const stack,
           break;
         case GBLayerBlendModeOver:
           GBPixelBlendOver(&res, bgColor);
+          break;
+        case GBLayerBlendModeAverage:
+          // TODO
           break;
         default:
           break;
@@ -2347,13 +2423,15 @@ void GBToolPlotterDrawSCurve(const GBToolPlotter* const that,
 
 // ---------------- GBToolPen --------------------------
 
-// Create a new GBToolPen with the given 'shape'
+// Create a new GBToolPen with the given 'shape' and default
+// 'softness' value of 1.0
 GBToolPen* GBToolPenCreate(const Shapoid* shape) {
   // Declare the new GBToolPen
   GBToolPen* that = PBErrMalloc(GenBrushErr, sizeof(GBToolPen));
   // Set properties
   that->_tool = GBToolCreateStatic(GBToolTypePen);
   that->_shape = ShapoidClone(shape);
+  that->_softness = 1.0;
   // Return the new tool
   return that;
 }
@@ -2442,20 +2520,15 @@ void GBToolPenDrawPoint(const GBToolPen* const that,
     PBErrCatch(GenBrushErr);
   }
 #endif
-  // Create a Spheroid at the location of the point
-  Spheroid* spheroidPoint = SpheroidCreate(VecGetDim(point));
-
-  VecFloat3D scale = VecFloatCreateStatic3D();
-  VecSet(&scale, 0, 2.0);
-  VecSet(&scale, 1, 2.0);
-  VecSet(&scale, 2, 2.0);
-  ShapoidScale(spheroidPoint, (VecFloat*)&scale);
-
-  ShapoidTranslate(spheroidPoint, point);
-  // Draw the Spheroid
-  GBToolPenDrawShapoid(that, (Shapoid*)spheroidPoint, pod);
-  // Free memory
-  ShapoidFree(&spheroidPoint);
+  // Move the shapoid of the pen to the location of the point
+  ShapoidSetCenterPos(GBToolPenShape(that), point);
+  // Plot the shapoid of the pen
+  GBToolPlotterDrawShapoid(
+    (GBToolPlotter*)that, GBToolPenShape(that), pod);
+  // Move the shapoid of the pen back to the origin
+  VecFloat* orig = VecFloatCreate(VecGetDim(point));
+  ShapoidSetCenterPos(GBToolPenShape(that), orig);
+  VecFree(&orig);
 }
   
 // Draw the Shapoid 'shap' in the GBObjPod 'pod' with the 
@@ -2605,9 +2678,6 @@ void GBToolPenDrawSCurve(const GBToolPen* const that,
     PBErrCatch(GenBrushErr);
   }
 #endif
-  
-  // TODO
-  
   // Get the approximate length of the curve
   float length = SCurveGetApproxLen(curve);
   // Calculate the delta step based on teh apporximate length
@@ -2633,28 +2703,22 @@ void GBToolPenDrawSCurve(const GBToolPen* const that,
     // previous one, except for the first step (p==0.0)
     if (ISEQUALF(p, 0.0) == true || 
       VecIsEqual(posLayer, prevPosLayer) == false) {
-      // Get the internal position as a vector
-      VecSet(posIn, 0, p);
-      // Get the external position
-      VecFloat* posExt = SCurveGet(GBObjPodGetObjAsSCurve(pod), p);
-      // Get the ink at this position
-      GBPixel pixColor = GBInkGet(GBObjPodInk(pod), that, pod, 
-        posIn, posExt, posLayer);
-      // Get the depth
-      float depth = 0.0;
-      if (VecGetDim(posLayerFloat) > 2)
-        depth = VecGet(posLayerFloat, 2);
-      // Add the pixel to the layer
-      GBLayerAddPixelSafe(GBObjPodLayer(pod), (VecShort2D*)posLayer, 
-        &pixColor, depth); 
-      // Free memory
-      VecFree(&posExt);
+      // Move the shapoid of the pen to the location of the
+      // current point
+      ShapoidSetCenterPos(GBToolPenShape(that), posLayerFloat);
+      // Plot the shapoid of the pen
+      GBToolPlotterDrawShapoid(
+        (GBToolPlotter*)that, GBToolPenShape(that), pod);
       // Set the previous position
       VecCopy(prevPosLayer, posLayer);
     }
     // Free memory
     VecFree(&posLayerFloat);
   } while (SCurveIterStep(&iter));
+  // Move the shapoid of the pen back to the origin
+  VecFloat* orig = VecFloatCreate(SCurveGetDim(curve));
+  ShapoidSetCenterPos(GBToolPenShape(that), orig);
+  VecFree(&orig);
   // Free memory
   VecFree(&posIn);
   VecFree(&posLayer);
@@ -2680,7 +2744,7 @@ GBPixel _GBInkGet(const GBInk* const that, const GBTool* const tool,
 #endif
   // Currently unused, voided and left for forward compatibility
   (void)tool; (void)pod;
-  (void)posInternal; (void)posExternal; (void)posLayer;
+  (void)posInternal; (void)posLayer;
   // Declare the result pixel
   GBPixel pix = GBColorTransparent;
   // Call the appropriate function according to the type of ink
@@ -2690,6 +2754,14 @@ GBPixel _GBInkGet(const GBInk* const that, const GBTool* const tool,
       break;
     default:
       break;
+  }
+  // Modification of the ink by the tool
+  if (GBToolGetType(tool) == GBToolTypePen) {
+    float strength = ShapoidGetPosDepth(
+      GBToolPenShape((GBToolPen*)tool), posExternal);
+    strength = pow(strength, GBToolPenGetSoftness((GBToolPen*)tool));
+    pix._rgba[GBPixelAlpha] = 
+      (unsigned char)((float)(pix._rgba[GBPixelAlpha]) * strength);
   }
   // Return the result pixel
   return pix;

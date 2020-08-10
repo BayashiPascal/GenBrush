@@ -89,7 +89,8 @@ typedef struct GBPixel {
 typedef enum GBLayerBlendMode {
   GBLayerBlendModeDefault, // Simple overwritting
   GBLayerBlendModeNormal, // Blending according to relative alpha
-  GBLayerBlendModeOver // Blending according to alpha of top pix
+  GBLayerBlendModeOver, // Blending according to alpha of top pix
+  GBLayerBlendModeAverage // Average of stacked pixels
 } GBLayerBlendMode;
 
 typedef enum GBLayerStackPosition {
@@ -256,6 +257,10 @@ typedef struct GBToolPen {
   GBTool _tool;
   // Shape of the pen
   Shapoid* _shape;
+  // Softness of the pen
+  // bigger than 0.0, the bigger the softener the pen is, used as
+  // second argument of pow(...)
+  float _softness;
 } GBToolPen;
 
 typedef enum GBInkType {
@@ -1083,7 +1088,8 @@ void GBToolPlotterDraw(const GBToolPlotter* const that,
 
 // ---------------- GBToolPen --------------------------
 
-// Create a new GBToolPen with the given 'shape'
+// Create a new GBToolPen with the given 'shape' and default
+// 'softness' value of 1.0
 GBToolPen* GBToolPenCreate(const Shapoid* shape);
 
 // Free the memory used by the GBToolPen 'that'
@@ -1104,6 +1110,19 @@ Shapoid* GBToolPenShape(const GBToolPen* that);
 static inline
 #endif 
 void GBToolPenSetShape(GBToolPen* that, const Shapoid* shape);
+
+// Function to get the softness of GBToolPen 'that'
+#if BUILDMODE != 0
+static inline
+#endif 
+float GBToolPenGetSoftness(const GBToolPen* that);
+
+// Function to set the softness of GBToolPen 'that' to 'softness'
+// 'softness' > 0.0, the bigger the softener the pen is
+#if BUILDMODE != 0
+static inline
+#endif 
+void GBToolPenSetSoftness(GBToolPen* that, float softness);
 
 // ---------------- GBInk --------------------------
 
