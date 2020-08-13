@@ -89,6 +89,21 @@ void GBToolPlotterDrawShapoid(const GBToolPlotter* const that,
 void GBToolPlotterDrawSCurve(const GBToolPlotter* const that, 
   const SCurve* const curve, const GBObjPod* const pod);
 
+// Draw the Point 'point' in the GBObjPod 'pod' with the 
+// GBToolPen 'that'
+void GBToolPenDrawPoint(const GBToolPen* const that, 
+  const VecFloat* const point, const GBObjPod* const pod);
+  
+// Draw the Shapoid 'shap' in the GBObjPod 'pod' with the 
+// GBToolPen 'that'
+void GBToolPenDrawShapoid(const GBToolPen* const that, 
+  const Shapoid* const shap, const GBObjPod* const pod);
+  
+// Draw the SCurve 'curve' in the GBObjPod 'pod' with the 
+// GBToolPen 'that'
+void GBToolPenDrawSCurve(const GBToolPen* const that, 
+  const SCurve* const curve, const GBObjPod* const pod);
+
 // Update the content of the layer 'layer' of the GenBrush 'that'
 // Flush the content of the layer and redraw all the pod attached to it
 void GBUpdateLayer(GenBrush* const that, GBLayer* const layer);
@@ -339,7 +354,6 @@ bool GBReadTGABody(FILE *stream, GSet* pix, GBTGAHeader* header,
 
 // Blend the pixel 'pix' into the pixel 'that'
 // BlendNormal mixes colors according to their relative alpha value
-// and add the alpha values
 void GBPixelBlendNormal(GBPixel* const that , const GBPixel* const pix) {
 #if BUILDMODE == 0
   if (that == NULL) {
@@ -354,19 +368,12 @@ void GBPixelBlendNormal(GBPixel* const that , const GBPixel* const pix) {
   }
 #endif
   // Declare a variable for computation
-  float u = 0.5 * 
-    (1.0 + ((float)(that->_rgba[GBPixelAlpha]) - 
-    (float)(pix->_rgba[GBPixelAlpha])) / 255.0);
+  float u = 0.5;
   for (int iRgb = 4; iRgb--;)
     // Add 0.5 to the conversion to float ot avoid numeric instability
-    if (iRgb == GBPixelAlpha)
-      that->_rgba[iRgb] = (unsigned char)floor(
-        MIN(255.0, (float)(that->_rgba[iRgb]) + 
-        (float)(pix->_rgba[iRgb])) + 0.5);
-    else
-      that->_rgba[iRgb] = (unsigned char)floor(
-        (1.0 - u) * (float)(that->_rgba[iRgb]) + 
-        u * (float)(pix->_rgba[iRgb]) + 0.5);
+    that->_rgba[iRgb] = (unsigned char)floor(
+      (1.0 - u) * (float)(that->_rgba[iRgb]) + 
+      u * (float)(pix->_rgba[iRgb]) + 0.5);
 }
 
 // Blend the pixel 'pix' into the pixel 'that'
@@ -386,7 +393,7 @@ void GBPixelBlendOver(GBPixel* const that, const GBPixel* const pix) {
   }
 #endif
   // Declare a variable for computation
-  float u = (float)(that->_rgba[GBPixelAlpha]) / 255.0;
+  float u = (float)(pix->_rgba[GBPixelAlpha]) / 255.0;
   for (int iRgb = 4; iRgb--;)
     // Add 0.5 to the conversion to float ot avoid numeric instability
     if (iRgb == GBPixelAlpha)
@@ -426,41 +433,38 @@ GBPixel GBPixelStackBlend(const GSet* const stack,
     // Initalise the result pixel with the last pixel
     GSetIterBackward iter = GSetIterBackwardCreateStatic(stack);
     GBStackedPixel* pix = GSetIterGet(&iter);
-    blendMode = pix->_blendMode;
     res = pix->_val;
+    blendMode = pix->_blendMode;
     // For each following pixel until we reach the bottom of the stack
     // or the opacity reaches 255
     while (res._rgba[GBPixelAlpha] < 255 && GSetIterStep(&iter)) {
       pix = GSetIterGet(&iter);
+      // Blend according to the blending mode of the previous pixel
       switch (blendMode) {
         case GBLayerBlendModeDefault:
+          blendMode = pix->_blendMode;
           break;
         case GBLayerBlendModeNormal:
           GBPixelBlendNormal(&res, &(pix->_val));
+          blendMode = pix->_blendMode;
           break;
         case GBLayerBlendModeOver:
           GBPixelBlendOver(&res, &(pix->_val));
+          blendMode = pix->_blendMode;
           break;
         default:
+          blendMode = pix->_blendMode;
           break;
       }
-      blendMode = pix->_blendMode;
     }
     // If we've reached the bottom of the stack and there is still 
     // transparency
     if (res._rgba[GBPixelAlpha] < 255) {
-      // Add the background color
-      switch (blendMode) {
-        case GBLayerBlendModeDefault:
-          break;
-        case GBLayerBlendModeNormal:
-          GBPixelBlendNormal(&res, bgColor);
-          break;
-        case GBLayerBlendModeOver:
-          GBPixelBlendOver(&res, bgColor);
-          break;
-        default:
-          break;
+      if (blendMode != GBLayerBlendModeDefault) {
+        // Add the background color
+        GBPixel tmp = *bgColor;
+        GBPixelBlendOver(&tmp, &res);
+        res = tmp;
       }
     }
   // Else, the stack is empty
@@ -2266,7 +2270,7 @@ void GBToolPlotterDrawShapoid(const GBToolPlotter* const that,
       VecFloat* posIn = ShapoidImportCoord(shap, posLayerFloat);
       // Get the current external coordinates
       VecFloat* posExt = 
-        ShapoidExportCoord(GBObjPodGetObjAsShapoid(pod), posIn);
+        ShapoidExportCoord(shap, posIn);
       // Get the ink at this position
       GBPixel pixColor = GBInkGet(GBObjPodInk(pod), that, pod, 
         posIn, posExt, posLayer);
@@ -2311,7 +2315,7 @@ void GBToolPlotterDrawSCurve(const GBToolPlotter* const that,
     PBErrCatch(GenBrushErr);
   }
 #endif
-  // Det the approximate length of the curve
+  // Get the approximate length of the curve
   float length = SCurveGetApproxLen(curve);
   // Calculate the delta step based on teh apporximate length
   float delta = 0.5 / length;
@@ -2364,6 +2368,257 @@ void GBToolPlotterDrawSCurve(const GBToolPlotter* const that,
   VecFree(&prevPosLayer);
 }
 
+// ---------------- GBToolPen --------------------------
+
+// Create a new GBToolPen with the given 'shape' and default
+// 'softness' value of 1.0
+GBToolPen* GBToolPenCreate(const Shapoid* shape) {
+  // Declare the new GBToolPen
+  GBToolPen* that = PBErrMalloc(GenBrushErr, sizeof(GBToolPen));
+  // Set properties
+  that->_tool = GBToolCreateStatic(GBToolTypePen);
+  that->_shape = ShapoidClone(shape);
+  that->_softness = 1.0;
+  // Return the new tool
+  return that;
+}
+
+// Free the memory used by the GBToolPen 'that'
+void GBToolPenFree(GBToolPen** that) {
+  // Check argument
+  if (that == NULL || *that == NULL)
+    // Nothing to do
+    return;
+  // Free memory
+  ShapoidFree(&((*that)->_shape));
+  GBToolFreeStatic(&((*that)->_tool));
+  free(*that);
+  *that = NULL;
+}
+
+// Draw the object in the GBObjPod 'pod' with the GBToolPen 'that'
+void GBToolPenDraw(const GBToolPen* const that, 
+  const GBObjPod* const pod) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (pod == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'pod' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  // Loop on the Points drawn by hand
+  if (GSetNbElem(&(pod->_handPoints)) > 0) {
+    GSetIterForward iter = 
+      GSetIterForwardCreateStatic(&(pod->_handPoints));
+    do {
+      // Get the point
+      VecFloat* point = GSetIterGet(&iter);
+      // Draw the point
+      GBToolPenDrawPoint(that, point, pod);
+    } while (GSetIterStep(&iter));
+  }
+  // Loop on the Shapoids drawn by hand
+  if (GSetNbElem(&(pod->_handShapoids)) > 0) {
+    GSetIterForward iter = 
+      GSetIterForwardCreateStatic(&(pod->_handShapoids));
+    do {
+      // Get the shapoid
+      Shapoid* shap = GSetIterGet(&iter);
+      // Draw the shapoid
+      GBToolPenDrawShapoid(that, shap, pod);
+    } while (GSetIterStep(&iter));
+  }
+  // Loop on the SCurves drawn by hand
+  if (GSetNbElem(&(pod->_handSCurves)) > 0) {
+    GSetIterForward iter = 
+      GSetIterForwardCreateStatic(&(pod->_handSCurves));
+    do {
+      // Get the curve
+      SCurve* curve = GSetIterGet(&iter);
+      // Draw the curve
+      GBToolPenDrawSCurve(that, curve, pod);
+    } while (GSetIterStep(&iter));
+  }
+}
+
+// Draw the Point 'point' in the GBObjPod 'pod' with the 
+// GBToolPen 'that'
+void GBToolPenDrawPoint(const GBToolPen* const that, 
+  const VecFloat*  const point, const GBObjPod*  const pod) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (pod == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'pod' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (point == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'point' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  // Move the shapoid of the pen to the location of the point
+  ShapoidSetCenterPos(GBToolPenShape(that), point);
+  // Plot the shapoid of the pen
+  GBToolPlotterDrawShapoid(
+    (GBToolPlotter*)that, GBToolPenShape(that), pod);
+  // Move the shapoid of the pen back to the origin
+  VecFloat* orig = VecFloatCreate(VecGetDim(point));
+  ShapoidSetCenterPos(GBToolPenShape(that), orig);
+  VecFree(&orig);
+}
+  
+// Draw the Shapoid 'shap' in the GBObjPod 'pod' with the 
+// GBToolPen 'that'
+void GBToolPenDrawShapoid(const GBToolPen* const that, 
+  const Shapoid* const shap, const GBObjPod* const pod) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (pod == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'pod' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (shap == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'shap' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  // Get the bounding box of the shapoid in layer
+  Facoid* bound = ShapoidGetBoundingBox(shap);
+  // Declare two vectors for the VecShiftStep
+  VecShort* from = VecShortCreate(ShapoidGetDim(bound));
+  VecShort* to = VecShortCreate(ShapoidGetDim(bound));
+  // Initialise the values of the vectors for the VecShiftStep
+  for (int iAxis = ShapoidGetDim(bound); iAxis--;) {
+    if (iAxis < 2) {
+      VecSet(from, iAxis, 
+        (short)round(MAX(ShapoidPosGet(bound, iAxis), 0.0)));
+      short v = (short)round(ShapoidPosGet(bound, iAxis) + 
+        ShapoidAxisGet(bound, iAxis, iAxis)) + 1;
+      VecSet(to, iAxis, 
+        MIN(v, VecGet(GBLayerDim(GBObjPodLayer(pod)),iAxis)));
+    } else {
+      VecSet(from, iAxis, 
+        (short)round(ShapoidPosGet(bound, iAxis)));
+      short v = (short)round(ShapoidPosGet(bound, iAxis) + 
+        ShapoidAxisGet(bound, iAxis, iAxis)) + 1;
+      VecSet(to, iAxis, v);
+    }
+  }
+  // Loop on pixels in layers inside the bounding box
+  VecShort* posLayer = VecClone(from);
+  VecFloat* posLayerFloat = VecFloatCreate(VecGetDim(posLayer));
+  do {
+    for (long iAxis = VecGetDim(posLayer); iAxis--;) {
+      VecSet(posLayerFloat, iAxis, 
+        (float)VecGet(posLayer, iAxis) + 0.5);
+    }
+    // If this pixel is inside the Shapoid
+    if (ShapoidIsPosInside(shap, posLayerFloat)) {
+      // Move the shapoid of the pen to the location of the
+      // current point
+      ShapoidSetCenterPos(GBToolPenShape(that), posLayerFloat);
+      // Plot the shapoid of the pen
+      GBToolPlotterDrawShapoid(
+        (GBToolPlotter*)that, GBToolPenShape(that), pod);
+    }
+  } while (VecShiftStep(posLayer, from, to));
+  // Move the shapoid of the pen back to the origin
+  VecFloat* orig = VecFloatCreate(ShapoidGetDim(shap));
+  ShapoidSetCenterPos(GBToolPenShape(that), orig);
+  VecFree(&orig);
+  // Free memory
+  VecFree(&from);
+  VecFree(&to);
+  VecFree(&posLayer);
+  VecFree(&posLayerFloat);
+  ShapoidFree(&bound);
+}
+
+// Draw the SCurve 'curve' in the GBObjPod 'pod' with the 
+// GBToolPen 'that'
+void GBToolPenDrawSCurve(const GBToolPen* const that, 
+  const SCurve* const curve, const GBObjPod* const pod) {
+#if BUILDMODE == 0
+  if (that == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'that' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (pod == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'pod' is null");
+    PBErrCatch(GenBrushErr);
+  }
+  if (curve == NULL) {
+    GenBrushErr->_type = PBErrTypeNullPointer;
+    sprintf(GenBrushErr->_msg, "'curve' is null");
+    PBErrCatch(GenBrushErr);
+  }
+#endif
+  // Get the approximate length of the curve
+  float length = SCurveGetApproxLen(curve);
+  // Calculate the delta step based on teh apporximate length
+  float delta = 0.5 / length;
+  // Create an iterator on the curve
+  SCurveIter iter = SCurveIterCreateStatic(curve, delta);
+  // Declare a vector to store the internal position as a vector
+  VecFloat* posIn = VecFloatCreate(1);
+  // Declare a vector to memorize the position in layer as short
+  VecShort* posLayer = VecShortCreate(SCurveGetDim(curve));
+  // Declare a vector to memorize the 
+  VecShort* prevPosLayer = VecShortCreate(SCurveGetDim(curve));
+  // Loop on the curve internal position
+  do {
+    // Get the internal position
+    float p = SCurveIterGetPos(&iter);
+    // Get the position in layer
+    VecFloat* posLayerFloat = SCurveIterGet(&iter);
+    for (long iAxis = VecGetDim(posLayer); iAxis--;)
+      VecSet(posLayer, iAxis, 
+        (short)round(VecGet(posLayerFloat, iAxis)));
+    // Ensure the position is different (at pixel level) with the 
+    // previous one, except for the first step (p==0.0)
+    if (ISEQUALF(p, 0.0) == true || 
+      VecIsEqual(posLayer, prevPosLayer) == false) {
+      // Move the shapoid of the pen to the location of the
+      // current point
+      ShapoidSetCenterPos(GBToolPenShape(that), posLayerFloat);
+      // Plot the shapoid of the pen
+      GBToolPlotterDrawShapoid(
+        (GBToolPlotter*)that, GBToolPenShape(that), pod);
+      // Set the previous position
+      VecCopy(prevPosLayer, posLayer);
+    }
+    // Free memory
+    VecFree(&posLayerFloat);
+  } while (SCurveIterStep(&iter));
+  // Move the shapoid of the pen back to the origin
+  VecFloat* orig = VecFloatCreate(SCurveGetDim(curve));
+  ShapoidSetCenterPos(GBToolPenShape(that), orig);
+  VecFree(&orig);
+  // Free memory
+  VecFree(&posIn);
+  VecFree(&posLayer);
+  VecFree(&prevPosLayer);
+}
+
 // ---------------- GBInk --------------------------
 
 // Entry point for the GBTool<>Draw function to get the color of the 
@@ -2383,7 +2638,7 @@ GBPixel _GBInkGet(const GBInk* const that, const GBTool* const tool,
 #endif
   // Currently unused, voided and left for forward compatibility
   (void)tool; (void)pod;
-  (void)posInternal; (void)posExternal; (void)posLayer;
+  (void)posInternal; (void)posLayer;
   // Declare the result pixel
   GBPixel pix = GBColorTransparent;
   // Call the appropriate function according to the type of ink
@@ -2393,6 +2648,14 @@ GBPixel _GBInkGet(const GBInk* const that, const GBTool* const tool,
       break;
     default:
       break;
+  }
+  // Modification of the ink by the tool
+  if (tool != NULL && GBToolGetType(tool) == GBToolTypePen) {
+    float strength = ShapoidGetPosDepth(
+      GBToolPenShape((GBToolPen*)tool), posExternal);
+    strength = pow(strength, GBToolPenGetSoftness((GBToolPen*)tool));
+    pix._rgba[GBPixelAlpha] = 
+      (unsigned char)((float)(pix._rgba[GBPixelAlpha]) * strength);
   }
   // Return the result pixel
   return pix;

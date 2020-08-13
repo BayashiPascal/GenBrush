@@ -2,7 +2,7 @@
 # 0: development (max safety, no optimisation)
 # 1: release (min safety, optimisation)
 # 2: fast and furious (no safety, optimisation)
-BUILD_MODE?=1
+BUILD_MODE?=0
 
 all: pbmake_wget main
 	
@@ -13,7 +13,7 @@ pbmake_wget:
 # 0: monolith version, the GBSurface is rendered toward a TGA image
 # 1: GTK version, the GBSurface is rendered toward a TGA image or 
 #    a GtkWidget
-BUILDWITHGRAPHICLIB?=1
+BUILDWITHGRAPHICLIB?=0
 
 # Makefile definitions
 MAKEFILE_INC=../PBMake/Makefile.inc

@@ -22,6 +22,7 @@
 \contentsline {subsubsection}{\numberline {1.7.3}Over}{12}
 \contentsline {section}{\numberline {2}Interface}{12}
 \contentsline {subsection}{\numberline {2.1}genbrush.h}{12}
+<<<<<<< HEAD
 \contentsline {subsection}{\numberline {2.2}genbrush-GTK.h}{45}
 \contentsline {section}{\numberline {3}Code}{48}
 \contentsline {subsection}{\numberline {3.1}genbrush.c}{48}
@@ -39,3 +40,22 @@
 \contentsline {subsubsection}{\numberline {7.2.1}main.c}{244}
 \contentsline {subsubsection}{\numberline {7.2.2}Makefile}{248}
 \contentsline {subsubsection}{\numberline {7.2.3}test.glade}{249}
+=======
+\contentsline {subsection}{\numberline {2.2}genbrush-GTK.h}{46}
+\contentsline {section}{\numberline {3}Code}{49}
+\contentsline {subsection}{\numberline {3.1}genbrush.c}{49}
+\contentsline {subsection}{\numberline {3.2}genbrush-inline.c}{110}
+\contentsline {subsection}{\numberline {3.3}genbrush-GTK.c}{157}
+\contentsline {subsection}{\numberline {3.4}genbrush-inline-GTK.c}{165}
+\contentsline {section}{\numberline {4}Makefile}{167}
+\contentsline {section}{\numberline {5}Unit tests}{167}
+\contentsline {section}{\numberline {6}Unit tests output}{240}
+\contentsline {section}{\numberline {7}Demo}{250}
+\contentsline {subsection}{\numberline {7.1}ImageViewer}{250}
+\contentsline {subsubsection}{\numberline {7.1.1}main.c}{250}
+\contentsline {subsubsection}{\numberline {7.1.2}Makefile}{251}
+\contentsline {subsection}{\numberline {7.2}Glade}{252}
+\contentsline {subsubsection}{\numberline {7.2.1}main.c}{252}
+\contentsline {subsubsection}{\numberline {7.2.2}Makefile}{256}
+\contentsline {subsubsection}{\numberline {7.2.3}test.glade}{257}
+>>>>>>> add_pen_tool
