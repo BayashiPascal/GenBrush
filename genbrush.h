@@ -89,8 +89,7 @@ typedef struct GBPixel {
 typedef enum GBLayerBlendMode {
   GBLayerBlendModeDefault, // Simple overwritting
   GBLayerBlendModeNormal, // Blending according to relative alpha
-  GBLayerBlendModeOver, // Blending according to alpha of top pix
-  GBLayerBlendModeAverage // Average of stacked pixels
+  GBLayerBlendModeOver // Blending according to alpha of top pix
 } GBLayerBlendMode;
 
 typedef enum GBLayerStackPosition {
@@ -338,7 +337,6 @@ typedef struct GenBrush {
 
 // Blend the pixel 'pix' into the pixel 'that'
 // BlendNormal mixes colors according to their relative alpha value
-// and add the alpha values
 void GBPixelBlendNormal(GBPixel* const that , const GBPixel* const pix);
 
 // Blend the pixel 'pix' into the pixel 'that'

@@ -609,7 +609,6 @@ bool GBSurfaceIsSameAs(const GBSurface* const that,
     PBErrCatch(GenBrushErr);
   }
 #endif
-
   // Display different pixels, for debugging purpose
   /*VecShort2D p = VecShortCreateStatic2D();
   do {

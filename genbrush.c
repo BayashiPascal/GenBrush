@@ -354,7 +354,6 @@ bool GBReadTGABody(FILE *stream, GSet* pix, GBTGAHeader* header,
 
 // Blend the pixel 'pix' into the pixel 'that'
 // BlendNormal mixes colors according to their relative alpha value
-// and add the alpha values
 void GBPixelBlendNormal(GBPixel* const that , const GBPixel* const pix) {
 #if BUILDMODE == 0
   if (that == NULL) {
@@ -369,19 +368,12 @@ void GBPixelBlendNormal(GBPixel* const that , const GBPixel* const pix) {
   }
 #endif
   // Declare a variable for computation
-  float u = 0.5 * 
-    (1.0 + ((float)(that->_rgba[GBPixelAlpha]) - 
-    (float)(pix->_rgba[GBPixelAlpha])) / 255.0);
+  float u = 0.5;
   for (int iRgb = 4; iRgb--;)
     // Add 0.5 to the conversion to float ot avoid numeric instability
-    if (iRgb == GBPixelAlpha)
-      that->_rgba[iRgb] = (unsigned char)floor(
-        MIN(255.0, (float)(that->_rgba[iRgb]) + 
-        (float)(pix->_rgba[iRgb])) + 0.5);
-    else
-      that->_rgba[iRgb] = (unsigned char)floor(
-        (1.0 - u) * (float)(that->_rgba[iRgb]) + 
-        u * (float)(pix->_rgba[iRgb]) + 0.5);
+    that->_rgba[iRgb] = (unsigned char)floor(
+      (1.0 - u) * (float)(that->_rgba[iRgb]) + 
+      u * (float)(pix->_rgba[iRgb]) + 0.5);
 }
 
 // Blend the pixel 'pix' into the pixel 'that'
@@ -401,7 +393,7 @@ void GBPixelBlendOver(GBPixel* const that, const GBPixel* const pix) {
   }
 #endif
   // Declare a variable for computation
-  float u = (float)(that->_rgba[GBPixelAlpha]) / 255.0;
+  float u = (float)(pix->_rgba[GBPixelAlpha]) / 255.0;
   for (int iRgb = 4; iRgb--;)
     // Add 0.5 to the conversion to float ot avoid numeric instability
     if (iRgb == GBPixelAlpha)
@@ -443,47 +435,10 @@ GBPixel GBPixelStackBlend(const GSet* const stack,
     GBStackedPixel* pix = GSetIterGet(&iter);
     res = pix->_val;
     blendMode = pix->_blendMode;
-    // Declare variables for the GBLayerBlendModeAverage
-    float avg[4] = {0.0, 0.0, 0.0, 0.0};
-    unsigned int nbAvg = 0;
     // For each following pixel until we reach the bottom of the stack
     // or the opacity reaches 255
     while (res._rgba[GBPixelAlpha] < 255 && GSetIterStep(&iter)) {
       pix = GSetIterGet(&iter);
-      // If the current pixel's blending mode is not
-      // GBLayerBlendModeAverage and there is average pixels
-      // under calculation
-      if (pix->_blendMode != GBLayerBlendModeAverage &&
-        nbAvg > 0) {
-        // Flush the average pixels
-        avg[0] /= (float)nbAvg;
-        avg[1] /= (float)nbAvg;
-        avg[2] /= (float)nbAvg;
-        avg[3] /= (float)nbAvg;
-        GBPixel avgPix = GBColorTransparent;
-        avgPix._rgba[0] = (unsigned char)round(avg[0]);
-        avgPix._rgba[1] = (unsigned char)round(avg[1]);
-        avgPix._rgba[2] = (unsigned char)round(avg[2]);
-        avgPix._rgba[3] = (unsigned char)round(avg[3]);
-        nbAvg = 0;
-        avg[0] = 0.0;
-        avg[1] = 0.0;
-        avg[2] = 0.0;
-        avg[3] = 0.0;
-        switch (blendMode) {
-          case GBLayerBlendModeDefault:
-            break;
-          case GBLayerBlendModeAverage:
-          case GBLayerBlendModeNormal:
-            GBPixelBlendNormal(&res, &avgPix);
-            break;
-          case GBLayerBlendModeOver:
-            GBPixelBlendOver(&res, &avgPix);
-            break;
-          default:
-            break;
-        }
-      }
       // Blend according to the blending mode of the previous pixel
       switch (blendMode) {
         case GBLayerBlendModeDefault:
@@ -497,61 +452,19 @@ GBPixel GBPixelStackBlend(const GSet* const stack,
           GBPixelBlendOver(&res, &(pix->_val));
           blendMode = pix->_blendMode;
           break;
-        case GBLayerBlendModeAverage:
-          ++nbAvg;
-          avg[0] += (float)(pix->_val._rgba[0]);
-          avg[1] += (float)(pix->_val._rgba[1]);
-          avg[2] += (float)(pix->_val._rgba[2]);
-          avg[3] += (float)(pix->_val._rgba[3]);
-          break;
         default:
           blendMode = pix->_blendMode;
-          break;
-      }
-    }
-    // Finish the computation in case of GBLayerBlendModeAverage
-    if (nbAvg > 0) {
-      avg[0] /= (float)nbAvg;
-      avg[1] /= (float)nbAvg;
-      avg[2] /= (float)nbAvg;
-      avg[3] /= (float)nbAvg;
-      GBPixel avgPix = GBColorTransparent;
-      avgPix._rgba[0] = (unsigned char)round(avg[0]);
-      avgPix._rgba[1] = (unsigned char)round(avg[1]);
-      avgPix._rgba[2] = (unsigned char)round(avg[2]);
-      avgPix._rgba[3] = (unsigned char)round(avg[3]);
-      switch (blendMode) {
-        case GBLayerBlendModeDefault:
-          break;
-        case GBLayerBlendModeAverage:
-        case GBLayerBlendModeNormal:
-          GBPixelBlendNormal(&res, &avgPix);
-          break;
-        case GBLayerBlendModeOver:
-          GBPixelBlendOver(&res, &avgPix);
-          break;
-        default:
           break;
       }
     }
     // If we've reached the bottom of the stack and there is still 
     // transparency
     if (res._rgba[GBPixelAlpha] < 255) {
-      // Add the background color
-      switch (blendMode) {
-        case GBLayerBlendModeDefault:
-          break;
-        case GBLayerBlendModeNormal:
-          GBPixelBlendNormal(&res, bgColor);
-          break;
-        case GBLayerBlendModeOver:
-          GBPixelBlendOver(&res, bgColor);
-          break;
-        case GBLayerBlendModeAverage:
-          // TODO
-          break;
-        default:
-          break;
+      if (blendMode != GBLayerBlendModeDefault) {
+        // Add the background color
+        GBPixel tmp = *bgColor;
+        GBPixelBlendOver(&tmp, &res);
+        res = tmp;
       }
     }
   // Else, the stack is empty
@@ -2584,71 +2497,18 @@ void GBToolPenDrawShapoid(const GBToolPen* const that,
     }
     // If this pixel is inside the Shapoid
     if (ShapoidIsPosInside(shap, posLayerFloat)) {
-      // Place the center of the shape of the pen on this pixel
+      // Move the shapoid of the pen to the location of the
+      // current point
       ShapoidSetCenterPos(GBToolPenShape(that), posLayerFloat);
-      // Get the bounding box of the pen shapoid in layer
-      Facoid* boundPen = ShapoidGetBoundingBox(GBToolPenShape(that));
-      // Declare two vectors for the VecShiftStep
-      VecShort* fromPen = VecShortCreate(ShapoidGetDim(boundPen));
-      VecShort* toPen = VecShortCreate(ShapoidGetDim(boundPen));
-      // Initialise the values of the vectors for the VecShiftStep
-      for (int iAxis = ShapoidGetDim(boundPen); iAxis--;) {
-        if (iAxis < 2) {
-          VecSet(fromPen, iAxis, 
-            (short)round(MAX(ShapoidPosGet(boundPen, iAxis), 0.0)));
-          short v = (short)round(ShapoidPosGet(boundPen, iAxis) + 
-            ShapoidAxisGet(boundPen, iAxis, iAxis)) + 1;
-          VecSet(toPen, iAxis, 
-            MIN(v, VecGet(GBLayerDim(GBObjPodLayer(pod)),iAxis)));
-        } else {
-          VecSet(fromPen, iAxis, 
-            (short)round(ShapoidPosGet(boundPen, iAxis)));
-          short v = (short)round(ShapoidPosGet(boundPen, iAxis) + 
-            ShapoidAxisGet(boundPen, iAxis, iAxis)) + 1;
-          VecSet(toPen, iAxis, v);
-        }
-      }
-      // Loop on pixels in layers inside the pen bounding box
-      VecShort* posLayerPen = VecClone(fromPen);
-      VecFloat* posLayerFloatPen = VecFloatCreate(VecGetDim(posLayerPen));
-      do {
-        for (long iAxis = VecGetDim(posLayerPen); iAxis--;) {
-          VecSet(posLayerFloatPen, iAxis, 
-            (float)VecGet(posLayerPen, iAxis) + 0.5);
-        }
-        // If this pixel is inside the pen Shapoid
-        if (ShapoidIsPosInside(GBToolPenShape(that), posLayerFloatPen)) {
-          // Get the current internal coordinates
-          VecFloat* posIn = ShapoidImportCoord(shap, posLayerFloatPen);
-          // Get the current external coordinates
-          VecFloat* posExt = 
-            ShapoidExportCoord(shap, posIn);
-          // Get the ink at this position
-          GBPixel pixColor = GBInkGet(GBObjPodInk(pod), that, pod, 
-            posIn, posExt, posLayerPen);
-          // Get the depth
-          float depth = 0.0;
-          if (VecGetDim(posLayerFloatPen) > 2)
-            depth = VecGet(posLayerFloatPen, 2);
-          // Add the pixel to the layer
-          GBLayerAddPixelSafe(GBObjPodLayer(pod), (VecShort2D*)posLayerPen, 
-            &pixColor, depth); 
-          // Free memory
-          VecFree(&posIn);
-          VecFree(&posExt);
-        }
-      } while (VecShiftStep(posLayerPen, fromPen, toPen));
-      // Free memory
-      VecFree(&fromPen);
-      VecFree(&toPen);
-      VecFree(&posLayerPen);
-      VecFree(&posLayerFloatPen);
-      ShapoidFree(&boundPen);
+      // Plot the shapoid of the pen
+      GBToolPlotterDrawShapoid(
+        (GBToolPlotter*)that, GBToolPenShape(that), pod);
     }
   } while (VecShiftStep(posLayer, from, to));
-  // Reset the position of the shape of the tool
-  VecSetNull(posLayerFloat);
-  ShapoidSetPos(GBToolPenShape(that), posLayerFloat);
+  // Move the shapoid of the pen back to the origin
+  VecFloat* orig = VecFloatCreate(ShapoidGetDim(shap));
+  ShapoidSetCenterPos(GBToolPenShape(that), orig);
+  VecFree(&orig);
   // Free memory
   VecFree(&from);
   VecFree(&to);
@@ -2756,7 +2616,7 @@ GBPixel _GBInkGet(const GBInk* const that, const GBTool* const tool,
       break;
   }
   // Modification of the ink by the tool
-  if (GBToolGetType(tool) == GBToolTypePen) {
+  if (tool != NULL && GBToolGetType(tool) == GBToolTypePen) {
     float strength = ShapoidGetPosDepth(
       GBToolPenShape((GBToolPen*)tool), posExternal);
     strength = pow(strength, GBToolPenGetSoftness((GBToolPen*)tool));

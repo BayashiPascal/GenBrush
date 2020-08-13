@@ -66,6 +66,11 @@ UnitTestGBToolPlotterDrawSpheroid OK
 UnitTestGBToolPlotterDrawFacoid3D OK
 UnitTestGBToolPlotterDrawSCurve OK
 UnitTestGBToolPlotter OK
+UnitTestGBToolPenCreateFreeSetGet OK
+UnitTestGBToolPenDrawPoint OK
+UnitTestGBToolPenDrawFacoid OK
+UnitTestGBToolPenDrawSCurve OK
+UnitTestGBToolPen OK
 UnitTestGBTool OK
 UnitTestGBInkSolidCreateFree OK
 UnitTestGBInkSolidGetSet OK
@@ -94,6 +99,3 @@ UnitTestGenBrushAddRemovePostProcessing
 UnitTestGenBrushScaleCropCopyFragmentFlip OK
 UnitTestGenBrush OK
 UnitTestAll OK
-UnitTestGBSurfaceApp OK
-UnitTestGBSurfaceWidget OK
-UnitTestAllGTK OK
