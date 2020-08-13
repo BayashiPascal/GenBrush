@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.17)  3 AUG 2020 15:18
-=======
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.17)  13 AUG 2020 23:13
->>>>>>> add_pen_tool
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.10.17)  13 AUG 2020 23:20
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -834,34 +830,20 @@ Overfull \hbox (9.50574pt too wide) in paragraph at lines 349--349
 [60] [61] [62] [63] [64] [65] [66] [67] [68] [69] [70] [71] [72] [73] [74]
 [75] [76] [77] [78] [79] [80] [81] [82] [83] [84] [85] [86] [87] [88] [89]
 [90] [91] [92] [93] [94] [95] [96] [97] [98] [99] [100] [101] [102] [103]
-<<<<<<< HEAD
-[104]
+[104] [105] [106] [107] [108] [109] [110]
 File: /home/bayashi/GitHub/GenBrush/genbrush-inline.c  (verbatim)
- [105] [106] [107] [108] [109] [110] [111] [112] [113] [114] [115]
-[116] [117] [118] [119] [120] [121] [122] [123] [124] [125] [126] [127]
-[128] [129] [130] [131] [132] [133] [134] [135] [136] [137] [138] [139]
-[140] [141] [142] [143] [144] [145] [146] [147] [148] [149] [150]
-File: /home/bayashi/GitHub/GenBrush/genbrush-GTK.c  (verbatim)
- [151]
-[152] [153] [154] [155] [156] [157] [158] [159]
-File: /home/bayashi/GitHub/GenBrush/genbrush-inline-GTK.c  (verbatim)
- [160]
-=======
-[104] [105] [106] [107] [108] [109]
-File: /home/bayashi/GitHub/GenBrush/genbrush-inline.c  (verbatim)
- [110] [111] [112] [113] [114] [115]
+ [111] [112] [113] [114] [115]
 [116] [117] [118] [119] [120] [121] [122] [123] [124] [125] [126] [127]
 [128] [129] [130] [131] [132] [133] [134] [135] [136] [137] [138] [139]
 [140] [141] [142] [143] [144] [145] [146] [147] [148] [149] [150] [151]
 [152] [153] [154] [155] [156]
 File: /home/bayashi/GitHub/GenBrush/genbrush-GTK.c  (verbatim)
  [157] [158] [159] [160] [161] [162] [163]
-[164]
+[164] [165]
 File: /home/bayashi/GitHub/GenBrush/genbrush-inline-GTK.c  (verbatim)
- [165] [166]
->>>>>>> add_pen_tool
+ [166]
 File: /home/bayashi/GitHub/GenBrush/Makefile  (verbatim)
-
+ [167]
 Overfull \hbox (787.2669pt too wide) in paragraph at lines 381--381
 []\OT1/cmtt/m/n/8 if [ ! -d ../PBMake ]; then wget https://github.com/BayashiPa
 scal/PBMake/archive/master.zip; unzip master.zip; rm -f master.zip; sed -i '' '
@@ -869,7 +851,7 @@ s@ROOT_DIR=.*@ROOT_DIR='"`pwd | gawk -F/ 'NF{NF-=1};1' | sed -e 's@ @/@g'`"'@'
 PBMake-master/Makefile.inc; mv PBMake-master ../PBMake; fi[] 
  []
 
-[161]
+
 Overfull \hbox (196.50842pt too wide) in paragraph at lines 381--381
 []\OT1/cmtt/m/n/8 $(COMPILER) `echo "$($(repo)_EXE_DEP) $($(repo)_EXENAME).o" |
  tr ' ' '\n' | sort -u` $(LINK_ARG) $($(repo)_LINK_ARG) -o $($(repo)_EXENAME)[]
@@ -883,54 +865,31 @@ Overfull \hbox (188.0083pt too wide) in paragraph at lines 381--381
  []
 
 File: /home/bayashi/GitHub/GenBrush/main.c  (verbatim)
-<<<<<<< HEAD
-[162] [163] [164] [165] [166] [167] [168] [169] [170] [171] [172] [173]
-[174] [175] [176] [177] [178] [179] [180] [181] [182] [183] [184] [185]
-[186] [187] [188] [189] [190] [191] [192] [193] [194] [195] [196] [197]
-[198] [199] [200] [201] [202] [203] [204] [205] [206] [207] [208] [209]
-[210] [211] [212] [213] [214] [215] [216] [217] [218] [219] [220] [221]
-[222] [223] [224] [225] [226] [227] [228] [229] [230] [231]
-File: /home/bayashi/GitHub/GenBrush/unitTestRef.txt  (verbatim)
- [232]
-=======
-[167] [168] [169] [170] [171] [172] [173] [174] [175] [176] [177] [178]
-[179] [180] [181] [182] [183] [184] [185] [186] [187] [188] [189] [190]
-[191] [192] [193] [194] [195] [196] [197] [198] [199] [200] [201] [202]
-[203] [204] [205] [206] [207] [208] [209] [210] [211] [212] [213] [214]
-[215] [216] [217] [218] [219] [220] [221] [222] [223] [224] [225] [226]
-[227] [228] [229] [230] [231] [232] [233] [234] [235] [236] [237] [238]
+[168] [169] [170] [171] [172] [173] [174] [175] [176] [177] [178] [179]
+[180] [181] [182] [183] [184] [185] [186] [187] [188] [189] [190] [191]
+[192] [193] [194] [195] [196] [197] [198] [199] [200] [201] [202] [203]
+[204] [205] [206] [207] [208] [209] [210] [211] [212] [213] [214] [215]
+[216] [217] [218] [219] [220] [221] [222] [223] [224] [225] [226] [227]
+[228] [229] [230] [231] [232] [233] [234] [235] [236] [237] [238] [239]
 File: /home/bayashi/GitHub/GenBrush/unitTestRef.txt  (verbatim)
 
-[239] [240]
->>>>>>> add_pen_tool
+[240] [241]
 Underfull \hbox (badness 10000) in paragraph at lines 401--402
 
  []
 
-<<<<<<< HEAD
-<./GBSurfaceImageSave.png, id=755, 10.0375pt x 10.0375pt>
-=======
-<./GBSurfaceImageSave.png, id=780, 10.0375pt x 10.0375pt>
->>>>>>> add_pen_tool
+<./GBSurfaceImageSave.png, id=784, 10.0375pt x 10.0375pt>
 File: ./GBSurfaceImageSave.png Graphic file (type png)
 <use ./GBSurfaceImageSave.png>
 Package pdftex.def Info: ./GBSurfaceImageSave.png  used on input line 404.
 (pdftex.def)             Requested size: 85.35826pt x 85.41107pt.
-<<<<<<< HEAD
-[233 <./GBSurfaceImageSave.png>]
-=======
 
->>>>>>> add_pen_tool
 Underfull \hbox (badness 10000) in paragraph at lines 408--409
 
  []
 
-<<<<<<< HEAD
-<./GBToolPlotterDrawSCurve.png, id=761, 10.0375pt x 10.0375pt>
-=======
-[241 <./GBSurfaceImageSave.png>]
-<./GBToolPlotterDrawSCurve.png, id=787, 10.0375pt x 10.0375pt>
->>>>>>> add_pen_tool
+[242 <./GBSurfaceImageSave.png>]
+<./GBToolPlotterDrawSCurve.png, id=790, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawSCurve.png Graphic file (type png)
 <use ./GBToolPlotterDrawSCurve.png>
 Package pdftex.def Info: ./GBToolPlotterDrawSCurve.png  used on input line 411.
@@ -941,11 +900,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 415--416
 
  []
 
-<<<<<<< HEAD
-<./GBToolPlotterDrawFacoid3D.png, id=762, 10.0375pt x 10.0375pt>
-=======
-<./GBToolPlotterDrawFacoid3D.png, id=788, 10.0375pt x 10.0375pt>
->>>>>>> add_pen_tool
+<./GBToolPlotterDrawFacoid3D.png, id=791, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawFacoid3D.png Graphic file (type png)
 <use ./GBToolPlotterDrawFacoid3D.png>
 Package pdftex.def Info: ./GBToolPlotterDrawFacoid3D.png  used on input line 41
@@ -956,11 +911,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 422--423
 
  []
 
-<<<<<<< HEAD
-<./GBToolPlotterDrawSpheroid.png, id=763, 10.0375pt x 10.0375pt>
-=======
-<./GBToolPlotterDrawSpheroid.png, id=789, 10.0375pt x 10.0375pt>
->>>>>>> add_pen_tool
+<./GBToolPlotterDrawSpheroid.png, id=792, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawSpheroid.png Graphic file (type png)
 <use ./GBToolPlotterDrawSpheroid.png>
 Package pdftex.def Info: ./GBToolPlotterDrawSpheroid.png  used on input line 42
@@ -971,31 +922,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 429--430
 
  []
 
-<<<<<<< HEAD
-<./GBToolPlotterDrawFacoid.png, id=764, 10.0375pt x 10.0375pt>
-=======
-<./GBToolPlotterDrawFacoid.png, id=790, 10.0375pt x 10.0375pt>
->>>>>>> add_pen_tool
+<./GBToolPlotterDrawFacoid.png, id=793, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawFacoid.png Graphic file (type png)
 <use ./GBToolPlotterDrawFacoid.png>
 Package pdftex.def Info: ./GBToolPlotterDrawFacoid.png  used on input line 432.
 
 (pdftex.def)             Requested size: 85.35826pt x 85.41107pt.
-<<<<<<< HEAD
-[234 <./GBToolPlotterDrawSCurve.png> <./GBToolPlotterDrawFacoid3D.png> <./GBToo
-=======
-[242 <./GBToolPlotterDrawSCurve.png> <./GBToolPlotterDrawFacoid3D.png> <./GBToo
->>>>>>> add_pen_tool
+[243 <./GBToolPlotterDrawSCurve.png> <./GBToolPlotterDrawFacoid3D.png> <./GBToo
 lPlotterDrawSpheroid.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 436--437
 
  []
 
-<<<<<<< HEAD
-<./ImageRef.png, id=771, 10.0375pt x 10.0375pt>
-=======
-<./ImageRef.png, id=797, 10.0375pt x 10.0375pt>
->>>>>>> add_pen_tool
+<./ImageRef.png, id=800, 10.0375pt x 10.0375pt>
 File: ./ImageRef.png Graphic file (type png)
 <use ./ImageRef.png>
 Package pdftex.def Info: ./ImageRef.png  used on input line 439.
@@ -1005,11 +944,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 443--444
 
  []
 
-<<<<<<< HEAD
-<./GBToolPlotterDrawPoint.png, id=772, 10.0375pt x 10.0375pt>
-=======
-<./GBToolPlotterDrawPoint.png, id=798, 10.0375pt x 10.0375pt>
->>>>>>> add_pen_tool
+<./GBToolPlotterDrawPoint.png, id=801, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawPoint.png Graphic file (type png)
 <use ./GBToolPlotterDrawPoint.png>
 Package pdftex.def Info: ./GBToolPlotterDrawPoint.png  used on input line 446.
@@ -1019,11 +954,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 450--451
 
  []
 
-<<<<<<< HEAD
-<./GBToolPlotterDrawPyramidoid.png, id=773, 10.0375pt x 10.0375pt>
-=======
-<./GBToolPlotterDrawPyramidoid.png, id=799, 10.0375pt x 10.0375pt>
->>>>>>> add_pen_tool
+<./GBToolPlotterDrawPyramidoid.png, id=802, 10.0375pt x 10.0375pt>
 File: ./GBToolPlotterDrawPyramidoid.png Graphic file (type png)
 <use ./GBToolPlotterDrawPyramidoid.png>
 Package pdftex.def Info: ./GBToolPlotterDrawPyramidoid.png  used on input line 
@@ -1034,15 +965,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 457--458
 
  []
 
-<<<<<<< HEAD
-[235 <./GBToolPlotterDrawFacoid.png> <./ImageRef.png> <./GBToolPlotterDrawPoint
+[244 <./GBToolPlotterDrawFacoid.png> <./ImageRef.png> <./GBToolPlotterDrawPoint
 .png> <./GBToolPlotterDrawPyramidoid.png>]
-<./testBottomLeft.png, id=782, 3.01125pt x 4.015pt>
-=======
-[243 <./GBToolPlotterDrawFacoid.png> <./ImageRef.png> <./GBToolPlotterDrawPoint
-.png> <./GBToolPlotterDrawPyramidoid.png>]
-<./testBottomLeft.png, id=807, 3.01125pt x 4.015pt>
->>>>>>> add_pen_tool
+<./testBottomLeft.png, id=810, 3.01125pt x 4.015pt>
 File: ./testBottomLeft.png Graphic file (type png)
 <use ./testBottomLeft.png>
 Package pdftex.def Info: ./testBottomLeft.png  used on input line 460.
@@ -1052,11 +977,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 464--465
 
  []
 
-<<<<<<< HEAD
-<./testTopLeft.png, id=783, 3.01125pt x 4.015pt>
-=======
-<./testTopLeft.png, id=808, 3.01125pt x 4.015pt>
->>>>>>> add_pen_tool
+<./testTopLeft.png, id=811, 3.01125pt x 4.015pt>
 File: ./testTopLeft.png Graphic file (type png)
 <use ./testTopLeft.png>
 Package pdftex.def Info: ./testTopLeft.png  used on input line 467.
@@ -1066,11 +987,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 471--472
 
  []
 
-<<<<<<< HEAD
-<./GBSurfaceNormalizeHueTest.png, id=784, 501.875pt x 326.21875pt>
-=======
-<./GBSurfaceNormalizeHueTest.png, id=809, 501.875pt x 326.21875pt>
->>>>>>> add_pen_tool
+<./GBSurfaceNormalizeHueTest.png, id=812, 501.875pt x 326.21875pt>
 File: ./GBSurfaceNormalizeHueTest.png Graphic file (type png)
 <use ./GBSurfaceNormalizeHueTest.png>
 Package pdftex.def Info: ./GBSurfaceNormalizeHueTest.png  used on input line 47
@@ -1081,15 +998,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 478--479
 
  []
 
-<<<<<<< HEAD
-[236 <./testBottomLeft.png> <./testTopLeft.png> <./GBSurfaceNormalizeHueTest.pn
+[245 <./testBottomLeft.png> <./testTopLeft.png> <./GBSurfaceNormalizeHueTest.pn
 g (PNG copy)>]
-<./GBSurfaceNormalizeHueRef.png, id=790, 501.875pt x 326.21875pt>
-=======
-[244 <./testBottomLeft.png> <./testTopLeft.png> <./GBSurfaceNormalizeHueTest.pn
-g (PNG copy)>]
-<./GBSurfaceNormalizeHueRef.png, id=815, 501.875pt x 326.21875pt>
->>>>>>> add_pen_tool
+<./GBSurfaceNormalizeHueRef.png, id=818, 501.875pt x 326.21875pt>
 File: ./GBSurfaceNormalizeHueRef.png Graphic file (type png)
 <use ./GBSurfaceNormalizeHueRef.png>
 Package pdftex.def Info: ./GBSurfaceNormalizeHueRef.png  used on input line 481
@@ -1100,11 +1011,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 485--486
 
  []
 
-<<<<<<< HEAD
-<./GBSurfaceOrderedDitheringTest.png, id=791, 501.875pt x 326.21875pt>
-=======
-<./GBSurfaceOrderedDitheringTest.png, id=816, 501.875pt x 326.21875pt>
->>>>>>> add_pen_tool
+<./GBSurfaceOrderedDitheringTest.png, id=819, 501.875pt x 326.21875pt>
 File: ./GBSurfaceOrderedDitheringTest.png Graphic file (type png)
 <use ./GBSurfaceOrderedDitheringTest.png>
 Package pdftex.def Info: ./GBSurfaceOrderedDitheringTest.png  used on input lin
@@ -1115,11 +1022,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 492--493
 
  []
 
-<<<<<<< HEAD
-<./GBSurfaceOrderedDitheringRef.png, id=792, 501.875pt x 326.21875pt>
-=======
-<./GBSurfaceOrderedDitheringRef.png, id=817, 501.875pt x 326.21875pt>
->>>>>>> add_pen_tool
+<./GBSurfaceOrderedDitheringRef.png, id=820, 501.875pt x 326.21875pt>
 File: ./GBSurfaceOrderedDitheringRef.png Graphic file (type png)
 <use ./GBSurfaceOrderedDitheringRef.png>
 Package pdftex.def Info: ./GBSurfaceOrderedDitheringRef.png  used on input line
@@ -1130,31 +1033,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 499--500
 
  []
 
-<<<<<<< HEAD
-<./GBSurfaceOrderedDitheringTestRGB.png, id=793, 501.875pt x 326.21875pt>
-=======
-<./GBSurfaceOrderedDitheringTestRGB.png, id=818, 501.875pt x 326.21875pt>
->>>>>>> add_pen_tool
+<./GBSurfaceOrderedDitheringTestRGB.png, id=821, 501.875pt x 326.21875pt>
 File: ./GBSurfaceOrderedDitheringTestRGB.png Graphic file (type png)
 <use ./GBSurfaceOrderedDitheringTestRGB.png>
 Package pdftex.def Info: ./GBSurfaceOrderedDitheringTestRGB.png  used on input 
 line 502.
 (pdftex.def)             Requested size: 170.71652pt x 110.96765pt.
-<<<<<<< HEAD
-[237 <./GBSurfaceNormalizeHueRef.png> <./GBSurfaceOrderedDitheringTest.png> <./
-=======
-[245 <./GBSurfaceNormalizeHueRef.png> <./GBSurfaceOrderedDitheringTest.png> <./
->>>>>>> add_pen_tool
+[246 <./GBSurfaceNormalizeHueRef.png> <./GBSurfaceOrderedDitheringTest.png> <./
 GBSurfaceOrderedDitheringRef.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 506--507
 
  []
 
-<<<<<<< HEAD
-<./GBSurfaceOrderedDitheringRefRGB.png, id=800, 501.875pt x 326.21875pt>
-=======
-<./GBSurfaceOrderedDitheringRefRGB.png, id=825, 501.875pt x 326.21875pt>
->>>>>>> add_pen_tool
+<./GBSurfaceOrderedDitheringRefRGB.png, id=828, 501.875pt x 326.21875pt>
 File: ./GBSurfaceOrderedDitheringRefRGB.png Graphic file (type png)
 <use ./GBSurfaceOrderedDitheringRefRGB.png>
 Package pdftex.def Info: ./GBSurfaceOrderedDitheringRefRGB.png  used on input l
@@ -1165,11 +1056,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 513--514
 
  []
 
-<<<<<<< HEAD
-<./GBSurfaceFloydSteinbergDitheringTest.png, id=801, 501.875pt x 326.21875pt>
-=======
-<./GBSurfaceFloydSteinbergDitheringTest.png, id=826, 501.875pt x 326.21875pt>
->>>>>>> add_pen_tool
+<./GBSurfaceFloydSteinbergDitheringTest.png, id=829, 501.875pt x 326.21875pt>
 File: ./GBSurfaceFloydSteinbergDitheringTest.png Graphic file (type png)
 <use ./GBSurfaceFloydSteinbergDitheringTest.png>
 Package pdftex.def Info: ./GBSurfaceFloydSteinbergDitheringTest.png  used on in
@@ -1180,31 +1067,19 @@ Underfull \hbox (badness 10000) in paragraph at lines 520--521
 
  []
 
-<<<<<<< HEAD
-<./GBSurfaceFloydSteinbergDitheringRef.png, id=802, 501.875pt x 326.21875pt>
-=======
-<./GBSurfaceFloydSteinbergDitheringRef.png, id=827, 501.875pt x 326.21875pt>
->>>>>>> add_pen_tool
+<./GBSurfaceFloydSteinbergDitheringRef.png, id=830, 501.875pt x 326.21875pt>
 File: ./GBSurfaceFloydSteinbergDitheringRef.png Graphic file (type png)
 <use ./GBSurfaceFloydSteinbergDitheringRef.png>
 Package pdftex.def Info: ./GBSurfaceFloydSteinbergDitheringRef.png  used on inp
 ut line 523.
 (pdftex.def)             Requested size: 170.71652pt x 110.96765pt.
-<<<<<<< HEAD
-[238 <./GBSurfaceOrderedDitheringTestRGB.png (PNG copy)> <./GBSurfaceOrderedDit
-=======
-[246 <./GBSurfaceOrderedDitheringTestRGB.png (PNG copy)> <./GBSurfaceOrderedDit
->>>>>>> add_pen_tool
+[247 <./GBSurfaceOrderedDitheringTestRGB.png (PNG copy)> <./GBSurfaceOrderedDit
 heringRefRGB.png> <./GBSurfaceFloydSteinbergDitheringTest.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 527--528
 
  []
 
-<<<<<<< HEAD
-<./GBSurfaceFloydSteinbergDitheringTestRGB.png, id=808, 501.875pt x 326.21875pt
-=======
-<./GBSurfaceFloydSteinbergDitheringTestRGB.png, id=833, 501.875pt x 326.21875pt
->>>>>>> add_pen_tool
+<./GBSurfaceFloydSteinbergDitheringTestRGB.png, id=837, 501.875pt x 326.21875pt
 >
 File: ./GBSurfaceFloydSteinbergDitheringTestRGB.png Graphic file (type png)
 <use ./GBSurfaceFloydSteinbergDitheringTestRGB.png>
@@ -1216,11 +1091,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 534--535
 
  []
 
-<<<<<<< HEAD
-<./GBSurfaceFloydSteinbergDitheringRefRGB.png, id=809, 501.875pt x 326.21875pt>
-=======
-<./GBSurfaceFloydSteinbergDitheringRefRGB.png, id=834, 501.875pt x 326.21875pt>
->>>>>>> add_pen_tool
+<./GBSurfaceFloydSteinbergDitheringRefRGB.png, id=838, 501.875pt x 326.21875pt>
 
 File: ./GBSurfaceFloydSteinbergDitheringRefRGB.png Graphic file (type png)
 <use ./GBSurfaceFloydSteinbergDitheringRefRGB.png>
@@ -1232,30 +1103,18 @@ Underfull \hbox (badness 10000) in paragraph at lines 541--542
 
  []
 
-<<<<<<< HEAD
-<./GBScaleCropTest.png, id=810, 75.28125pt x 75.28125pt>
-=======
-<./GBScaleCropTest.png, id=835, 75.28125pt x 75.28125pt>
->>>>>>> add_pen_tool
+<./GBScaleCropTest.png, id=839, 75.28125pt x 75.28125pt>
 File: ./GBScaleCropTest.png Graphic file (type png)
 <use ./GBScaleCropTest.png>
 Package pdftex.def Info: ./GBScaleCropTest.png  used on input line 544.
 (pdftex.def)             Requested size: 170.71652pt x 170.75046pt.
-<<<<<<< HEAD
-[239 <./GBSurfaceFloydSteinbergDitheringRef.png> <./GBSurfaceFloydSteinbergDith
-=======
-[247 <./GBSurfaceFloydSteinbergDitheringRef.png> <./GBSurfaceFloydSteinbergDith
->>>>>>> add_pen_tool
+[248 <./GBSurfaceFloydSteinbergDitheringRef.png> <./GBSurfaceFloydSteinbergDith
 eringTestRGB.png (PNG copy)> <./GBSurfaceFloydSteinbergDitheringRefRGB.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 548--549
 
  []
 
-<<<<<<< HEAD
-<./GBScaleTestAvgNeighbourRef01.png, id=816, 100.375pt x 50.1875pt>
-=======
-<./GBScaleTestAvgNeighbourRef01.png, id=842, 100.375pt x 50.1875pt>
->>>>>>> add_pen_tool
+<./GBScaleTestAvgNeighbourRef01.png, id=845, 100.375pt x 50.1875pt>
 File: ./GBScaleTestAvgNeighbourRef01.png Graphic file (type png)
 <use ./GBScaleTestAvgNeighbourRef01.png>
 Package pdftex.def Info: ./GBScaleTestAvgNeighbourRef01.png  used on input line
@@ -1266,29 +1125,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 555--556
 
  []
 
-<<<<<<< HEAD
-<./GBCropTestRef01.png, id=817, 50.1875pt x 50.1875pt>
-=======
-<./GBCropTestRef01.png, id=843, 50.1875pt x 50.1875pt>
->>>>>>> add_pen_tool
+<./GBCropTestRef01.png, id=846, 50.1875pt x 50.1875pt>
 File: ./GBCropTestRef01.png Graphic file (type png)
 <use ./GBCropTestRef01.png>
 Package pdftex.def Info: ./GBCropTestRef01.png  used on input line 558.
 (pdftex.def)             Requested size: 170.71652pt x 170.7692pt.
-<<<<<<< HEAD
-[240 <./GBScaleCropTest.png> <./GBScaleTestAvgNeighbourRef01.png>]
-=======
-[248 <./GBScaleCropTest.png> <./GBScaleTestAvgNeighbourRef01.png>]
->>>>>>> add_pen_tool
+[249 <./GBScaleCropTest.png> <./GBScaleTestAvgNeighbourRef01.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 562--563
 
  []
 
-<<<<<<< HEAD
-<./GBCropTestRef02.png, id=823, 50.1875pt x 50.1875pt>
-=======
-<./GBCropTestRef02.png, id=849, 50.1875pt x 50.1875pt>
->>>>>>> add_pen_tool
+<./GBCropTestRef02.png, id=852, 50.1875pt x 50.1875pt>
 File: ./GBCropTestRef02.png Graphic file (type png)
 <use ./GBCropTestRef02.png>
 Package pdftex.def Info: ./GBCropTestRef02.png  used on input line 565.
@@ -1298,40 +1145,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 569--570
 
  []
 
-<<<<<<< HEAD
-<./screenshotGBSurfaceApp.png, id=824, 301.125pt x 200.75pt>
-=======
-<./screenshotGBSurfaceApp.png, id=850, 301.125pt x 200.75pt>
->>>>>>> add_pen_tool
+<./screenshotGBSurfaceApp.png, id=853, 301.125pt x 200.75pt>
 File: ./screenshotGBSurfaceApp.png Graphic file (type png)
 <use ./screenshotGBSurfaceApp.png>
 Package pdftex.def Info: ./screenshotGBSurfaceApp.png  used on input line 572.
 (pdftex.def)             Requested size: 170.71652pt x 113.81604pt.
-<<<<<<< HEAD
-[241 <./GBCropTestRef01.png> <./GBCropTestRef02.png>]
-=======
-[249 <./GBCropTestRef01.png> <./GBCropTestRef02.png>]
->>>>>>> add_pen_tool
+[250 <./GBCropTestRef01.png> <./GBCropTestRef02.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 576--577
 
  []
 
-<<<<<<< HEAD
-<./screenshotGBSurfaceWidget.png, id=831, 301.125pt x 200.75pt>
-=======
-<./screenshotGBSurfaceWidget.png, id=856, 301.125pt x 200.75pt>
->>>>>>> add_pen_tool
+<./screenshotGBSurfaceWidget.png, id=860, 301.125pt x 200.75pt>
 File: ./screenshotGBSurfaceWidget.png Graphic file (type png)
 <use ./screenshotGBSurfaceWidget.png>
 Package pdftex.def Info: ./screenshotGBSurfaceWidget.png  used on input line 57
 9.
 (pdftex.def)             Requested size: 170.71652pt x 113.81604pt.
 File: /home/bayashi/GitHub/GenBrush/Demo/ImageViewer/main.c  (verbatim)
-<<<<<<< HEAD
-[242 <./screenshotGBSurfaceApp.png> <./screenshotGBSurfaceWidget.png>]
-=======
-[250 <./screenshotGBSurfaceApp.png> <./screenshotGBSurfaceWidget.png>]
->>>>>>> add_pen_tool
+[251 <./screenshotGBSurfaceApp.png> <./screenshotGBSurfaceWidget.png>]
 File: /home/bayashi/GitHub/GenBrush/Demo/ImageViewer/Makefile  (verbatim)
 
 Overfull \hbox (196.50842pt too wide) in paragraph at lines 599--599
@@ -1340,26 +1171,16 @@ Overfull \hbox (196.50842pt too wide) in paragraph at lines 599--599
  
  []
 
-<<<<<<< HEAD
-[243]
-=======
-[251]
->>>>>>> add_pen_tool
+[252]
 Overfull \hbox (64.75653pt too wide) in paragraph at lines 599--599
 []\OT1/cmtt/m/n/8 $(COMPILER) $(BUILD_ARG) $($(repo)_BUILD_ARG) `echo "$($(repo
 )_INC_DIR)" | tr ' ' '\n' | sort -u` -c main.c[] 
  []
 
 File: /home/bayashi/GitHub/GenBrush/Demo/Glade/main.c  (verbatim)
-<<<<<<< HEAD
-[244] [245] [246] [247]
+[253] [254] [255] [256]
 File: /home/bayashi/GitHub/GenBrush/Demo/Glade/Makefile  (verbatim)
- [248]
-=======
-[252] [253] [254] [255]
-File: /home/bayashi/GitHub/GenBrush/Demo/Glade/Makefile  (verbatim)
- [256]
->>>>>>> add_pen_tool
+ [257]
 Overfull \hbox (137.00757pt too wide) in paragraph at lines 619--619
 []\OT1/cmtt/m/n/8 $(COMPILER) `echo "$(main_DEP) $(genbrush_EXE_DEP) main.o" | 
 tr ' ' '\n' | sort -u` $(LINK_ARG) $(genbrush_LINK_ARG) -o main[] 
@@ -1372,11 +1193,7 @@ ush_INC_DIR)" | tr ' ' '\n' | sort -u` -c main.c[]
  []
 
 File: /home/bayashi/GitHub/GenBrush/Demo/Glade/test.glade  (verbatim)
-<<<<<<< HEAD
-[249]) [250] (./doc.aux) ) 
-=======
-[257]) [258] (./doc.aux) ) 
->>>>>>> add_pen_tool
+[258]) [259] (./doc.aux) ) 
 Here is how much of TeX's memory you used:
  13749 strings out of 493765
  266693 string characters out of 6151500
@@ -1398,17 +1215,10 @@ ts/type1/public/amsfonts/cm/cmtt12.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/public/amsfonts/cm/cmtt8.pfb>
 
 pdfTeX warning: pdflatex: no GlyphToUnicode entry has been inserted yet!
-<<<<<<< HEAD
-Output written on doc.pdf (250 pages, 2249058 bytes).
+Output written on doc.pdf (259 pages, 2260185 bytes).
 PDF statistics:
- 908 PDF objects out of 1000 (max. 8388607)
- 590 compressed objects within 6 object streams
-=======
-Output written on doc.pdf (258 pages, 2257794 bytes).
-PDF statistics:
- 935 PDF objects out of 1000 (max. 8388607)
- 608 compressed objects within 7 object streams
->>>>>>> add_pen_tool
+ 939 PDF objects out of 1000 (max. 8388607)
+ 611 compressed objects within 7 object streams
  0 named destinations out of 1000 (max. 500000)
  143 words of extra memory for PDF output out of 10000 (max. 10000000)
 

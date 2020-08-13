@@ -2939,9 +2939,11 @@ void GBFree(GenBrush** that) {
     case GBSurfaceTypeImage:
       GBSurfaceImageFree((GBSurfaceImage**)&((*that)->_surf));
       break;
+#if BUILDWITHGRAPHICLIB == 1
     case GBSurfaceTypeWidget:
       GBSurfaceWidgetFree((GBSurfaceWidget**)&((*that)->_surf));
       break;
+#endif
     default:
       break;
   }
