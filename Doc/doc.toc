@@ -10,25 +10,26 @@
 \contentsline {subsubsection}{\numberline {1.3.1}Default}{8}
 \contentsline {subsection}{\numberline {1.4}Tool}{8}
 \contentsline {subsubsection}{\numberline {1.4.1}Plotter}{8}
+\contentsline {subsubsection}{\numberline {1.4.2}Pen}{9}
 \contentsline {subsection}{\numberline {1.5}Ink}{9}
 \contentsline {subsubsection}{\numberline {1.5.1}Solid}{9}
-\contentsline {subsection}{\numberline {1.6}Surface}{9}
-\contentsline {subsubsection}{\numberline {1.6.1}Image}{9}
+\contentsline {subsection}{\numberline {1.6}Surface}{10}
+\contentsline {subsubsection}{\numberline {1.6.1}Image}{10}
 \contentsline {subsubsection}{\numberline {1.6.2}GBWidget}{10}
 \contentsline {subsubsection}{\numberline {1.6.3}GBApp}{10}
-\contentsline {subsection}{\numberline {1.7}Layer}{10}
+\contentsline {subsection}{\numberline {1.7}Layer}{11}
 \contentsline {subsubsection}{\numberline {1.7.1}Default}{12}
 \contentsline {subsubsection}{\numberline {1.7.2}Normal}{12}
 \contentsline {subsubsection}{\numberline {1.7.3}Over}{12}
-\contentsline {section}{\numberline {2}Interface}{12}
-\contentsline {subsection}{\numberline {2.1}genbrush.h}{12}
-\contentsline {subsection}{\numberline {2.2}genbrush-GTK.h}{46}
+\contentsline {section}{\numberline {2}Interface}{13}
+\contentsline {subsection}{\numberline {2.1}genbrush.h}{13}
+\contentsline {subsection}{\numberline {2.2}genbrush-GTK.h}{47}
 \contentsline {section}{\numberline {3}Code}{49}
 \contentsline {subsection}{\numberline {3.1}genbrush.c}{49}
 \contentsline {subsection}{\numberline {3.2}genbrush-inline.c}{111}
-\contentsline {subsection}{\numberline {3.3}genbrush-GTK.c}{157}
+\contentsline {subsection}{\numberline {3.3}genbrush-GTK.c}{158}
 \contentsline {subsection}{\numberline {3.4}genbrush-inline-GTK.c}{166}
-\contentsline {section}{\numberline {4}Makefile}{167}
+\contentsline {section}{\numberline {4}Makefile}{168}
 \contentsline {section}{\numberline {5}Unit tests}{168}
 \contentsline {section}{\numberline {6}Unit tests output}{241}
 \contentsline {section}{\numberline {7}Demo}{251}

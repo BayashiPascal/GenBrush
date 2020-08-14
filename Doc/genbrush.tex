@@ -234,6 +234,12 @@ If the Plotter draws a SCurve, it runs through the SCurve from beginning to end 
 
 If the Plotter draws a Shapoid, it checks for each voxel of the bounding box of the Shapoid if the center of the voxel is inside the Shapoid, and if so adds a pixel into the Layer at the position (2 first dimension) and depth (3rd dimension) of this voxel. If the Shapoid has only 2 dimensions, a 3rd one always equals to 0.0 is considered. The internal coordinates for a given voxel can be calculated thanks to the Shapoid functions.\\
 
+\subsubsection{Pen}
+
+The Pen tool has a Shapoid which defines its shape and a softness coefficient which influences the Ink.\\
+
+When used to draw a Point, SCurve or Shapoid, the Pen uses the same algorithm as the Plotter to find the positions of added pixels, and then draws its internal Shapoid at each of these positions as if it was a Plotter tool. However the alpha channel of the ink when drawing the internal Shapoid is multiplied by a value equals to (Pen's Shapoid's depth at position in Pen's Shapoid)\^{}(Pen's softness). According to the original alpha value of the ink, and the blending mode of the layer (Over is recommended), it allows to create a soft edge effect to the drawing.\\
+
 \subsection{Ink}
 
 The Ink converts coordinates into RGBA values. It takes as input internal coordinates (in the Object internal coordinates system), external coordinates (in the global coordinates system) and layer coordinates. Layer coordinates have integer values whlie the others have floating values. An Ink may ignore some or all of the coordinates given as parameter, and to be able to proces any kind of object should be resilient to lower than expected dimensions for these coordinates (typically by assuming the missing dimensions are equals to 0.0).\\
