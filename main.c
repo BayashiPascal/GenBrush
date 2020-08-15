@@ -1826,7 +1826,7 @@ void UnitTestGBEyeOrthoProcessCurve() {
   }
   GBEyeOrtho* eye = GBEyeOrthoCreate(GBEyeOrthoViewFront);
   float theta = PBMATH_HALFPI;
-  GBEyeSetRot((GBEye*)eye, theta);
+  GBEyeSetRot(eye, theta);
   SCurve* projCurve = GBEyeGetProjectedCurve((GBEye*)eye, curve);
   if (SCurveGetDim(projCurve) != SCurveGetDim(curve)) {
     GenBrushErr->_type = PBErrTypeUnitTestFailed;
@@ -2274,33 +2274,6 @@ void UnitTestGBEyeGetSet() {
     sprintf(ShapoidErr->_msg, "GBEyeGetRot failed");
     PBErrCatch(ShapoidErr);
   }
-  VecSet(&v, 0, 2.0); VecSet(&v, 1, 3.0); VecSet(&v, 2, 4.0);
-  GBEyeSetScale(&eye, &v);
-  if (VecIsEqual(&v, &(eye._scale)) == false) {
-    ShapoidErr->_type = PBErrTypeUnitTestFailed;
-    sprintf(ShapoidErr->_msg, "GBEyeSetScale failed");
-    PBErrCatch(ShapoidErr);
-  }
-  VecSet(&v, 0, 3.0); VecSet(&v, 1, 3.0); VecSet(&v, 2, 3.0);
-  GBEyeSetScale(&eye, (float)3.0);
-  if (VecIsEqual(&v, &(eye._scale)) == false) {
-    ShapoidErr->_type = PBErrTypeUnitTestFailed;
-    sprintf(ShapoidErr->_msg, "GBEyeSetScale failed");
-    PBErrCatch(ShapoidErr);
-  }
-  GBEyeSetOrig(&eye, &w);
-  if (VecIsEqual(&w, &(eye._orig)) == false) {
-    ShapoidErr->_type = PBErrTypeUnitTestFailed;
-    sprintf(ShapoidErr->_msg, "GBEyeSetOrig failed");
-    PBErrCatch(ShapoidErr);
-  }
-  float theta = 1.0;
-  GBEyeSetRot(&eye, theta);
-  if (ISEQUALF(eye._theta, theta) == false) {
-    ShapoidErr->_type = PBErrTypeUnitTestFailed;
-    sprintf(ShapoidErr->_msg, "GBEyeSetRot failed");
-    PBErrCatch(ShapoidErr);
-  }
   if (GBEyeProj(&eye) != eye._proj) {
     ShapoidErr->_type = PBErrTypeUnitTestFailed;
     sprintf(ShapoidErr->_msg, "GBEyeProj failed");
@@ -2730,15 +2703,15 @@ void UnitTestGBToolPlotterDrawFacoid3D() {
   blue._rgba[GBPixelAlpha] = 10;
   GBInkSolid* ink = GBInkSolidCreate(&blue);
   Facoid* facoid = FacoidCreate(3);
-  Shapoid* shap = (Shapoid*)facoid;
   VecFloat3D v = VecFloatCreateStatic3D();
   VecSet(&v, 0, 7.0); VecSet(&v, 1, 4.0); VecSet(&v, 2, 4.0);
-  ShapoidScale(shap, (VecFloat*)&v);
+  ShapoidScale(facoid, (VecFloat*)&v);
   VecSet(&v, 0, 2.0); VecSet(&v, 1, 4.0); VecSet(&v, 2, 0.0);
-  ShapoidTranslate(shap, (VecFloat*)&v);
-  ShapoidRotYStart(shap, PBMATH_QUARTERPI);
+  ShapoidTranslate(facoid, (VecFloat*)&v);
+  ShapoidRotYStart(facoid, PBMATH_QUARTERPI);
   GBEyeOrtho* eye = GBEyeOrthoCreate(GBEyeOrthoViewFront);
   GBHand hand = GBHandCreateStatic(GBHandTypeDefault);
+  Shapoid* shap = (Shapoid*)facoid;
   GBObjPod* pod = 
     GBObjPodCreateShapoid(shap, &eye, &hand, tool, ink, layer);
   GBToolPlotterDraw(tool, pod);

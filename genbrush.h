@@ -1981,13 +1981,11 @@ float GBGetSimilarity(const GenBrush* const gbA, GenBrush* const gbB);
   const VecFloat3D*: GBEyeSetScaleVec, \
   default: PBErrInvalidPolymorphism)( \
     _Generic(Eye, \
-      GBEye*: Eye, \
       GBEyeOrtho*: (GBEye*)Eye, \
       GBEyeIsometric*: (GBEye*)Eye, \
-      const GBEye*: Eye, \
       const GBEyeOrtho*: (GBEye*)Eye, \
       const GBEyeIsometric*: (GBEye*)Eye, \
-      default: Eye), \
+      default: PBErrInvalidPolymorphism), \
     _Generic(Scale, \
       float: Scale, \
       VecFloat3D*: Scale, \
@@ -2014,10 +2012,8 @@ float GBGetSimilarity(const GenBrush* const gbA, GenBrush* const gbB);
   default: PBErrInvalidPolymorphism)((GBEye*)(Eye))
 
 #define GBEyeSetOrig(Eye, Orig) _Generic(Eye, \
-  GBEye*: _GBEyeSetOrig, \
   GBEyeOrtho*: _GBEyeSetOrig, \
   GBEyeIsometric*: _GBEyeSetOrig, \
-  const GBEye*: _GBEyeSetOrig, \
   const GBEyeOrtho*: _GBEyeSetOrig, \
   const GBEyeIsometric*: _GBEyeSetOrig, \
   default: PBErrInvalidPolymorphism)((GBEye*)(Eye), Orig)
@@ -2032,10 +2028,8 @@ float GBGetSimilarity(const GenBrush* const gbA, GenBrush* const gbB);
   default: PBErrInvalidPolymorphism)((GBEye*)(Eye))
 
 #define GBEyeSetRot(Eye, Theta) _Generic(Eye, \
-  GBEye*: _GBEyeSetRot, \
   GBEyeOrtho*: _GBEyeSetRot, \
   GBEyeIsometric*: _GBEyeSetRot, \
-  const GBEye*: _GBEyeSetRot, \
   const GBEyeOrtho*: _GBEyeSetRot, \
   const GBEyeIsometric*: _GBEyeSetRot, \
   default: PBErrInvalidPolymorphism)((GBEye*)(Eye), Theta)
