@@ -480,6 +480,7 @@ void UnitTestGBLayerCreateFromFile() {
       PBErrCatch(GenBrushErr);
     }
   }
+  GBLayerSetFlushed(layer, true);
   GBLayerFree(&layer);
   layer = GBLayerCreateFromFile("./testTopLeft.tga");
   if (layer == NULL) {
@@ -504,6 +505,7 @@ void UnitTestGBLayerCreateFromFile() {
       PBErrCatch(GenBrushErr);
     }
   }
+  GBLayerSetFlushed(layer, true);
   GBLayerFree(&layer);
   printf("UnitTestGBLayerCreateFromFile OK\n");
 }
@@ -4183,6 +4185,8 @@ void UnitTestGenBrushScaleCropCopyFragmentFlip() {
     sprintf(ShapoidErr->_msg, "GBFlip failed");
     PBErrCatch(ShapoidErr);
   }
+  GBFree(&gbFlipXRef);
+  GBFree(&gbFlipYRef);
   VecShort2D dim = VecShortCreateStatic2D();
   VecSet(&dim, 0, 100); VecSet(&dim, 1, 50); 
   GenBrush* gbScaled = GBScale(gb, &dim, GBScaleMethod_AvgNeighbour);

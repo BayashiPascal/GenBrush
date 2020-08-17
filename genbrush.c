@@ -629,6 +629,7 @@ void GBLayerFree(GBLayer** that) {
   }
   // Free the memory
   if ((*that)->_pix != NULL) {
+    GBLayerSetFlushed(*that, true);
     GBLayerFlush(*that);
     free((*that)->_pix);
   }
